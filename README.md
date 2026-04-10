@@ -1,5 +1,4 @@
 # H2H-betting-platform
-# H2H Betting Platform
 
 ## Overview
 The H2H Betting Platform is an innovative solution built on the Solana blockchain. It facilitates head-to-head betting between two users in a fair and transparent way. The platform allows seamless bets, automated payouts, and a 0.5% platform fee on each transaction.
