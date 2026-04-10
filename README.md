@@ -22,3 +22,4 @@ The H2H Betting Platform is an innovative solution built on the Solana blockchai
    ```bash
    git clone https://github.com/Kennyvincss/H2H-betting-platform.git
    cd frontend/
+   npm install
