@@ -1,0 +1,203 @@
+1
+00:00:00,050 --> 00:00:03,672
+Meet NeatSpace, a home cleaning platform for Lagos, Nigeria.
+
+2
+00:00:03,712 --> 00:00:07,395
+Customers pick a service, choose a time, and book in minutes,
+
+3
+00:00:07,435 --> 00:00:10,997
+while the owner runs the whole business from one dashboard.
+
+4
+00:00:11,640 --> 00:00:15,863
+The home page shows the rating, homes cleaned, and the next open slot.
+
+5
+00:00:15,903 --> 00:00:19,334
+It explains the three steps to book, lists every service,
+
+6
+00:00:19,374 --> 00:00:21,648
+and introduces your dedicated cleaner.
+
+7
+00:00:22,290 --> 00:00:26,351
+On the Services page, every cleaning is priced upfront. Standard,
+
+8
+00:00:26,391 --> 00:00:27,991
+Deep, Move In or Move Out,
+
+9
+00:00:28,031 --> 00:00:32,345
+and Custom cleans each show a starting price, the estimated duration,
+
+10
+00:00:32,385 --> 00:00:34,111
+and exactly what's included.
+
+11
+00:00:34,750 --> 00:00:38,886
+How it works walks through the process, then explains confirmations,
+
+12
+00:00:38,926 --> 00:00:40,851
+reminders, live status tracking,
+
+13
+00:00:40,891 --> 00:00:43,307
+and the deposit and cancellation policy.
+
+14
+00:00:43,950 --> 00:00:47,336
+The Reviews page collects honest feedback from real homes,
+
+15
+00:00:47,376 --> 00:00:51,825
+and the referral program gives five thousand naira to both you and a friend.
+
+16
+00:00:52,460 --> 00:00:55,634
+To book, customers sign in or create a free account.
+
+17
+00:00:55,674 --> 00:00:59,774
+The booking wizard starts with the home: type, bedrooms, bathrooms,
+
+18
+00:00:59,814 --> 00:01:01,381
+condition, and pets. Next,
+
+19
+00:01:01,421 --> 00:01:04,533
+they build the cleaning with a service and add-ons,
+
+20
+00:01:04,573 --> 00:01:06,201
+and the price updates live.
+
+21
+00:01:07,180 --> 00:01:08,762
+They can upload room photos,
+
+22
+00:01:08,802 --> 00:01:12,064
+enter the address and service area to see any travel fee,
+
+23
+00:01:12,104 --> 00:01:15,481
+then choose from time slots the cleaner can genuinely work.
+
+24
+00:01:17,547 --> 00:01:21,625
+Finally, they add contact details, how often they'd like a cleaning,
+
+25
+00:01:21,665 --> 00:01:23,261
+and an optional promo code,
+
+26
+00:01:23,301 --> 00:01:26,168
+then review everything and pay a secure deposit.
+
+27
+00:01:28,313 --> 00:01:32,264
+Every booking gets its own page, where customers track its status,
+
+28
+00:01:32,304 --> 00:01:35,166
+reschedule, pay the balance, and leave a review.
+
+29
+00:01:35,206 --> 00:01:38,371
+The footer links to the rescheduling, terms, privacy,
+
+30
+00:01:38,411 --> 00:01:39,580
+and refund policies.
+
+31
+00:01:41,723 --> 00:01:44,022
+Now the owner side. After signing in,
+
+32
+00:01:44,062 --> 00:01:48,129
+the Overview gives a daily summary: today's bookings and revenue,
+
+33
+00:01:48,169 --> 00:01:51,731
+upcoming jobs, pending payments, ratings, and follow-ups.
+
+34
+00:01:52,373 --> 00:01:55,129
+Bookings lists every job, filtered by status.
+
+35
+00:01:55,169 --> 00:01:58,795
+Opening one shows the customer, the home details, payments,
+
+36
+00:01:58,835 --> 00:02:02,275
+and the timeline, so the owner can move the job forward.
+
+37
+00:02:02,913 --> 00:02:05,916
+The calendar shows the day, week, or month at a glance,
+
+38
+00:02:05,956 --> 00:02:09,124
+and the owner can block off time when they're unavailable.
+
+39
+00:02:09,763 --> 00:02:13,334
+Customers tracks every client, their spending and preferences,
+
+40
+00:02:13,374 --> 00:02:16,827
+with one-click reminders for follow-ups and unpaid bookings.
+
+41
+00:02:17,463 --> 00:02:21,328
+Payments shows collected deposits, outstanding balances, refunds,
+
+42
+00:02:21,368 --> 00:02:22,650
+and scheduled revenue.
+
+43
+00:02:23,293 --> 00:02:25,387
+Analytics charts revenue over time,
+
+44
+00:02:25,427 --> 00:02:28,861
+highlights insights like the busiest day and top service,
+
+45
+00:02:28,901 --> 00:02:31,787
+and breaks down capacity, services, and add-ons.
+
+46
+00:02:32,423 --> 00:02:36,103
+Reviews and issues gathers ratings and problems to resolve,
+
+47
+00:02:36,143 --> 00:02:39,445
+and Notifications logs every new booking and payment.
+
+48
+00:02:40,083 --> 00:02:44,611
+In Settings, the owner controls the business profile, working hours,
+
+49
+00:02:44,651 --> 00:02:49,245
+deposit, fees, cancellation policy, services, add-ons, service areas,
+
+50
+00:02:49,285 --> 00:02:52,267
+and promo codes. Changes go live immediately.
+
+51
+00:02:52,903 --> 00:02:55,530
+NeatSpace. A cleaner home, without the hassle.

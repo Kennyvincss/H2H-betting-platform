@@ -1,0 +1,92 @@
+[
+ {
+  "id": "01_intro",
+  "text": "Meet NeatSpace, a home cleaning platform for Lagos, Nigeria. Customers pick a service, choose a time, and book in minutes, while the owner runs the whole business from one dashboard.",
+  "dur": 10.986666666666666
+ },
+ {
+  "id": "02_home",
+  "text": "The home page shows the rating, homes cleaned, and the next open slot. It explains the three steps to book, lists every service, and introduces your dedicated cleaner.",
+  "dur": 10.048
+ },
+ {
+  "id": "03_services",
+  "text": "On the Services page, every cleaning is priced upfront. Standard, Deep, Move In or Move Out, and Custom cleans each show a starting price, the estimated duration, and exactly what's included.",
+  "dur": 11.861333333333333
+ },
+ {
+  "id": "04_how",
+  "text": "How it works walks through the process, then explains confirmations, reminders, live status tracking, and the deposit and cancellation policy.",
+  "dur": 8.597333333333333
+ },
+ {
+  "id": "05_reviews_referrals",
+  "text": "The Reviews page collects honest feedback from real homes, and the referral program gives five thousand naira to both you and a friend.",
+  "dur": 7.914666666666666
+ },
+ {
+  "id": "06_book_a",
+  "text": "To book, customers sign in or create a free account. The booking wizard starts with the home: type, bedrooms, bathrooms, condition, and pets. Next, they build the cleaning with a service and add-ons, and the price updates live.",
+  "dur": 13.781333333333333
+ },
+ {
+  "id": "07_book_b",
+  "text": "They can upload room photos, enter the address and service area to see any travel fee, then choose from time slots the cleaner can genuinely work.",
+  "dur": 8.341333333333333
+ },
+ {
+  "id": "08_book_c",
+  "text": "Finally, they add contact details, how often they'd like a cleaning, and an optional promo code, then review everything and pay a secure deposit.",
+  "dur": 8.661333333333333
+ },
+ {
+  "id": "09_account",
+  "text": "Every booking gets its own page, where customers track its status, reschedule, pay the balance, and leave a review. The footer links to the rescheduling, terms, privacy, and refund policies.",
+  "dur": 11.306666666666667
+ },
+ {
+  "id": "10_owner_overview",
+  "text": "Now the owner side. After signing in, the Overview gives a daily summary: today's bookings and revenue, upcoming jobs, pending payments, ratings, and follow-ups.",
+  "dur": 10.048
+ },
+ {
+  "id": "11_owner_bookings",
+  "text": "Bookings lists every job, filtered by status. Opening one shows the customer, the home details, payments, and the timeline, so the owner can move the job forward.",
+  "dur": 9.941333333333333
+ },
+ {
+  "id": "12_owner_calendar",
+  "text": "The calendar shows the day, week, or month at a glance, and the owner can block off time when they're unavailable.",
+  "dur": 6.250666666666667
+ },
+ {
+  "id": "13_owner_customers",
+  "text": "Customers tracks every client, their spending and preferences, with one-click reminders for follow-ups and unpaid bookings.",
+  "dur": 7.104
+ },
+ {
+  "id": "14_owner_payments",
+  "text": "Payments shows collected deposits, outstanding balances, refunds, and scheduled revenue.",
+  "dur": 5.226666666666667
+ },
+ {
+  "id": "15_owner_analytics",
+  "text": "Analytics charts revenue over time, highlights insights like the busiest day and top service, and breaks down capacity, services, and add-ons.",
+  "dur": 8.533333333333333
+ },
+ {
+  "id": "16_owner_reviews_notif",
+  "text": "Reviews and issues gathers ratings and problems to resolve, and Notifications logs every new booking and payment.",
+  "dur": 7.061333333333334
+ },
+ {
+  "id": "17_owner_settings",
+  "text": "In Settings, the owner controls the business profile, working hours, deposit, fees, cancellation policy, services, add-ons, service areas, and promo codes. Changes go live immediately.",
+  "dur": 12.224
+ },
+ {
+  "id": "18_outro",
+  "text": "NeatSpace. A cleaner home, without the hassle.",
+  "dur": 2.6666666666666665
+ }
+]
