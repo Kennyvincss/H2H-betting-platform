@@ -1,0 +1,382 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Merrymen Film</title>
+<style>
+  html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;font-family:Inter,"DejaVu Sans",sans-serif}
+  #stage{position:absolute;inset:0;overflow:hidden;background:#000}
+  .layer{position:absolute;inset:0;opacity:0;will-change:transform,opacity}
+  .bar{position:absolute;left:0;right:0;height:132px;background:#000;z-index:50}
+  #barT{top:0} #barB{bottom:0}
+  #sub{position:absolute;left:0;right:0;bottom:30px;z-index:60;text-align:center;color:#f2efe6;font-size:38px;line-height:1.25;font-weight:500;text-shadow:0 2px 6px #000}
+  #sub .who{display:block;font-size:19px;letter-spacing:.32em;font-weight:700;margin-bottom:6px}
+  #tag{position:absolute;left:44px;top:46px;z-index:61;color:#8d9a7f;font:600 17px/1 "DejaVu Sans Mono",monospace;letter-spacing:.14em}
+  #tagR{position:absolute;right:44px;top:46px;z-index:61;color:#8d9a7f;font:600 17px/1 "DejaVu Sans Mono",monospace;letter-spacing:.14em;text-align:right}
+  #grain{position:absolute;inset:0;z-index:40;pointer-events:none;mix-blend-mode:overlay;opacity:.22}
+  #vig{position:absolute;inset:0;z-index:41;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(0,0,0,.75) 100%)}
+  #flash{position:absolute;inset:0;z-index:42;background:#ff2a2a;opacity:0;mix-blend-mode:screen}
+  #fade{position:absolute;inset:0;z-index:45;background:#000;opacity:0}
+  /* room */
+  .room{background:radial-gradient(ellipse at 50% 35%,#0d1a22 0%,#05080a 60%,#000 100%)}
+  .mon{position:absolute;background:#020406;border:10px solid #111417;border-radius:6px;box-shadow:0 0 60px rgba(60,160,255,.18)}
+  .mon canvas{width:100%;height:100%;display:block}
+  .desk{position:absolute;left:-100px;right:-100px;bottom:0;height:330px;background:linear-gradient(#0b0d0f,#020203)}
+  .shot{position:absolute;left:0;top:0;transform-origin:0 0}
+  .shot img{display:block}
+  .hl{position:absolute;border:4px solid #b6e02a;border-radius:14px;box-shadow:0 0 40px rgba(182,224,42,.55),inset 0 0 30px rgba(182,224,42,.15);opacity:0}
+  .hl.red{border-color:#ff4d5e;box-shadow:0 0 40px rgba(255,77,94,.6),inset 0 0 30px rgba(255,77,94,.15)}
+  .cap{position:absolute;z-index:55;font:600 22px/1.3 "DejaVu Sans Mono",monospace;color:#0b0e08;background:#b6e02a;padding:10px 16px;border-radius:8px;opacity:0;letter-spacing:.04em}
+  .cap.red{background:#ff4d5e;color:#fff}
+  .note{position:absolute;z-index:55;font:500 18px/1.3 "DejaVu Sans Mono",monospace;color:#9fae8e;opacity:0;letter-spacing:.06em}
+  .bezel{position:absolute;background:#0a0c0e;border-radius:22px;box-shadow:0 0 0 2px #1d2226,0 40px 140px rgba(120,200,60,.18)}
+  .screen{position:absolute;inset:22px;overflow:hidden;border-radius:6px;background:#141c17}
+</style></head>
+<body><div id="stage">
+
+<!-- S1 room wide -->
+<div class="layer room" id="room">
+  <div id="roomInner" style="position:absolute;inset:0;transform-origin:50% 45%">
+    <div class="mon" style="left:150px;top:220px;width:470px;height:300px"><canvas width="470" height="300" class="mc"></canvas></div>
+    <div class="mon" style="left:700px;top:160px;width:520px;height:340px"><canvas width="520" height="340" class="mc"></canvas></div>
+    <div class="mon" style="left:1300px;top:220px;width:470px;height:300px"><canvas width="470" height="300" class="mc"></canvas></div>
+    <div class="mon" style="left:260px;top:560px;width:400px;height:220px"><canvas width="400" height="220" class="mc"></canvas></div>
+    <div class="mon" style="left:1260px;top:560px;width:400px;height:220px"><canvas width="400" height="220" class="mc"></canvas></div>
+    <div class="desk"></div>
+    <!-- trader silhouette, seen from behind -->
+    <svg style="position:absolute;left:640px;top:520px" width="640" height="560" viewBox="0 0 640 560">
+      <defs><filter id="rim"><feDropShadow dx="0" dy="-2" stdDeviation="6" flood-color="#5fb4ff" flood-opacity=".55"/></filter></defs>
+      <g filter="url(#rim)" fill="#010203">
+        <ellipse cx="320" cy="190" rx="92" ry="112"/>
+        <path d="M200 300 Q320 250 440 300 Q610 340 640 560 L0 560 Q30 340 200 300Z"/>
+        <rect x="285" y="270" width="70" height="60"/>
+      </g>
+    </svg>
+    <!-- phone on desk -->
+    <div id="deskPhone" style="position:absolute;left:1440px;top:850px;width:150px;height:84px;border-radius:14px;background:#050607;border:3px solid #1b1f22;transform:perspective(600px) rotateX(55deg)">
+      <div id="deskPhoneGlow" style="position:absolute;inset:4px;border-radius:10px;background:#b6e02a;opacity:0"></div>
+    </div>
+  </div>
+</div>
+
+<!-- S1 close: monitors chaos -->
+<div class="layer" id="chaos" style="background:#000">
+  <div class="mon" style="left:-40px;top:120px;width:1080px;height:640px;border-width:16px"><canvas width="1080" height="640" class="mc2"></canvas></div>
+  <div class="mon" style="left:1060px;top:180px;width:960px;height:560px;border-width:16px"><canvas width="960" height="560" class="mc2"></canvas></div>
+</div>
+
+<!-- S1 phone close-up: live call UI -->
+<div class="layer" id="phone" style="background:radial-gradient(ellipse at 50% 50%,#10140c,#000 70%)">
+  <div style="position:absolute;left:760px;top:150px;width:400px;height:800px;border-radius:56px;background:#0b0c0d;border:6px solid #23272a;box-shadow:0 0 120px rgba(182,224,42,.12)">
+    <div style="position:absolute;inset:18px;border-radius:40px;background:linear-gradient(#141a12,#07090a);text-align:center;color:#eae7dc">
+      <div style="margin-top:110px;font:600 18px/1 'DejaVu Sans Mono',monospace;letter-spacing:.3em;color:#9fae8e">ON CALL</div>
+      <div style="margin-top:22px;font:700 58px/1 Inter">Marcus</div>
+      <div id="callTimer" style="margin-top:16px;font:500 26px/1 'DejaVu Sans Mono',monospace;color:#b6e02a">00:04</div>
+      <div id="wave" style="position:absolute;left:40px;right:40px;top:420px;height:120px;display:flex;align-items:center;justify-content:center;gap:8px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Merrymen whisper card -->
+<div class="layer" id="whisper" style="background:#000">
+  <img src="assets/favicon.svg" id="whisperLogo" style="position:absolute;left:885px;top:430px;width:150px;height:135px;opacity:.0">
+</div>
+
+<!-- PRODUCT: monitor framed screen (generic) -->
+<div class="layer" id="desk2" style="background:radial-gradient(ellipse at 50% 40%,#0c1410,#000 75%)">
+  <div id="desk2Cam" style="position:absolute;inset:0;transform-origin:50% 50%">
+    <div class="bezel" style="left:200px;top:150px;width:1520px;height:870px">
+      <div class="screen" id="desk2Screen"></div>
+    </div>
+  </div>
+</div>
+
+<!-- generic full-frame product shot container -->
+<div class="layer" id="prod" style="background:#151d18"><div class="shot" id="prodShot"></div></div>
+
+<!-- Claude-style prompt box (connector) -->
+<div class="layer" id="ask" style="background:radial-gradient(ellipse at 50% 40%,#16130f,#000 80%)">
+  <div style="position:absolute;left:330px;top:300px;width:1260px">
+    <div style="font:600 18px/1 'DejaVu Sans Mono',monospace;letter-spacing:.24em;color:#9fae8e;margin-bottom:22px">AI ASSISTANT · MERRYMEN MCP CONNECTOR</div>
+    <div style="background:#1e1c19;border:2px solid #3a362f;border-radius:26px;padding:42px 46px;min-height:120px;box-shadow:0 30px 120px rgba(0,0,0,.6)">
+      <span id="askText" style="font:500 48px/1.3 Inter;color:#f2efe6"></span><span id="caret" style="display:inline-block;width:4px;height:52px;background:#b6e02a;vertical-align:-8px;margin-left:4px"></span>
+    </div>
+    <div style="margin-top:22px;font:500 20px/1.4 'DejaVu Sans Mono',monospace;color:#7d8873">Example prompt from merrymen.si/claude</div>
+  </div>
+</div>
+
+<!-- market crash -->
+<div class="layer" id="crash" style="background:#000">
+  <div class="mon" style="left:120px;top:150px;width:1680px;height:780px;border-width:18px;box-shadow:0 0 120px rgba(255,40,60,.25)"><canvas width="1680" height="780" id="crashCanvas"></canvas></div>
+</div>
+
+<!-- logo reveal -->
+<div class="layer" id="logo" style="background:radial-gradient(ellipse at 50% 45%,#121b0c 0%,#000 65%)">
+  <img src="assets/favicon.svg" id="logoMark" style="position:absolute;left:870px;top:250px;width:180px;height:162px">
+  <div id="logoWord" style="position:absolute;left:0;right:0;top:450px;text-align:center;color:#f2efe6;font:900 128px/1 'Inter Display',Inter;letter-spacing:.18em">MERRY MEN AI</div>
+  <div id="logoLine" style="position:absolute;left:0;right:0;top:612px;text-align:center;color:#b6e02a;font:500 40px/1 Inter;letter-spacing:.04em">Discover what you can do with AI.</div>
+  <div id="logoUrl" style="position:absolute;left:0;right:0;top:700px;text-align:center;color:#cfd3c4;font:600 30px/1 'DejaVu Sans Mono',monospace;letter-spacing:.12em">merrymen.si  ·  start on paper</div>
+  <div id="logoRisk" style="position:absolute;left:0;right:0;top:770px;text-align:center;color:#6f7a66;font:500 18px/1.4 Inter">Crypto trading carries risk. Agents trade only inside limits you sign; your owner key stays with you.</div>
+</div>
+
+<div id="flash"></div>
+<canvas id="grain" width="480" height="270"></canvas>
+<div id="vig"></div>
+<div id="fade"></div>
+<div class="bar" id="barT"></div><div class="bar" id="barB"></div>
+<div id="tag"></div><div id="tagR"></div>
+<div id="sub"></div>
+<div class="cap" id="cap1"></div><div class="cap" id="cap2"></div>
+<div class="note" id="note1"></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const lerp=(a,b,x)=>a+(b-a)*x;
+// window fade helper: visible between a and b with fade in/out durations
+const win=(t,a,b,fi=.25,fo=.25)=>clamp((t-a)/fi)*clamp((b-t)/fo);
+function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+
+// ---------- dialogue (on-screen, in-character; no voiceover) ----------
+const M='#f0b44c', T='#b6e02a';
+const LINES=[
+ [2.9,5.0,'MARCUS · ON THE PHONE',M,'“Tell me you’ve figured out what’s happening.”'],
+ [5.0,8.3,'TRADER',T,'“Five screens. Three sources, all saying different things.<br>The market’s moving faster than I can keep up.”'],
+ [8.3,9.7,'MARCUS',M,'“Then stop doing it the hard way.”'],
+ [9.7,10.7,'TRADER',T,'“What other way is there?”'],
+ [10.8,12.0,'MARCUS',M,'“…Merrymen.”'],
+ [12.2,14.2,'TRADER',T,'“This is the one you keep telling me about?”'],
+ [14.2,15.6,'MARCUS',M,'“Yes. Let me show you what it does.”'],
+ [16.0,19.2,'MARCUS',M,'“You sign the limits. The agent proposes a trade.<br>The chain checks it against what you signed.”'],
+ [19.3,20.8,'TRADER',T,'“Hold on. It trades for me — inside my rules?”'],
+ [20.8,22.0,'MARCUS',M,'“That’s the idea. Put it to work.”'],
+ [22.2,24.2,'TRADER',T,'“Alright. Let’s see what these agents are actually doing.”'],
+ [25.6,27.4,'TRADER',T,'“Four hundred fifty-eight refused?”'],
+ [27.4,30.6,'MARCUS',M,'“Every trade outside the caps gets turned back —<br>and it’s shown as loudly as a win.”'],
+ [31.0,33.0,'TRADER',T,'“And if it sits still, I can just ask it why?”'],
+ [34.6,37.0,'MARCUS',M,'“Exactly. But don’t just read the answer.<br>Understand it, then decide what you do.”'],
+ [37.2,38.8,'TRADER',T,'“And I can steer it from Telegram, too?”'],
+ [38.8,40.4,'MARCUS',M,'“Yes. That’s what I wanted you to see.”'],
+ [40.4,42.0,'TRADER',T,'“Now I see why you kept recommending this.”'],
+ [44.6,46.6,'TRADER',T,'“A few minutes ago, I was completely lost.”'],
+ [46.6,47.4,'MARCUS',M,'“And now?”'],
+ [47.4,51.2,'TRADER',T,'“Now I know what I’m looking at. I still make the call —<br>it just can’t break the rules I signed.”'],
+ [53.0,54.4,'MARCUS',M,'“So… was it worth trying?”'],
+ [54.4,56.2,'TRADER',T,'“You should’ve shown me this a long time ago.”'],
+];
+
+// ---------- product shots (image pixel coords) ----------
+const IMG={hero:[3200,1800],steps:[3200,1358],band:[838,878],commands:[1520,1052],perm:[1424,222],cando:[1424,480],camp:[720,1196]};
+let curImg=null;
+function setShot(name,cx,cy,z){
+  const el=$('prodShot');
+  if(curImg!==name){el.innerHTML='<img src="assets/'+(name==='hero'?'home_hero':name==='perm'?'perm_row':name==='cando'?'cando_list':name)+'.png">';curImg=name;el.querySelectorAll('.hl').forEach(n=>n.remove());}
+  el.style.transform=`translate(${960-cx*z}px,${540-cy*z}px) scale(${z})`;
+  return el;
+}
+function hl(el,id,x,y,w,h,op,red){
+  let d=el.querySelector('#'+id); if(!d){d=document.createElement('div');d.id=id;d.className='hl'+(red?' red':'');el.appendChild(d);}
+  Object.assign(d.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px',opacity:op});
+}
+function cap(id,text,x,y,op,red){const c=$(id);c.innerHTML=text;c.className='cap'+(red?' red':'');Object.assign(c.style,{left:x+'px',top:y+'px',opacity:op});}
+
+// ---------- charts ----------
+function drawChart(cv,t,seed,crash){
+  const c=cv.getContext('2d'),W=cv.width,H=cv.height;
+  c.fillStyle='#03070a';c.fillRect(0,0,W,H);
+  c.strokeStyle='rgba(80,140,200,.12)';c.lineWidth=1;
+  for(let x=0;x<W;x+=40){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke()}
+  for(let y=0;y<H;y+=40){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}
+  const n=Math.floor(W/14), step=Math.floor(t*9);
+  const r=rng(seed); let p=H*.5; const pts=[];
+  for(let i=0;i<n+step;i++){p+= (r()-.5)*H*.09 + (H*.5-p)*.04; if(i>=step) pts.push(p);}
+  pts.forEach((v,i)=>{
+    const o=i?pts[i-1]:v, x=i*14+4, up=v<o;
+    let cl=up?'#21d07a':'#ff4d5e';
+    if(crash>0 && i>n*.55){v=v+crash*(i-n*.55)*H*.012;}
+    c.strokeStyle=cl;c.fillStyle=cl;
+    const hi=Math.min(o,v)-6-r()*14, lo=Math.max(o,v)+6+r()*14;
+    c.beginPath();c.moveTo(x+4,hi);c.lineTo(x+4,lo);c.stroke();
+    c.fillRect(x,Math.min(o,v),9,Math.max(2,Math.abs(v-o)));
+  });
+  c.font='bold 18px DejaVu Sans Mono';
+  const rr=rng(seed+Math.floor(t*6));
+  for(let k=0;k<4;k++){const ch=((rr()-.5)*9).toFixed(2);c.fillStyle=ch>0?'#21d07a':'#ff4d5e';c.fillText(['BTC','ETH','SOL','TSLA','NVDA','PEPE'][(seed+k)%6]+' '+(ch>0?'+':'')+ch+'%',14+k*Math.max(110,W/4.4),28);}
+}
+function drawCrash(t,k){
+  const cv=$('crashCanvas'),c=cv.getContext('2d'),W=cv.width,H=cv.height;
+  c.fillStyle='#050203';c.fillRect(0,0,W,H);
+  const r=rng(77);let p=H*.35;c.lineWidth=5;c.strokeStyle='#ff4d5e';c.shadowColor='#ff2a3a';c.shadowBlur=24;c.beginPath();
+  const n=140, upto=Math.floor(n*clamp(.45+k*.55));
+  for(let i=0;i<upto;i++){p+=(r()-.45)*14; if(i>n*.55)p+=(i-n*.55)*.9; const x=i*W/n; i?c.lineTo(x,p):c.moveTo(x,p);}
+  c.stroke();c.shadowBlur=0;
+  c.font='900 64px Inter';c.fillStyle='#ff4d5e';
+  if(k>.35&&Math.floor(t*4)%2===0)c.fillText('▼ −11.8%  MARKET-WIDE SELL-OFF',60,100);
+  c.font='500 22px DejaVu Sans Mono';c.fillStyle='#8a5a60';c.fillText('dramatization · simulated market chart',60,H-30);
+}
+
+// ---------- grain ----------
+function grain(t){const c=$('grain').getContext('2d');const d=c.createImageData(480,270);const r=rng(Math.floor(t*24)*7919+3);for(let i=0;i<d.data.length;i+=4){const v=r()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}c.putImageData(d,0,0)}
+
+// wave bars
+const wave=$('wave');for(let i=0;i<22;i++){const b=document.createElement('div');b.style.cssText='width:9px;border-radius:5px;background:#b6e02a';wave.appendChild(b)}
+
+function speaking(t){for(const l of LINES) if(t>=l[0]&&t<l[1]) return l; return null;}
+
+window.render=function(t){
+  // reset layers
+  for(const id of ['room','chaos','phone','whisper','desk2','prod','ask','crash','logo']) $(id).style.opacity=0;
+  $('flash').style.opacity=0; $('fade').style.opacity=0; $('prod').style.background='#151d18'; $('desk2Cam').style.transformOrigin='50% 50%';
+  ['cap1','cap2','note1'].forEach(i=>$(i).style.opacity=0);
+  let tag='', tagR='';
+
+  // ===== SCENE 1: THE PROBLEM 0–12 =====
+  if(t<5.0){ // wide room, slow push in, phone buzzes at 2.3
+    const L=$('room'); L.style.opacity=win(t,0,5.0,1.2,.08);
+    $('roomInner').style.transform=`scale(${1+t*.02}) translate(${Math.sin(t*1.3)*3}px,${Math.cos(t*1.1)*2}px)`;
+    document.querySelectorAll('.mc').forEach((cv,i)=>drawChart(cv,t,11+i*31,0));
+    const buzz=t>2.2&&t<3.2; $('deskPhoneGlow').style.opacity=buzz?(.55+.45*Math.sin(t*60)):(t>=3.2?.25:0);
+    $('deskPhone').style.marginLeft=buzz?(Math.sin(t*90)*3)+'px':'0';
+    tag='SHERWOOD &nbsp;·&nbsp; 02:47 AM';
+  } else if(t<8.3){ // monitor chaos close-up with shake
+    $('chaos').style.opacity=1;
+    const s=1.04+(t-5)*.03;
+    $('chaos').style.transform=`scale(${s}) translate(${Math.sin(t*23)*4}px,${Math.cos(t*19)*3}px)`;
+    document.querySelectorAll('.mc2').forEach((cv,i)=>drawChart(cv,t,5+i*97,0));
+  } else if(t<10.75){ // phone call close-up
+    $('phone').style.opacity=1;
+    $('phone').style.transform=`scale(${1+(t-8.3)*.03})`;
+    $('callTimer').textContent='00:0'+Math.floor(t-2.8+1);
+    const l=speaking(t), talking=l&&l[2].startsWith('MARCUS');
+    [...wave.children].forEach((b,i)=>{b.style.height=(talking?14+Math.abs(Math.sin(t*14+i*1.7)*Math.sin(t*5+i))*90:6)+'px';b.style.opacity=talking?1:.35});
+  } else if(t<12){ // black beat, logo whisper
+    $('whisper').style.opacity=1;
+    $('whisperLogo').style.opacity=clamp((t-10.9)/.8)*.9;
+    $('whisperLogo').style.transform=`scale(${1+(t-10.75)*.05})`;
+    $('whisperLogo').style.filter=`drop-shadow(0 0 ${30*clamp((t-10.9)/.8)}px rgba(182,224,42,.7))`;
+  }
+
+  // ===== SCENE 2: INTRODUCING THE PRODUCT 12–22 =====
+  else if(t<16.0){ // hero on monitor, camera pushes in
+    const L=$('desk2');L.style.opacity=win(t,12,16.0,.35,.1);
+    const sc=$('desk2Screen'); if(!sc.firstChild){sc.innerHTML='<img src="assets/home_hero.png" style="width:100%;height:100%;object-fit:cover;object-position:top">';}
+    const k=ease(clamp((t-12)/4));
+    $('desk2Cam').style.transform=`scale(${lerp(.92,1.22,k)}) translate(${lerp(0,90,k)}px,${lerp(20,40,k)}px)`;
+    tag='MERRYMEN.SI &nbsp;·&nbsp; REAL PRODUCT';
+  } else if(t<22){ // steps: wall / proposes / chain decides
+    $('prod').style.opacity=win(t,16,22,.2,.15);
+    const k=ease(clamp((t-16)/6));
+    const el=setShot('steps',lerp(1250,1900,k),lerp(820,960,k),lerp(.78,.86,k));
+    const a=(s)=>clamp((t-s)/.3)*clamp((22-t)/.2);
+    hl(el,'h1',440,770,795,410,a(16.4)*(t<17.6?1:.35));
+    hl(el,'h2',1203,770,795,410,a(17.6)*(t<18.8?1:.35));
+    hl(el,'h3',1966,770,795,410,a(18.8));
+    tag='HOW IT WORKS &nbsp;·&nbsp; MERRYMEN.SI';
+  }
+
+  // ===== SCENE 3: LIVE DEMONSTRATION 22–42 =====
+  else if(t<25.4){ // hero again, push toward live band widget
+    $('prod').style.opacity=win(t,22,25.4,.2,.15);
+    const k=ease(clamp((t-22)/3.4));
+    const el=setShot('hero',lerp(1600,2280,k),lerp(900,1080,k),lerp(.6,.95,k));
+    hl(el,'hb',1850,640,860,890,clamp((t-23.2)/.4));
+    tag='LIVE AGENT BOARD &nbsp;·&nbsp; PUBLIC, NO LOGIN';
+  } else if(t<31.0){ // band close-up, shogun row
+    $('prod').style.opacity=win(t,25.4,31,.15,.2);
+    const k=ease(clamp((t-25.4)/5.6));
+    const el=setShot('band',lerp(420,430,k),lerp(360,340,k),lerp(1.5,1.75,k));
+    hl(el,'hs',10,282,820,112,clamp((t-25.7)/.3));
+    hl(el,'hc',10,154,820,112,clamp((t-28.4)/.3)*.8);
+    cap('cap1','REAL DATA · captured 10 Oct 2026',1300,170,clamp((t-26)/.3));
+    tag='THE BAND, LIVE FROM SHERWOOD';
+  } else if(t<34.4){ // ask the assistant
+    $('ask').style.opacity=win(t,31,34.4,.2,.12);
+    const q='Why hasn’t my agent traded?';
+    const n=Math.floor(clamp((t-31.5)/1.6)*q.length);
+    $('askText').textContent=q.slice(0,n);
+    $('caret').style.opacity=(Math.floor(t*3)%2||n<q.length)?1:0;
+    tag='CLAUDE &amp; MCP';
+  } else if(t<37.1){ // permission row = what comes back
+    $('prod').style.opacity=win(t,34.4,37.1,.12,.15);
+    const k=ease(clamp((t-34.4)/2.7));
+    const el=setShot('perm',lerp(700,760,k),111,lerp(1.15,1.25,k));
+    hl(el,'hp',600,14,800,110,clamp((t-34.8)/.3));
+    cap('cap1','What the connector can read — from merrymen.si/claude',330,250,clamp((t-34.6)/.3));
+    $('note1').innerHTML='Suggested trades need your approval in Merrymen. It can never move funds or loosen your limits.';
+    Object.assign($('note1').style,{left:'330px',top:'790px',width:'1260px',opacity:clamp((t-35.2)/.3)});
+    tag='WHAT IT TELLS YOU';
+  } else if(t<42){ // telegram commands
+    $('prod').style.opacity=win(t,37.1,42,.15,.2);
+    const k=ease(clamp((t-37.1)/4.9));
+    const el=setShot('commands',lerp(700,760,k),lerp(300,700,k),lerp(1.05,1.15,k));
+    hl(el,'hw',12,140,1500,76,clamp((t-37.5)/.3)*(t<39.2?1:.35));
+    hl(el,'hcap',12,575,1500,120,clamp((t-39.2)/.3)*(t<40.6?1:.35));
+    hl(el,'hk',12,975,1500,72,clamp((t-40.6)/.3));
+    tag='STEER IT FROM TELEGRAM &nbsp;·&nbsp; DOCS';
+  }
+
+  // ===== SCENE 4: THE PAYOFF 42–53 =====
+  else if(t<44.6){
+    $('crash').style.opacity=1;
+    const k=clamp((t-42)/2.4);
+    $('crash').style.transform=`scale(${1.02+k*.05}) translate(${Math.sin(t*31)*7*(1-k*.3)}px,${Math.cos(t*27)*5}px)`;
+    drawCrash(t,k);
+    $('flash').style.opacity=(t<42.25?.55:0)+(Math.floor(t*4)%2?0:.12);
+    tag='<span style="color:#ff4d5e">02:58 AM &nbsp;·&nbsp; MARKET MOVES</span>';
+  } else if(t<51.4){ // phone app: refused rows
+    $('prod').style.opacity=win(t,44.6,51.4,.15,.2);
+    $('prod').style.background='radial-gradient(ellipse at 50% 50%,#13170f,#000 70%)';
+    const k=ease(clamp((t-44.6)/6.8));
+    const el=setShot('camp',lerp(360,370,k),lerp(600,820,k),lerp(.78,1.0,k));
+    hl(el,'hpe',90,830,560,92,clamp((t-45.4)/.3)*.8,true);
+    hl(el,'hts',90,1010,560,92,clamp((t-46.6)/.3),true);
+    cap('cap1','REFUSED · past today’s spending cap',1240,430,clamp((t-46.8)/.3),true);
+    $('note1').innerHTML='Mobile demo build · shows generated numbers, by design';
+    Object.assign($('note1').style,{left:'1240px',top:'510px',width:'560px',opacity:clamp((t-47)/.3)});
+    tag='THE WALL HOLDS';
+  } else if(t<53){ // final product beat: what it can never do
+    $('prod').style.opacity=win(t,51.4,53,.15,.25);
+    $('prod').style.background='#0a0a0a';
+    const k=ease(clamp((t-51.4)/1.6));
+    const el=setShot('cando',720,lerp(320,350,k),lerp(1.2,1.28,k));
+    hl(el,'hn',20,300,1400,110,clamp((t-51.6)/.3));
+    tag='YOUR KEYS. YOUR CAPS.';
+  }
+
+  // ===== SCENE 5: BRAND REVEAL 53–60 =====
+  else if(t<55.6){ // laptop closing: screen glow collapses
+    $('desk2').style.opacity=1;
+    const sc=$('desk2Screen'); if(!sc.firstChild){sc.innerHTML='<img src="assets/home_hero.png" style="width:100%;height:100%;object-fit:cover;object-position:top">';}
+    const k=ease(clamp((t-54.6)/1.0));
+    $('desk2Cam').style.transform=`scale(${1.05+ (t-53)*.02}) perspective(1600px) rotateX(${k*80}deg)`;
+    $('desk2Cam').style.transformOrigin='50% 100%';
+    $('fade').style.opacity=clamp((t-55.2)/.4);
+  } else {
+    $('logo').style.opacity=1;
+    const a=clamp((t-55.6)/.8);
+    $('logoMark').style.opacity=a; $('logoMark').style.transform=`scale(${lerp(1.25,1,ease(a))})`;
+    $('logoMark').style.filter=`drop-shadow(0 0 ${lerp(80,24,a)}px rgba(182,224,42,.8))`;
+    const w=clamp((t-56.1)/.7); $('logoWord').style.opacity=w; $('logoWord').style.letterSpacing=lerp(.5,.18,ease(w))+'em';
+    $('logoLine').style.opacity=clamp((t-56.9)/.6);
+    $('logoUrl').style.opacity=clamp((t-57.5)/.6);
+    $('logoRisk').style.opacity=clamp((t-57.9)/.6)*.9;
+    $('fade').style.opacity=clamp((t-59.5)/.5);
+  }
+  if(t>=12&&t<16&&false){}
+
+  // subtitles
+  const l=speaking(t);
+  $('sub').innerHTML=l?`<span class="who" style="color:${l[3]}">${l[2]}</span>${l[4]}`:'';
+  $('sub').style.opacity=l?clamp((t-l[0])/.12)*clamp((l[1]-t)/.12):0;
+  $('tag').innerHTML=tag; $('tagR').innerHTML=(t>12&&t<53)?'merrymen.si':'';
+  // letterbox: thin in product scenes so screens read clearly
+  const bar=(t>=12&&t<42)||(t>=44.6&&t<53)?96:132;
+  $('barT').style.height=$('barB').style.height=bar+'px';
+  grain(t);
+  $('grain').style.opacity=(t>=12&&t<42)||(t>=44.6&&t<53)?.08:.22;
+};
+window.render(0);
+// preload
+['home_hero','steps','band','commands','perm_row','cando_list','camp'].forEach(n=>{const i=new Image();i.src='assets/'+n+'.png'});
+$('desk2Screen').innerHTML='<img src="assets/home_hero.png" style="width:100%;height:100%;object-fit:cover;object-position:top">';
+</script>
+</body></html>
