@@ -1,0 +1,416 @@
+[
+ {
+  "i": 0,
+  "a": 2.9,
+  "b": 5.0,
+  "who": "M",
+  "dur": 1.61,
+  "slot": 2.1,
+  "txt": "Tell me you\u2019ve figured out what\u2019s happening.",
+  "trim": [
+   0,
+   35000
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 1.469723691945914,
+  "A": 2.4,
+  "B": 3.87
+ },
+ {
+  "i": 1,
+  "a": 5.0,
+  "b": 8.3,
+  "who": "T",
+  "dur": 4.59,
+  "slot": 3.3,
+  "txt": "Five screens. Three sources, all saying different things. It\u2019s moving faster than I can keep up.",
+  "trim": [
+   152,
+   101120
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 4.162770562770563,
+  "A": 4.119,
+  "B": 8.281
+ },
+ {
+  "i": 2,
+  "a": 8.3,
+  "b": 9.7,
+  "who": "M",
+  "dur": 1.58,
+  "slot": 1.4,
+  "txt": "Then stop doing it the hard way.",
+  "trim": [
+   563,
+   33672
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 1.3903166204753505,
+  "A": 8.53,
+  "B": 9.92
+ },
+ {
+  "i": 3,
+  "a": 9.7,
+  "b": 10.7,
+  "who": "T",
+  "dur": 0.99,
+  "slot": 1.0,
+  "txt": "What other way is there?",
+  "trim": [
+   0,
+   21760
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 0.8971346114203257,
+  "A": 10.169,
+  "B": 11.066
+ },
+ {
+  "i": 4,
+  "a": 10.8,
+  "b": 12.0,
+  "who": "M",
+  "dur": 0.68,
+  "slot": 1.2,
+  "txt": "... Merry-men.",
+  "trim": [
+   274,
+   14802
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 0.6100613084740069,
+  "A": 11.455,
+  "B": 12.065
+ },
+ {
+  "i": 5,
+  "a": 12.2,
+  "b": 14.2,
+  "who": "T",
+  "dur": 1.92,
+  "slot": 2.0,
+  "txt": "This is the one you keep telling me about?",
+  "trim": [
+   0,
+   42240
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 1.7414965986394555,
+  "A": 12.314,
+  "B": 14.055
+ },
+ {
+  "i": 6,
+  "a": 14.2,
+  "b": 15.6,
+  "who": "M",
+  "dur": 1.68,
+  "slot": 1.4,
+  "txt": "Yes. Let me show you.",
+  "trim": [
+   560,
+   37120
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 1.5352313765012175,
+  "A": 14.304,
+  "B": 15.839
+ },
+ {
+  "i": 7,
+  "a": 16.0,
+  "b": 19.2,
+  "who": "M",
+  "dur": 3.33,
+  "slot": 3.2,
+  "txt": "You sign the limits. It proposes. The chain enforces.",
+  "trim": [
+   690,
+   72724
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 3.0248593264466277,
+  "A": 16.15,
+  "B": 19.175
+ },
+ {
+  "i": 8,
+  "a": 19.3,
+  "b": 20.8,
+  "who": "T",
+  "dur": 2.4,
+  "slot": 1.5,
+  "txt": "Hold on. It trades for me \u2014 inside my rules?",
+  "trim": [
+   0,
+   52992
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 2.184786641929499,
+  "A": 19.424,
+  "B": 21.609
+ },
+ {
+  "i": 9,
+  "a": 20.8,
+  "b": 22.0,
+  "who": "M",
+  "dur": 1.79,
+  "slot": 1.2,
+  "txt": "That\u2019s the idea. Put it to work.",
+  "trim": [
+   535,
+   36482
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 1.5094902158394221,
+  "A": 21.858,
+  "B": 23.367
+ },
+ {
+  "i": 10,
+  "a": 22.2,
+  "b": 24.2,
+  "who": "T",
+  "dur": 1.93,
+  "slot": 2.0,
+  "txt": "Alright. Let\u2019s see what they\u2019re actually doing.",
+  "trim": [
+   0,
+   42496
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 1.7520511234796947,
+  "A": 23.911,
+  "B": 25.663
+ },
+ {
+  "i": 11,
+  "a": 25.6,
+  "b": 27.4,
+  "who": "T",
+  "dur": 1.61,
+  "slot": 1.8,
+  "txt": "Four hundred fifty-eight refused?",
+  "trim": [
+   634,
+   35584
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 1.4409400123685836,
+  "A": 25.974,
+  "B": 27.415
+ },
+ {
+  "i": 12,
+  "a": 27.4,
+  "b": 30.6,
+  "who": "M",
+  "dur": 4.66,
+  "slot": 3.2,
+  "txt": "Outside the caps, it\u2019s refused \u2014 shown as loudly as a win.",
+  "trim": [
+   388,
+   102139
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 4.272738725119677,
+  "A": 27.664,
+  "B": 31.936
+ },
+ {
+  "i": 13,
+  "a": 31.0,
+  "b": 33.0,
+  "who": "T",
+  "dur": 2.03,
+  "slot": 2.0,
+  "txt": "And if it sits still, I can ask it why?",
+  "trim": [
+   0,
+   44800
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 1.8470418470418468,
+  "A": 32.185,
+  "B": 34.032
+ },
+ {
+  "i": 14,
+  "a": 34.6,
+  "b": 37.0,
+  "who": "M",
+  "dur": 3.61,
+  "slot": 2.4,
+  "txt": "Exactly. Don\u2019t just read the answer. Understand it, then decide.",
+  "trim": [
+   240,
+   78100
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 3.2695053329973964,
+  "A": 34.281,
+  "B": 37.55
+ },
+ {
+  "i": 15,
+  "a": 37.2,
+  "b": 38.8,
+  "who": "T",
+  "dur": 1.7,
+  "slot": 1.6,
+  "txt": "And I can steer it from Telegram, too?",
+  "trim": [
+   0,
+   37376
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 1.5409606266749123,
+  "A": 37.799,
+  "B": 39.34
+ },
+ {
+  "i": 16,
+  "a": 38.8,
+  "b": 40.4,
+  "who": "M",
+  "dur": 2.04,
+  "slot": 1.6,
+  "txt": "Yes. That\u2019s what I wanted you to see.",
+  "trim": [
+   587,
+   44659
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 1.850676072898295,
+  "A": 39.589,
+  "B": 41.439
+ },
+ {
+  "i": 17,
+  "a": 40.4,
+  "b": 42.0,
+  "who": "T",
+  "dur": 1.93,
+  "slot": 1.6,
+  "txt": "Now I see why you kept recommending this.",
+  "trim": [
+   0,
+   42496
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 1.7520511234796947,
+  "A": 41.688,
+  "B": 43.44
+ },
+ {
+  "i": 18,
+  "a": 44.6,
+  "b": 46.6,
+  "who": "T",
+  "dur": 2.26,
+  "slot": 2.0,
+  "txt": "A few minutes ago, I was completely lost.",
+  "trim": [
+   0,
+   49444
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 2.03850752422181,
+  "A": 45.927,
+  "B": 47.966
+ },
+ {
+  "i": 19,
+  "a": 46.6,
+  "b": 47.4,
+  "who": "M",
+  "dur": 0.58,
+  "slot": 0.8,
+  "txt": "And now?",
+  "trim": [
+   132,
+   12189
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 0.5062988158226254,
+  "A": 48.215,
+  "B": 48.721
+ },
+ {
+  "i": 20,
+  "a": 47.4,
+  "b": 51.2,
+  "who": "T",
+  "dur": 3.73,
+  "slot": 3.8,
+  "txt": "Now I know what I\u2019m looking at. I make the call \u2014 it just can\u2019t break my rules.",
+  "trim": [
+   0,
+   82176
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 3.3880024737167593,
+  "A": 48.97,
+  "B": 52.358
+ },
+ {
+  "i": 21,
+  "a": 53.0,
+  "b": 54.4,
+  "who": "M",
+  "dur": 1.34,
+  "slot": 1.4,
+  "txt": "So. Worth trying?",
+  "trim": [
+   278,
+   28320
+  ],
+  "sr": 22050,
+  "tempo": 1.08,
+  "tdur": 1.1775426219870664,
+  "A": 53.291,
+  "B": 54.468
+ },
+ {
+  "i": 22,
+  "a": 54.4,
+  "b": 56.2,
+  "who": "T",
+  "dur": 1.96,
+  "slot": 1.8,
+  "txt": "You should\u2019ve shown me this a long time ago.",
+  "trim": [
+   0,
+   43264
+  ],
+  "sr": 22050,
+  "tempo": 1.1,
+  "tdur": 1.7837146980004122,
+  "A": 54.717,
+  "B": 56.5
+ }
+]

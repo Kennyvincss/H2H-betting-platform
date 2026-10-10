@@ -140,27 +140,27 @@ function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return
 const M='#f0b44c', T='#b6e02a';
 const LINES=[
  [2.9,5.0,'MARCUS · ON THE PHONE',M,'“Tell me you’ve figured out what’s happening.”'],
- [5.0,8.3,'TRADER',T,'“Five screens. Three sources, all saying different things.<br>The market’s moving faster than I can keep up.”'],
+ [5.0,8.3,'TRADER',T,'“Five screens. Three sources, all saying different things.<br>It’s moving faster than I can keep up.”'],
  [8.3,9.7,'MARCUS',M,'“Then stop doing it the hard way.”'],
  [9.7,10.7,'TRADER',T,'“What other way is there?”'],
  [10.8,12.0,'MARCUS',M,'“…Merrymen.”'],
  [12.2,14.2,'TRADER',T,'“This is the one you keep telling me about?”'],
- [14.2,15.6,'MARCUS',M,'“Yes. Let me show you what it does.”'],
- [16.0,19.2,'MARCUS',M,'“You sign the limits. The agent proposes a trade.<br>The chain checks it against what you signed.”'],
+ [14.2,15.6,'MARCUS',M,'“Yes. Let me show you.”'],
+ [16.0,19.2,'MARCUS',M,'“You sign the limits. It proposes.<br>The chain enforces.”'],
  [19.3,20.8,'TRADER',T,'“Hold on. It trades for me — inside my rules?”'],
  [20.8,22.0,'MARCUS',M,'“That’s the idea. Put it to work.”'],
- [22.2,24.2,'TRADER',T,'“Alright. Let’s see what these agents are actually doing.”'],
+ [22.2,24.2,'TRADER',T,'“Alright. Let’s see what they’re actually doing.”'],
  [25.6,27.4,'TRADER',T,'“Four hundred fifty-eight refused?”'],
- [27.4,30.6,'MARCUS',M,'“Every trade outside the caps gets turned back —<br>and it’s shown as loudly as a win.”'],
- [31.0,33.0,'TRADER',T,'“And if it sits still, I can just ask it why?”'],
- [34.6,37.0,'MARCUS',M,'“Exactly. But don’t just read the answer.<br>Understand it, then decide what you do.”'],
+ [27.4,30.6,'MARCUS',M,'“Outside the caps, it’s refused —<br>shown as loudly as a win.”'],
+ [31.0,33.0,'TRADER',T,'“And if it sits still, I can ask it why?”'],
+ [34.6,37.0,'MARCUS',M,'“Exactly. Don’t just read the answer.<br>Understand it, then decide.”'],
  [37.2,38.8,'TRADER',T,'“And I can steer it from Telegram, too?”'],
  [38.8,40.4,'MARCUS',M,'“Yes. That’s what I wanted you to see.”'],
  [40.4,42.0,'TRADER',T,'“Now I see why you kept recommending this.”'],
  [44.6,46.6,'TRADER',T,'“A few minutes ago, I was completely lost.”'],
  [46.6,47.4,'MARCUS',M,'“And now?”'],
- [47.4,51.2,'TRADER',T,'“Now I know what I’m looking at. I still make the call —<br>it just can’t break the rules I signed.”'],
- [53.0,54.4,'MARCUS',M,'“So… was it worth trying?”'],
+ [47.4,51.2,'TRADER',T,'“Now I know what I’m looking at. I make the call —<br>it just can’t break my rules.”'],
+ [53.0,54.4,'MARCUS',M,'“So. Worth trying?”'],
  [54.4,56.2,'TRADER',T,'“You should’ve shown me this a long time ago.”'],
 ];
 
@@ -222,7 +222,7 @@ const wave=$('wave');for(let i=0;i<22;i++){const b=document.createElement('div')
 
 function speaking(t){for(const l of LINES) if(t>=l[0]&&t<l[1]) return l; return null;}
 
-window.render=function(t){
+window.renderOld=function(t){
   // reset layers
   for(const id of ['room','chaos','phone','whisper','desk2','prod','ask','crash','logo']) $(id).style.opacity=0;
   $('flash').style.opacity=0; $('fade').style.opacity=0; $('prod').style.background='#151d18'; $('desk2Cam').style.transformOrigin='50% 50%';
@@ -374,6 +374,9 @@ window.render=function(t){
   grain(t);
   $('grain').style.opacity=(t>=12&&t<42)||(t>=44.6&&t<53)?.08:.22;
 };
+const WARP=[[0, 0], [2.4, 2.9], [3.87, 5.0], [4.119, 5.0], [8.281, 8.3], [8.53, 8.3], [9.92, 9.7], [10.169, 9.7], [11.066, 10.7], [11.455, 10.8], [12.065, 12.0], [12.314, 12.2], [14.055, 14.2], [14.304, 14.2], [15.839, 15.6], [16.15, 16.0], [19.175, 19.2], [19.424, 19.3], [21.609, 20.8], [21.858, 20.8], [23.367, 22.0], [23.911, 22.2], [25.663, 24.2], [25.974, 25.6], [27.415, 27.4], [27.664, 27.4], [31.936, 30.6], [32.185, 31.0], [34.032, 33.0], [34.281, 34.6], [37.55, 37.0], [37.799, 37.2], [39.34, 38.8], [39.589, 38.8], [41.439, 40.4], [41.688, 40.4], [43.44, 42.0], [45.927, 44.6], [47.966, 46.6], [48.215, 46.6], [48.721, 47.4], [48.97, 47.4], [52.358, 51.2], [53.291, 53.0], [54.468, 54.4], [54.717, 54.4], [56.5, 56.2], [60, 60]];
+function warp(tn){for(let i=1;i<WARP.length;i++){const[a0,b0]=WARP[i-1],[a1,b1]=WARP[i];if(tn<=a1)return b0+(b1-b0)*(tn-a0)/Math.max(1e-6,a1-a0);}return 60;}
+window.render=function(tn){window.renderOld(warp(tn));};
 window.render(0);
 // preload
 ['home_hero','steps','band','commands','perm_row','cando_list','camp'].forEach(n=>{const i=new Image();i.src='assets/'+n+'.png'});
