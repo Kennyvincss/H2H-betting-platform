@@ -1,0 +1,197 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>ClipRally Outro</title>
+<style>
+  :root{--bg:#101011;--red:#f13549;--red2:#d8253b;--red3:#bb1b30;--cyan:#35c8e8;--text:#f5f3ee}
+  html,body{margin:0;background:transparent;overflow:hidden}
+  #stage{position:absolute;left:0;top:0;overflow:hidden;background:transparent}
+  canvas{position:absolute;left:0;top:0}
+  #dark{position:absolute;inset:0;background:var(--bg);opacity:0}
+  #lights{position:absolute;inset:0;opacity:0}
+  #center{position:absolute;left:50%;top:var(--cy);width:0;height:0}
+  #logoWrap{position:absolute;left:0;top:0;transform:translate(-50%,-50%)}
+  .wm{position:absolute;left:0;top:0;white-space:nowrap;font:800 var(--fs)/1 Inter,"Segoe UI",Arial,sans-serif;letter-spacing:-0.045em}
+  .wm .c{color:#fff}.wm .r{color:var(--red)}
+  #logoGlow{position:absolute;left:0;top:0;width:var(--glow);height:calc(var(--glow)*.55);transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(241,53,73,.55),rgba(187,27,48,.18) 45%,rgba(0,0,0,0) 70%);opacity:0;filter:blur(8px)}
+  .label{position:absolute;left:0;transform:translateX(-50%);white-space:nowrap;text-align:center;font:800 var(--ls)/1.18 Inter,"Segoe UI",Arial,sans-serif;letter-spacing:.1em;color:var(--text);text-shadow:0 2px 14px rgba(0,0,0,.6)}
+  .label b{color:var(--red);font-weight:800}
+  #clipped{top:var(--labelY);opacity:0}
+  #tag{top:var(--tagY);opacity:0;font-size:var(--ts);letter-spacing:.07em}
+  #tag span{display:block}
+  #rule{position:absolute;left:0;top:var(--ruleY);height:4px;width:var(--ruleW);transform:translateX(-50%) scaleX(0);background:linear-gradient(90deg,rgba(241,53,73,0),var(--red),rgba(241,53,73,0));border-radius:2px}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0;mix-blend-mode:screen}
+  #black{position:absolute;inset:0;background:#000;opacity:0}
+</style></head>
+<body>
+<div id="stage">
+  <img id="frame" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;display:none">
+  <canvas id="slices"></canvas>
+  <div id="dark"></div>
+  <div id="lights"></div>
+  <canvas id="fx"></canvas>
+  <div id="center">
+    <div id="logoGlow"></div>
+    <div id="logoWrap"></div>
+    <div id="rule"></div>
+    <div class="label" id="clipped">CLIPPED ON <b>CLIPRALLY</b></div>
+    <div class="label" id="tag"><span>YOUR NEXT VIRAL MOMENT</span><span>STARTS HERE.</span></div>
+  </div>
+  <div id="flash"></div>
+  <div id="black"></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search);
+const VERT=Q.get('v')==='1';
+const W=VERT?1080:1920, H=VERT?1920:1080;
+const FRAME=Q.get('frame');
+// Everything important lives inside the centre 9:16 column (608px wide on 16:9), so a vertical crop keeps it all.
+const S=VERT?{fs:210,ls:52,ts:50,cy:860,glow:950,labelY:160,tagY:160,ruleY:136,ruleW:560}
+            :{fs:128,ls:33,ts:31,cy:465,glow:680,labelY:100,tagY:100,ruleY:82,ruleW:360};
+const st=document.getElementById('stage'); st.style.width=W+'px'; st.style.height=H+'px';
+document.body.style.width=W+'px';document.body.style.height=H+'px';
+const R=document.documentElement.style;
+R.setProperty('--fs',S.fs+'px');R.setProperty('--ls',S.ls+'px');R.setProperty('--ts',S.ts+'px');R.setProperty('--cy',S.cy+'px');
+R.setProperty('--glow',S.glow+'px');R.setProperty('--labelY',S.labelY+'px');R.setProperty('--tagY',S.tagY+'px');R.setProperty('--ruleY',S.ruleY+'px');R.setProperty('--ruleW',S.ruleW+'px');
+const $=id=>document.getElementById(id);
+for(const c of ['fx','slices']){$(c).width=W;$(c).height=H;}
+$('lights').style.background=`radial-gradient(ellipse ${W*.55}px ${H*.42}px at 50% ${S.cy}px, rgba(241,53,73,.22), rgba(0,0,0,0) 70%),
+ radial-gradient(ellipse ${W*.9}px ${H*.25}px at 50% ${H+H*.05}px, rgba(53,200,232,.10), rgba(0,0,0,0) 70%),
+ linear-gradient(180deg, rgba(255,255,255,.025), rgba(0,0,0,0) 30%)`;
+let frameImg=null;
+if(FRAME){const f=$('frame');f.src=FRAME;f.style.display='block';frameImg=f;}
+
+// ---- official wordmark: "Clip" white + "Rally" brand red, Inter ExtraBold, -0.045em (as on cliprally.com) ----
+const WM='<span class="c">Clip</span><span class="r">Rally</span>';
+const probe=document.createElement('div');probe.className='wm';probe.innerHTML=WM;probe.style.visibility='hidden';$('logoWrap').appendChild(probe);
+let LW=0,LH=0;
+// fragments: horizontal bands x vertical cuts, each a clipped copy of the full wordmark
+const FR=[];
+function rng(s){return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+function buildFragments(){
+  const b=probe.getBoundingClientRect();LW=b.width;LH=b.height;
+  $('logoWrap').style.width=LW+'px';$('logoWrap').style.height=LH+'px';
+  const rows=4, cols=5, r=rng(42);
+  for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){
+    const d=document.createElement('div');d.className='wm';d.innerHTML=WM;
+    const t=i/rows*100,bm=100-(i+1)/rows*100,l=j/cols*100,rt=100-(j+1)/cols*100;
+    d.style.clipPath=`inset(${t-0.4}% ${rt-0.4}% ${bm-0.4}% ${l-0.4}%)`;
+    const ang=r()*Math.PI*2, dist=(VERT?520:420)*(.6+r()*.7);
+    FR.push({el:d,dx:Math.cos(ang)*dist,dy:Math.sin(ang)*dist*.7,rot:(r()-.5)*70,delay:r()*.16,sc:.5+r()*.9});
+    $('logoWrap').appendChild(d);
+  }
+  probe.remove();
+}
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const outExpo=x=>x>=1?1:1-Math.pow(2,-10*x);
+const outBack=x=>{const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const inCubic=x=>x*x*x;
+const lerp=(a,b,x)=>a+(b-a)*x;
+
+// ---- particles (deterministic) ----
+const P=[];{const r=rng(7);for(let i=0;i<170;i++){const a=r()*Math.PI*2,sp=(.35+r()*1.2)*(VERT?1300:1500);P.push({a,sp,sz:1.2+r()*3.6,life:.8+r()*.9,hue:r()<.62?'r':(r()<.55?'w':'c'),d:r()*.08})}}
+const P2=[];{const r=rng(99);for(let i=0;i<70;i++){const a=r()*Math.PI*2,sp=(.3+r()*.9)*700;P2.push({a,sp,sz:1+r()*2.6,life:.4+r()*.5,hue:r()<.7?'r':'w'})}}
+const SK=[];{const r=rng(3);for(let i=0;i<44;i++)SK.push({a:r()*Math.PI*2,len:.15+r()*.35,sp:.8+r()*1.4,w:1+r()*3,d:r()*.12,hue:r()<.5?'r':(r()<.5?'w':'c')})}
+const COL={r:[241,53,73],w:[255,245,240],c:[53,200,232]};
+function rgba(h,a){const c=COL[h];return `rgba(${c[0]},${c[1]},${c[2]},${a})`}
+
+function drawFX(t){
+  const c=$('fx').getContext('2d');c.clearRect(0,0,W,H);
+  const cx=W/2, cy=VERT?H/2:H/2, cy2=S.cy;
+  c.globalCompositeOperation='lighter';
+  // SCENE 1 shockwave rings
+  for(const [t0,col,wid] of [[0.02,'w',18],[0.09,'r',10],[0.16,'c',4]]){
+    const k=clamp((t-t0)/0.75); if(k<=0||k>=1)continue;
+    const rad=outExpo(k)*Math.hypot(W,H)*.62; const a=(1-k)*(col==='w'?.9:.75);
+    c.lineWidth=wid*(1-k*.6); c.strokeStyle=rgba(col,a); c.shadowColor=rgba(col,a); c.shadowBlur=30;
+    c.beginPath();c.arc(cx,cy,rad,0,Math.PI*2);c.stroke();
+  }
+  c.shadowBlur=0;
+  // light streaks
+  for(const s of SK){const k=clamp((t-.04-s.d)/.6); if(k<=0||k>=1)continue;
+    const r0=outExpo(k)*Math.hypot(W,H)*.55*s.sp, r1=r0-s.len*Math.hypot(W,H)*.5*(1-k*.5);
+    const g=c.createLinearGradient(cx+Math.cos(s.a)*r1,cy+Math.sin(s.a)*r1,cx+Math.cos(s.a)*r0,cy+Math.sin(s.a)*r0);
+    g.addColorStop(0,rgba(s.hue,0));g.addColorStop(1,rgba(s.hue,.85*(1-k)));
+    c.strokeStyle=g;c.lineWidth=s.w;c.beginPath();c.moveTo(cx+Math.cos(s.a)*Math.max(0,r1),cy+Math.sin(s.a)*Math.max(0,r1));c.lineTo(cx+Math.cos(s.a)*r0,cy+Math.sin(s.a)*r0);c.stroke();}
+  // particles
+  for(const p of P){const k=clamp((t-.03-p.d)/p.life);if(k<=0||k>=1)continue;
+    const d=outExpo(k)*p.sp*.55; const x=cx+Math.cos(p.a)*d, y=cy+Math.sin(p.a)*d+k*k*40;
+    c.fillStyle=rgba(p.hue,(1-k)*.95);c.beginPath();c.arc(x,y,p.sz*(1-k*.5),0,Math.PI*2);c.fill();}
+  // core flash bloom
+  const fk=clamp(t/.4); if(t>0&&fk<1){const g=c.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*.6*(.3+fk));g.addColorStop(0,`rgba(255,240,240,${.9*(1-fk)})`);g.addColorStop(.35,`rgba(241,53,73,${.45*(1-fk)})`);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);}
+  // SCENE 2 snap impact at logo
+  const ti=2.0;
+  { const k=clamp((t-ti)/.55); if(k>0&&k<1){
+      const rad=outExpo(k)*(VERT?620:520); c.lineWidth=6*(1-k); c.strokeStyle=rgba('r',.85*(1-k)); c.shadowColor=rgba('r',1); c.shadowBlur=24;
+      c.beginPath(); c.ellipse(cx,cy2,rad,rad*.42,0,0,Math.PI*2); c.stroke(); c.shadowBlur=0; }
+    for(const p of P2){const k2=clamp((t-ti)/p.life);if(k2<=0||k2>=1)continue;const d=outExpo(k2)*p.sp*.6;
+      c.fillStyle=rgba(p.hue,(1-k2)*.9);c.beginPath();c.arc(cx+Math.cos(p.a)*d*(VERT?.75:1.25),cy2+Math.sin(p.a)*d*.45,p.sz,0,Math.PI*2);c.fill();}
+  }
+  // ambient floating motes in scene 2/3 (subtle)
+  { const r=rng(1234); const a=clamp((t-1.6)/.6)*.5;
+    if(a>0) for(let i=0;i<40;i++){const x=r()*W, y0=r()*H, sp=20+r()*40, sz=.8+r()*1.6; const y=(y0 - t*sp + H)%H;
+      c.fillStyle=rgba(r()<.7?'r':'w',a*(.25+r()*.5));c.beginPath();c.arc(x,y,sz,0,Math.PI*2);c.fill();}
+  }
+  c.globalCompositeOperation='source-over';
+}
+
+// SCENE 1 digital distortion: displaced slices of the frozen frame (preview) or RGB-split bands (overlay)
+function drawSlices(t){
+  const c=$('slices').getContext('2d');c.clearRect(0,0,W,H);
+  const k=clamp((t-.03)/.6); if(k<=0||k>=1)return;
+  const r=rng(500+Math.floor(t*30)); const n=7;
+  for(let i=0;i<n;i++){
+    const y=r()*H, h=6+r()*(H*.05), off=(r()-.5)*120*(1-k);
+    if(frameImg&&frameImg.complete&&frameImg.naturalWidth){
+      const sy=y/H*frameImg.naturalHeight, sh=h/H*frameImg.naturalHeight;
+      c.globalAlpha=.9; c.drawImage(frameImg,0,sy,frameImg.naturalWidth,sh,off,y,W,h);
+      c.globalAlpha=.35; c.fillStyle=i%2?'#f13549':'#35c8e8'; c.fillRect(off*1.4,y,W,h*.35);
+    } else {
+      c.globalAlpha=.30*(1-k); c.fillStyle=i%2?'#f13549':'#35c8e8'; c.fillRect(0,y,W,h*.5);
+      c.globalAlpha=.14*(1-k); c.fillStyle='#ffffff'; c.fillRect(off,y+h*.5,W,1.5);
+    }
+  }
+  c.globalAlpha=1;
+}
+
+window.render=function(t){
+  // frozen frame punch-in (preview only); overlay users get the same punch from apply_outro.sh
+  if(frameImg){const z=1+.06*outExpo(clamp(t/.6)); frameImg.style.transform=`scale(${z})`; frameImg.style.filter=t<=0?'none':`brightness(${1+.35*Math.max(0,1-t/.3)-.35*clamp((t-.5)/.5)}) saturate(${1+.4*clamp(1-t/.9)})`;}
+  // dark environment takes over 0.95 → 1.55
+  const dk=clamp((t-.95)/.6); $('dark').style.opacity=dk; $('lights').style.opacity=dk;
+  // vignette darkening on the frozen frame before takeover
+  $('flash').style.opacity= t<=0?0: t<.035?.8*(t/.035): t<.14?.8*(1-(t-.035)/.105): (Math.abs(t-2.0)<.05? .1*(1-Math.abs(t-2.0)/.05):0);
+  drawSlices(t); drawFX(t);
+  // SCENE 2 logo assembly 1.5 → 2.0, snap at 2.0
+  const shake = t>=2.0&&t<2.12 ? (1-(t-2.0)/.12)*7 : 0;
+  const lw=$('logoWrap');
+  for(const f of FR){
+    const k=clamp((t-1.5-f.delay)/(0.5-f.delay)); const e=1-inCubic(1-k)*0+ (k<1? (1-Math.pow(1-k,3))-1 : 0); // easeOutCubic
+    const p=k>=1?1:1-Math.pow(1-k,3);
+    f.el.style.opacity=clamp(k*3);
+    f.el.style.transform=`translate(${f.dx*(1-p)}px,${f.dy*(1-p)}px) rotate(${f.rot*(1-p)}deg) scale(${lerp(f.sc,1,p)})`;
+    f.el.style.filter=k<1?`blur(${(1-p)*10}px)`:'none';
+  }
+  // after snap: tiny overshoot then settle; scene 3 gentle settle/breathe
+  let ls=1; if(t>=2.0){const k=clamp((t-2.0)/.35); ls=1+.08*Math.sin(k*Math.PI)*(1-k);}
+  if(t>=3.0){ls*=1+.015*Math.sin((t-3.0)/2*Math.PI);}
+  lw.style.transform=`translate(-50%,-50%) translate(${(Math.sin(t*170)*shake).toFixed(2)}px,${(Math.cos(t*190)*shake).toFixed(2)}px) scale(${ls})`;
+  // glow: punch at snap, then pulses in scene 3
+  let g=0; if(t>=1.9){g=clamp((t-1.9)/.15)*.9*Math.max(.45,1-(t-2.0)/.6);} if(t>=3.0){g=.45+.35*Math.pow(Math.sin((t-3.0)*Math.PI*1.1),2);}
+  $('logoGlow').style.opacity=g; $('logoGlow').style.transform=`translate(-50%,-50%) scale(${1+.08*g})`;
+  // "CLIPPED ON CLIPRALLY": 2.12 → 2.95 (wipe in), out by 3.15
+  const ci=clamp((t-2.12)/.28), co=clamp((t-2.92)/.22);
+  const cl=$('clipped'); cl.style.opacity=ci*(1-co);
+  cl.style.clipPath=`inset(0 ${(1-outExpo(ci))*50}% 0 ${(1-outExpo(ci))*50}%)`;
+  cl.style.transform=`translateX(-50%) translateY(${-co*18}px)`;
+  cl.style.letterSpacing=lerp(.24,.1,outExpo(ci))+'em';
+  // red rule
+  const rk=clamp((t-2.05)/.35); $('rule').style.transform=`translateX(-50%) scaleX(${outExpo(rk)})`; $('rule').style.opacity=1-clamp((t-4.7)/.3)*0;
+  // tagline: 3.12 → 3.6, line by line
+  const tg=$('tag'); tg.style.opacity=1; const sp=tg.children;
+  for(let i=0;i<2;i++){const k=clamp((t-3.12-i*.14)/.36); sp[i].style.opacity=k; sp[i].style.transform=`translateY(${(1-outExpo(k))*22}px)`; sp[i].style.filter=`blur(${(1-k)*6}px)`;}
+  // hard cut to black on the last frame (t ≥ 5.0 - 1 frame handled by encoder length)
+  $('black').style.opacity=t>=5.0?1:0;
+};
+document.fonts.ready.then(()=>{buildFragments();window.READY=true;window.render(0);});
+</script>
+</body></html>
