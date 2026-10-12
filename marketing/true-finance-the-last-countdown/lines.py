@@ -1,0 +1,22 @@
+# Script lines: (scene, speaker, text). Speakers: M=Marcus, E=Elena, C=Colleague (phone), N=Narrator.
+LINES=[
+ (1,'M',"What do you mean October fifteenth? What's happening on October fifteenth?"),
+ (1,'E',"You haven't heard? TRUE Finance is approaching its biggest moment yet."),
+ (1,'M',"Then tell me everything."),
+ (2,'E',"TRUE Finance is building a different approach to trading. AI-powered tools and market access, in one ecosystem."),
+ (2,'M',"So this isn't just another token announcement?"),
+ (2,'E',"There's more to the platform than the launch. But October fifteenth is the date everyone's watching."),
+ (3,'M',"Look into TRUE Finance. Everything. The platform, the launch, all of it."),
+ (3,'C',"You're late to the story, Marcus."),
+ (3,'M',"What does that mean?"),
+ (3,'C',"It means October fifteenth is closer than you think."),
+ (4,'M',"I've seen the platform. I've read the announcements. Why does this launch matter so much?"),
+ (4,'E',"Because launches mark beginnings, Marcus. They don't tell you the whole story."),
+ (4,'E',"If you want to know where things are going, understand what they're building."),
+ (4,'M',"Then I want to see it for myself."),
+ (5,'M',"October fifteenth. That's when everything begins?"),
+ (5,'E',"That's when the TRUE T G E arrives."),
+ (5,'M',"Then people should probably pay attention."),
+ (5,'E',"Now you're starting to understand."),
+ (6,'N',"October fifteenth. The next chapter begins."),
+]
