@@ -1,0 +1,145 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>ClipRally Outro</title>
+<style>
+  :root{--red:#f13549;--text:#f5f3ee}
+  html,body{margin:0;background:#000;overflow:hidden}
+  #stage{position:absolute;left:0;top:0;overflow:hidden;background:#000}
+  canvas{position:absolute;left:0;top:0}
+  /* official logo: the supplied circular mascot badge, never stretched or redrawn */
+  #logo{position:absolute;left:50%;top:50%;width:var(--ld);height:var(--ld);border-radius:50%;overflow:hidden;opacity:0;
+        background:#000 url("cliprally_logo.jpg") center/100% 100% no-repeat}
+  #logoSweep{position:absolute;inset:0;border-radius:50%;background:linear-gradient(105deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 60%);
+        background-size:300% 100%;mix-blend-mode:screen;opacity:0}
+  #logoRim{position:absolute;left:50%;top:50%;width:var(--ld);height:var(--ld);border-radius:50%;opacity:0;
+        box-shadow:0 0 0 3px rgba(241,53,73,.9),0 0 60px 6px rgba(241,53,73,.55),0 0 160px 20px rgba(187,27,48,.35)}
+  #label{position:absolute;left:50%;white-space:nowrap;transform:translateX(-50%);font:800 var(--ls)/1 Inter,"Segoe UI",Arial,sans-serif;letter-spacing:.1em;color:var(--text);text-shadow:0 2px 16px rgba(0,0,0,.7)}
+  #label b{color:var(--red);font-weight:800}
+  #label i{font-style:normal;display:inline-block;opacity:0}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head>
+<body>
+<div id="stage">
+  <canvas id="under"></canvas>
+  <canvas id="over"></canvas>
+  <div id="logoRim"></div>
+  <div id="logo"><div id="logoSweep"></div></div>
+  <div id="label"></div>
+  <div id="flash"></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search);
+const VERT=Q.get('v')==='1';
+const W=VERT?1080:1920, H=VERT?1920:1080;
+// logo + text sit inside the centre 9:16 column on 16:9 (x 656–1264)
+const S=VERT?{ld:600,ly:-110,ls:50,gap:70}:{ld:400,ly:-50,ls:33,gap:48};
+const T0=1.62;            // the logo punch
+const $=id=>document.getElementById(id);
+const st=$('stage');st.style.width=W+'px';st.style.height=H+'px';document.body.style.width=W+'px';document.body.style.height=H+'px';
+const RS=document.documentElement.style;RS.setProperty('--ld',S.ld+'px');RS.setProperty('--ls',S.ls+'px');
+for(const c of ['under','over']){$(c).width=W;$(c).height=H;}
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), lerp=(a,b,x)=>a+(b-a)*x;
+const ss=(a,b,x)=>{const k=clamp((x-a)/(b-a));return k*k*(3-2*k)};
+const outCubic=x=>1-Math.pow(1-x,3), outExpo=x=>x>=1?1:1-Math.pow(2,-10*x), inCubic=x=>x*x*x, inOutCubic=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const outBack=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+function rng(s){s=s>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const CX=W/2, CY=H/2+S.ly;
+
+// label
+const lab=$('label');
+lab.innerHTML=[...'CLIPPED ON '].map(c=>`<i>${c===' '?'&nbsp;':c}</i>`).join('')+`<b>${[...'CLIPRALLY'].map(c=>`<i>${c}</i>`).join('')}</b>`;
+lab.style.top=(CY+S.ld/2+S.gap)+'px';
+
+// energy vortex: particles on inward logarithmic spirals
+const VP=[];{const r=rng(5);for(let i=0;i<260;i++)VP.push({a0:r()*Math.PI*2,r0:.35+r()*.75,sp:.7+r()*.8,sz:.8+r()*2.6,hue:r()<.72?'r':(r()<.6?'w':'o'),born:.18+r()*.7})}
+// red crystal shards from the logo impact (echo the badge art)
+const CRY=[];{const r=rng(31);for(let i=0;i<54;i++)CRY.push({a:r()*Math.PI*2,sp:500+r()*1200,sz:6+r()*24,rot:r()*6,vr:(r()-.5)*14,life:.5+r()*.7})}
+// network nodes for the ripple
+const NODES=[];{const r=rng(77);for(let i=0;i<70;i++){let x,y;do{x=r()*W;y=r()*H}while(Math.abs(x-W/2)<(VERT?380:400)&&Math.abs(y-(CY+40))<(VERT?460:300));NODES.push({x,y,s:1.5+r()*2.5})}}
+const LINKS=NODES.map((n,i)=>{let best=0,bd=1e9;NODES.forEach((m,j)=>{if(i===j)return;const d=Math.hypot(n.x-m.x,n.y-m.y);if(d<bd){bd=d;best=j}});return[i,best]});
+const COL={r:'241,53,73',w:'255,240,240',o:'255,140,90'};
+
+window.render=function(t){
+  const U=$('under').getContext('2d'), O=$('over').getContext('2d');
+  U.fillStyle='#000';U.fillRect(0,0,W,H);O.clearRect(0,0,W,H);
+  let sx=0,sy=0;
+  if(t>T0&&t<T0+.22){const k=1-(t-T0)/.22;sx=Math.sin(t*210)*12*k;sy=Math.cos(t*230)*9*k}
+  const RMAX=Math.hypot(W,H)*.6;
+
+  // ===== 0.00–1.62: from black, a red energy vortex builds and is sucked into the centre =====
+  if(t<T0+.15){
+    const build=ss(.12,1.3,t), suck=clamp((t-(T0-.26))/.26), suckE=inCubic(suck), gone=1-ss(T0,T0+.12,t);
+    // ember → core glow
+    const core=ss(.05,.5,t)*(.35+.65*build)+1.4*suckE;
+    const g=U.createRadialGradient(CX,CY,0,CX,CY,RMAX*(.25+.35*build)*(1-.5*suckE));
+    g.addColorStop(0,`rgba(255,235,238,${Math.min(1,.25*core)*gone})`);g.addColorStop(.18,`rgba(241,53,73,${Math.min(.8,.35*core)*gone})`);g.addColorStop(1,'rgba(0,0,0,0)');
+    U.fillStyle=g;U.fillRect(0,0,W,H);
+    // spiral arms of light
+    const spin=1.2*t+4.2*Math.pow(clamp(t/T0),3);
+    O.save();O.globalCompositeOperation='lighter';O.lineCap='round';
+    for(let arm=0;arm<5;arm++){
+      const a0=arm/5*Math.PI*2+spin;O.beginPath();
+      for(let k=0;k<=60;k++){const u=k/60;const r=RMAX*(1-u)*(.95-.55*suckE);const a=a0+u*3.6;const x=CX+Math.cos(a)*r, y=CY+Math.sin(a)*r*(VERT?1:.78);k?O.lineTo(x,y):O.moveTo(x,y);}
+      O.strokeStyle=`rgba(241,53,73,${.22*build*gone})`;O.lineWidth=2+6*build;O.shadowColor='rgba(241,53,73,1)';O.shadowBlur=18;O.stroke();
+    }
+    O.shadowBlur=0;
+    // particles spiralling inward, accelerating
+    for(const p of VP){ if(t<p.born) continue;
+      const age=t-p.born; const u=clamp(age*p.sp*.75+suckE);         // 0 outside → 1 at centre
+      const r=RMAX*p.r0*Math.pow(1-u,1.4); if(r<4) continue;
+      const a=p.a0+age*(2+6*u)+spin*.6, x=CX+Math.cos(a)*r, y=CY+Math.sin(a)*r*(VERT?1:.78);
+      const tr=.18+.5*u, a2=a-tr, r2=r*(1+.25*tr), x2=CX+Math.cos(a2)*r2, y2=CY+Math.sin(a2)*r2*(VERT?1:.78);
+      const al=clamp(age/.2)*(.35+.65*u)*gone;
+      O.strokeStyle=`rgba(${COL[p.hue]},${al})`;O.lineWidth=p.sz;O.beginPath();O.moveTo(x2,y2);O.lineTo(x,y);O.stroke();
+    }
+    // speed lines rushing inward as it peaks
+    const sp=ss(.7,T0,t)*gone; if(sp>0){const r=rng(Math.floor(t*60)*31+7);const n=Math.floor(30+80*sp);
+      for(let i=0;i<n;i++){const a=r()*Math.PI*2,r0=90+r()*RMAX,len=(60+r()*340)*sp;const al=(.12+.45*r())*sp;
+        O.strokeStyle=r()<.6?`rgba(255,255,255,${al})`:`rgba(241,53,73,${al})`;O.lineWidth=1+r()*2;
+        O.beginPath();O.moveTo(CX+Math.cos(a)*r0,CY+Math.sin(a)*r0);O.lineTo(CX+Math.cos(a)*(r0+len),CY+Math.sin(a)*(r0+len));O.stroke();}}
+    O.restore();
+  }
+
+  // ===== 1.62: the mascot punches out =====
+  $('flash').style.opacity= t>=T0-.02&&t<T0+.12 ? (t<T0+.02? .14*(t-(T0-.02))/.04 : .14*(1-(t-(T0+.02))/.10)) : 0;
+  const logo=$('logo'), rim=$('logoRim');
+  let ls=0,lrot=0,lop=0,lblur=0;
+  if(t>=T0-.10){
+    const k=clamp((t-(T0-.10))/.42);
+    ls=k<.24? lerp(.05,1.18,inCubic(k/.24)) : lerp(1.18,1,outBack(clamp((k-.24)/.76)));
+    lrot=lerp(-18,0,outExpo(clamp(k*1.6))); lop=clamp(k*6); lblur=k<.24?(1-k/.24)*10:0;
+  }
+  if(t>=4.48){const k=clamp((t-4.48)/.32);ls*=1+.07*Math.sin(Math.PI*k)*(1-k*.3);}
+  else if(t>T0+.6){ls*=1+.01*Math.sin((t-T0-.6)*Math.PI*1.2);}
+  logo.style.opacity=lop; rim.style.opacity=lop*(t>T0+.1?(.55+.25*Math.pow(Math.sin((t-T0)*2.4),2)):0);
+  for(const el of [logo,rim]) el.style.transform=`translate(-50%,-50%) translate(${sx}px,${sy+S.ly}px) rotate(${lrot}deg) scale(${ls})`;
+  logo.style.filter=lblur>.2?`blur(${lblur.toFixed(1)}px)`:'none';
+  const sw=clamp((t-(T0+.4))/.42);$('logoSweep').style.opacity=sw>0&&sw<1?1:0;$('logoSweep').style.backgroundPosition=`${lerp(110,-10,inOutCubic(sw))}% 0`;
+  if(t>=T0){
+    const gk=clamp((t-T0)/.2)*(t>T0+.6?.75+.25*Math.pow(Math.sin((t-T0)*Math.PI),2):1);
+    const g=U.createRadialGradient(CX,CY,S.ld*.3,CX,CY,S.ld*1.3);g.addColorStop(0,`rgba(241,53,73,${.5*gk})`);g.addColorStop(1,'rgba(0,0,0,0)');U.fillStyle=g;U.fillRect(0,0,W,H);
+    const k=clamp((t-T0)/.6);
+    if(k<1){O.strokeStyle=`rgba(255,255,255,${.85*(1-k)})`;O.lineWidth=5*(1-k)+1;O.shadowColor='rgba(241,53,73,1)';O.shadowBlur=22;
+      O.beginPath();O.arc(CX+sx,CY+sy,S.ld*.5+outExpo(k)*Math.max(W,H)*.5,0,Math.PI*2);O.stroke();O.shadowBlur=0;}
+    for(const c of CRY){const q=clamp((t-T0)/c.life);if(q<=0||q>=1)continue;const d=S.ld*.45+outExpo(q)*c.sp*.6;
+      O.save();O.translate(CX+Math.cos(c.a)*d,CY+Math.sin(c.a)*d);O.rotate(c.rot+c.vr*q);O.globalAlpha=1-q;
+      O.fillStyle=q<.15?'#ffd3d8':'#f13549';O.shadowColor='#f13549';O.shadowBlur=16;O.beginPath();O.moveTo(0,-c.sz);O.lineTo(c.sz*.45,c.sz*.3);O.lineTo(-c.sz*.35,c.sz*.5);O.closePath();O.fill();O.restore();}
+  }
+  if(t>=4.5){const k=clamp((t-4.5)/.45);O.strokeStyle=`rgba(241,53,73,${.8*(1-k)})`;O.lineWidth=4*(1-k)+1;O.beginPath();O.arc(CX,CY,S.ld*.52+outExpo(k)*S.ld*.9,0,Math.PI*2);O.stroke();}
+
+  // ===== label + ripple across the network =====
+  lab.querySelectorAll('i').forEach((ch,i)=>{const k=clamp((t-(T0+.5)-i*.018)/.22),e=outCubic(k);ch.style.opacity=k;ch.style.transform=`translateY(${(1-e)*26}px)`;ch.style.filter=k<1?`blur(${(1-e)*5}px)`:'none'});
+  if(t>=T0+.7){
+    const rings=[T0+.75,T0+1.35,T0+1.95].map(t0=>clamp((t-t0)/1.1)), fadeIn=ss(T0+.7,T0+1.05,t), RM=Math.hypot(W,H)*.62;
+    for(const k of rings){if(k<=0||k>=1)continue;const r=S.ld*.5+outCubic(k)*RM;O.strokeStyle=`rgba(241,53,73,${.4*(1-k)})`;O.lineWidth=2;O.beginPath();O.arc(CX,CY,r,0,Math.PI*2);O.stroke();}
+    for(const [a,b] of LINKS){const A=NODES[a],B=NODES[b];O.strokeStyle=`rgba(255,255,255,${.06*fadeIn})`;O.lineWidth=1;O.beginPath();O.moveTo(A.x,A.y);O.lineTo(B.x,B.y);O.stroke();}
+    for(const n of NODES){const dn=Math.hypot(n.x-CX,n.y-CY);let hit=0;
+      for(const k of rings){if(k<=0)continue;const r=S.ld*.5+outCubic(k)*RM;hit=Math.max(hit,Math.exp(-Math.abs(r-dn)/40)*(1-k*.5))}
+      O.fillStyle=`rgba(255,255,255,${(.14+.3*hit)*fadeIn})`;O.beginPath();O.arc(n.x,n.y,n.s,0,Math.PI*2);O.fill();
+      if(hit>.05){O.fillStyle=`rgba(241,53,73,${hit*.9})`;O.shadowColor='rgba(241,53,73,1)';O.shadowBlur=14;O.beginPath();O.arc(n.x,n.y,n.s+2.5*hit,0,Math.PI*2);O.fill();O.shadowBlur=0;}}
+    // gentle drifting embers around the logo
+    const r=rng(1234);for(let i=0;i<36;i++){const x=r()*W,y0=r()*H,sp=15+r()*35,y=(y0-(t-T0)*sp+H)%H;O.fillStyle=`rgba(241,53,73,${(.15+.35*r())*fadeIn})`;O.beginPath();O.arc(x,y,.8+r()*1.6,0,Math.PI*2);O.fill();}
+  }
+};
+document.fonts.ready.then(()=>{const i=new Image();i.onload=i.onerror=()=>{window.render(0);window.READY=true};i.src='cliprally_logo.jpg';});
+</script>
+</body></html>

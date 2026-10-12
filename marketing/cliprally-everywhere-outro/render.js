@@ -6,7 +6,7 @@ const [,,out,fps,vert,frame,times]=process.argv;
   const W=vert==='1'?1080:1920,H=vert==='1'?1920:1080;
   const pg=await b.newPage({viewport:{width:W,height:H}});
   let q='?v='+vert; if(frame&&frame!=='-') q+='&frame='+encodeURIComponent('file://'+require('path').resolve(frame));
-  await pg.goto('file://'+__dirname+'/outro3.html'+q); await pg.waitForFunction(()=>window.READY,null,{timeout:30000});
+  await pg.goto('file://'+__dirname+'/outro4.html'+q); await pg.waitForFunction(()=>window.READY,null,{timeout:30000});
   const list=times?times.split(',').map(Number):Array.from({length:5*+fps},(_,i)=>i/+fps);
   for(const t of list){
     await pg.evaluate(t=>window.render(t),t);
