@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+:root{--lime:#c1fa04;--cream:#f3f0e8;--ink:#0b0b0c}
+html,body{margin:0;width:1600px;height:900px;overflow:hidden;font-family:Inter,"DejaVu Sans",sans-serif}
+body.dark{--bg:var(--ink);--fg:var(--cream);--mute:rgba(243,240,232,.45);--line:rgba(243,240,232,.08);--dot:rgba(243,240,232,.07)}
+body.light{--bg:var(--cream);--fg:var(--ink);--mute:rgba(11,11,12,.5);--line:rgba(11,11,12,.09);--dot:rgba(11,11,12,.08)}
+#c{position:absolute;inset:0;background:var(--bg);overflow:hidden}
+#dots{position:absolute;inset:0;background-image:radial-gradient(var(--dot) 1.6px,transparent 1.6px);background-size:36px 36px;
+  -webkit-mask-image:radial-gradient(ellipse at 75% 45%,#000 0%,rgba(0,0,0,.35) 55%,transparent 85%)}
+#glow{position:absolute;right:-260px;top:-240px;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(193,250,4,.20),rgba(193,250,4,0) 65%)}
+body.light #glow{background:radial-gradient(circle,rgba(193,250,4,.45),rgba(193,250,4,0) 65%)}
+#frame{position:absolute;inset:36px;border:1.5px solid var(--line);border-radius:28px}
+#head{position:absolute;left:84px;top:78px;display:flex;align-items:center;gap:16px;color:var(--fg);font:800 30px/1 Inter;letter-spacing:-.01em}
+#head img{width:54px;height:54px;border-radius:12px}
+body.light #head img{box-shadow:0 0 0 1.5px rgba(11,11,12,.12)}
+#tag{position:absolute;right:84px;top:90px;color:var(--mute);font:600 18px/1 "DejaVu Sans Mono",monospace;letter-spacing:.22em}
+#bar{position:absolute;left:84px;top:178px;width:120px;height:8px;border-radius:4px;background:var(--lime)}
+#foot{position:absolute;left:84px;right:84px;bottom:76px;display:flex;justify-content:space-between;align-items:center;color:var(--fg);font:700 22px/1 "DejaVu Sans Mono",monospace;letter-spacing:.04em}
+#foot .l b{color:var(--ink);background:var(--lime);padding:6px 10px;border-radius:8px;margin-right:12px}
+#foot .r{color:var(--mute);font-weight:600}
+#rule{position:absolute;left:84px;right:84px;bottom:124px;height:1.5px;background:var(--line)}
+
+#t{position:absolute;left:84px;right:84px;top:340px;color:var(--fg);font:900 118px/1.04 Inter;letter-spacing:-.035em}
+#t em{font-style:normal;background:linear-gradient(transparent 60%,var(--lime) 60%,var(--lime) 90%,transparent 90%)}
+</style></head><body class="light"><div id="c">
+<div id="glow"></div><div id="dots"></div><div id="frame"></div>
+<div id="head"><img src="hey_icon.png">HEY Research Lab</div>
+<div id="tag">ROBINHOOD CHAIN · BUILDER RESEARCH</div>
+<div id="bar"></div>
+<div id="t">Tokens aren’t scarce.<br><em>Evidence is.</em></div>
+<div id="rule"></div>
+<div id="foot"><div class="l"><b>$HEY</b>heyresearch.xyz</div><div class="r">@HeyResearch</div></div>
+</div></body></html>
