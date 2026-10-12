@@ -1,0 +1,155 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>ClipRally Outro — Knockout</title>
+<style>
+  :root{--red:#f13549;--ink:#0b0b0c;--paper:#fff3e2;--gold:#ffd23f}
+  html,body{margin:0;background:#000;overflow:hidden}
+  #stage{position:absolute;left:0;top:0;overflow:hidden;background:#000}
+  canvas{position:absolute;left:0;top:0}
+  #logo{position:absolute;left:50%;top:50%;width:var(--ld);height:var(--ld);border-radius:50%;overflow:hidden;opacity:0;
+        background:#000 url("cliprally_logo.jpg") center/100% 100% no-repeat}
+  #cap{position:absolute;left:50%;white-space:nowrap;opacity:0;transform-origin:50% 50%}
+  #cap .box{display:inline-block;font:900 var(--ls)/1 Inter,"Segoe UI",Arial,sans-serif;letter-spacing:.06em;color:#fff;background:var(--red);
+            padding:.42em .7em .38em;border:calc(var(--ls)*.14) solid var(--ink);box-shadow:calc(var(--ls)*.28) calc(var(--ls)*.28) 0 var(--ink)}
+  #cap b{color:var(--ink);font-weight:900}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head>
+<body>
+<div id="stage">
+  <canvas id="under"></canvas>
+  <canvas id="mid"></canvas>
+  <div id="logo"></div>
+  <canvas id="over"></canvas>
+  <div id="cap"><div class="box">CLIPPED ON <b>CLIPRALLY</b></div></div>
+  <div id="flash"></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search);
+const VERT=Q.get('v')==='1';
+const W=VERT?1080:1920, H=VERT?1920:1080;
+const S=VERT?{ld:600,ly:-130,ls:54,gap:96}:{ld:400,ly:-60,ls:36,gap:66};
+const TP=1.36;   // the punch through the page
+const $=id=>document.getElementById(id);
+const st=$('stage');st.style.width=W+'px';st.style.height=H+'px';document.body.style.width=W+'px';document.body.style.height=H+'px';
+const RS=document.documentElement.style;RS.setProperty('--ld',S.ld+'px');RS.setProperty('--ls',S.ls+'px');
+for(const c of ['under','mid','over']){$(c).width=W;$(c).height=H;}
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), lerp=(a,b,x)=>a+(b-a)*x;
+const ss=(a,b,x)=>{const k=clamp((x-a)/(b-a));return k*k*(3-2*k)};
+const outCubic=x=>1-Math.pow(1-x,3), outExpo=x=>x>=1?1:1-Math.pow(2,-10*x), inCubic=x=>x*x*x;
+const outBack=x=>{const c=2.2;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+function rng(s){s=s>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const CX=W/2, CY=H/2+S.ly, DIAG=Math.hypot(W,H);
+$('cap').style.top=(CY+S.ld/2+S.gap)+'px';
+
+function halftone(C,col,cell,maxR,cx,cy,falloff,alpha,ang){ // comic halftone dots, larger towards (cx,cy)
+  C.save();C.fillStyle=col;C.globalAlpha=alpha;C.translate(W/2,H/2);C.rotate(ang);C.translate(-W/2,-H/2);
+  for(let y=-cell*4;y<H+cell*4;y+=cell)for(let x=-cell*4;x<W+cell*4;x+=cell){
+    const d=Math.hypot(x-cx,y-cy)/falloff; const r=maxR*clamp(1-d); if(r<.6)continue;
+    C.beginPath();C.arc(x+((y/cell)%2?cell/2:0),y,r,0,Math.PI*2);C.fill();}
+  C.restore();
+}
+function actionLines(C,cx,cy,n,inner,col,alpha,rot,seed){ // radial manga speed lines
+  const r=rng(seed);C.save();C.fillStyle=col;C.globalAlpha=alpha;
+  for(let i=0;i<n;i++){const a=rot+i/n*Math.PI*2+r()*.05, w=.006+r()*.018, r0=inner*(.85+r()*.5);
+    C.beginPath();C.moveTo(cx+Math.cos(a)*r0,cy+Math.sin(a)*r0);C.lineTo(cx+Math.cos(a-w)*DIAG,cy+Math.sin(a-w)*DIAG);C.lineTo(cx+Math.cos(a+w)*DIAG,cy+Math.sin(a+w)*DIAG);C.closePath();C.fill();}
+  C.restore();
+}
+function starburst(C,cx,cy,rIn,rOut,n,fill,stroke,lw,rot,seed){
+  const r=rng(seed);C.beginPath();
+  for(let i=0;i<n*2;i++){const a=rot+i/(n*2)*Math.PI*2, rr=i%2? rIn*(.9+r()*.15) : rOut*(.8+r()*.35);const x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;i?C.lineTo(x,y):C.moveTo(x,y);}
+  C.closePath();C.fillStyle=fill;C.fill();if(stroke){C.lineWidth=lw;C.strokeStyle=stroke;C.lineJoin='miter';C.stroke();}
+}
+// manga panels: three slanted strips that slam in on the beats
+const PANELS=[{t:.30,c:'#f13549'},{t:.55,c:'#0b0b0c'},{t:.80,c:'#f13549'}];
+const PAPERBITS=[];{const r=rng(9);for(let i=0;i<40;i++)PAPERBITS.push({a:r()*Math.PI*2,sp:500+r()*1100,sz:14+r()*38,rot:r()*6,vr:(r()-.5)*12,life:.6+r()*.6})}
+
+window.render=function(t){
+  const U=$('under').getContext('2d'), M=$('mid').getContext('2d'), O=$('over').getContext('2d');
+  U.fillStyle='#000';U.fillRect(0,0,W,H);M.clearRect(0,0,W,H);O.clearRect(0,0,W,H);
+  let shx=0,shy=0;
+  const shake=(t0,d,a)=>{if(t>=t0&&t<t0+d){const k=1-(t-t0)/d;shx+=Math.sin(t*190)*a*k;shy+=Math.cos(t*210)*a*.8*k}};
+  shake(.30,.12,8);shake(.55,.12,9);shake(.80,.12,10);shake(TP,.25,16);shake(4.48,.2,10);
+
+  // ===== 0.00–0.30: black, a red halftone glow + action lines charge up =====
+  if(t<TP+.05){
+    const ch=ss(.04,.3,t);
+    halftone(U,'#f13549',VERT?26:24,(VERT?11:10)*ch,CX,CY,DIAG*.45*(.4+.6*ch),.85,.3);
+    actionLines(U,CX,CY,90,lerp(DIAG*.5,DIAG*.22,ch),'#fff3e2',.12+.3*ch,t*.4,3);
+  }
+  // ===== 0.30–1.10: three manga panels slam in on the beats =====
+  if(t>=.3&&t<TP){
+    const n=PANELS.length;
+    PANELS.forEach((p,i)=>{
+      const k=outExpo(clamp((t-p.t)/.12)); if(k<=0)return;
+      // slanted strip i of n
+      const x0=i/n*W, x1=(i+1)/n*W, sl=VERT?H*.18:W*.08;
+      const off=(1-k)*(i%2?-H:H);
+      M.save();M.translate(shx,shy+off);M.beginPath();M.moveTo(x0+sl,0);M.lineTo(x1+sl,0);M.lineTo(x1-sl,H);M.lineTo(x0-sl,H);M.closePath();
+      M.fillStyle=p.c;M.fill();M.clip();
+      const pcx=(x0+x1)/2, pcy=H/2;
+      actionLines(M,pcx,pcy,70,VERT?120:90,p.c==='#0b0b0c'?'#f13549':'#0b0b0c',.55,i*.7+t*.3,11+i);
+      halftone(M,p.c==='#0b0b0c'?'#f13549':'#fff3e2',VERT?20:18,7,pcx,pcy,DIAG*.35,.5,.3);
+      starburst(M,pcx,pcy,VERT?70:60,VERT?150:130,12,p.c==='#0b0b0c'?'#f13549':'#fff3e2','#0b0b0c',8,t,20+i);
+      M.restore();
+      M.save();M.translate(shx,shy+off);M.strokeStyle='#0b0b0c';M.lineWidth=14;M.beginPath();M.moveTo(x0+sl,0);M.lineTo(x0-sl,H);M.moveTo(x1+sl,0);M.lineTo(x1-sl,H);M.stroke();M.restore();
+    });
+    // 1.05–TP: a paper page slides over everything, ready to be punched
+    const pg=outExpo(clamp((t-1.05)/.14));
+    if(pg>0){M.save();M.translate(0,(1-pg)*-H);M.fillStyle='#fff3e2';M.fillRect(0,0,W,H);
+      halftone(M,'rgba(241,53,73,.18)',VERT?22:20,5,CX,CY,DIAG*.6,1,.3);
+      // bulge as the fist presses into the page
+      const b=ss(1.18,TP,t);if(b>0){const g=M.createRadialGradient(CX,CY,0,CX,CY,S.ld*.9);g.addColorStop(0,`rgba(11,11,12,${.35*b})`);g.addColorStop(1,'rgba(11,11,12,0)');M.fillStyle=g;M.fillRect(0,0,W,H);
+        actionLines(M,CX,CY,60,S.ld*.55,'#0b0b0c',.35*b,0,41);}
+      M.restore();}
+  }
+  // ===== TP: the mascot punches through the page =====
+  if(t>=TP){
+    // torn page with a jagged hole that blasts open
+    const hk=outExpo(clamp((t-TP)/.35)), pageGone=ss(TP+.25,TP+.55,t);
+    // pop-art background behind
+    U.fillStyle='#f13549';U.fillRect(0,0,W,H);
+    halftone(U,'#bb1b30',VERT?26:24,VERT?12:11,CX,CY,DIAG*.55,1,.3);
+    actionLines(U,CX,CY,72,S.ld*.62,'#0b0b0c',.28,(t-TP)*.12,5);
+    // starburst behind the logo
+    const sb=outBack(clamp((t-TP)/.3));
+    let pulse=1; if(t>=4.48){const q=clamp((t-4.48)/.3);pulse=1+.12*Math.sin(Math.PI*q);}
+    starburst(U,CX+shx,CY+shy,S.ld*.62*sb*pulse,S.ld*.95*sb*pulse,16,'#ffd23f','#0b0b0c',VERT?14:10,.2,77);
+    starburst(U,CX+shx,CY+shy,S.ld*.56*sb*pulse,S.ld*.76*sb*pulse,16,'#fff3e2',null,0,.33,78);
+    if(pageGone<1){
+      M.save();M.globalAlpha=1-pageGone;M.fillStyle='#fff3e2';M.beginPath();M.rect(0,0,W,H);
+      M.beginPath();M.rect(0,0,W,H);
+      const r=rng(55);const n=22,R=lerp(S.ld*.2,DIAG*.75,hk);
+      for(let i=0;i<=n;i++){const a=i/n*Math.PI*2, rr=R*(i%2?.72+r()*.2:1+r()*.18);const x=CX+Math.cos(a)*rr,y=CY+Math.sin(a)*rr;i?M.lineTo(x,y):M.moveTo(x,y);}
+      M.fill('evenodd');M.restore();
+    }
+    // paper shards flying
+    for(const p of PAPERBITS){const q=clamp((t-TP)/p.life);if(q<=0||q>=1)continue;const d=S.ld*.4+outExpo(q)*p.sp;
+      O.save();O.translate(CX+Math.cos(p.a)*d,CY+Math.sin(p.a)*d+q*q*160);O.rotate(p.rot+p.vr*q);O.globalAlpha=1-q;
+      O.fillStyle='#fff3e2';O.strokeStyle='#0b0b0c';O.lineWidth=3;O.beginPath();O.moveTo(-p.sz*.5,-p.sz*.3);O.lineTo(p.sz*.5,-p.sz*.4);O.lineTo(p.sz*.2,p.sz*.5);O.closePath();O.fill();O.stroke();O.restore();}
+  }
+  $('flash').style.opacity= t>=TP&&t<TP+.08 ? .55*(1-(t-TP)/.08) : 0;
+  // logo: rushes out of the page with a big overshoot, comic ink outline
+  const logo=$('logo');
+  if(t>=TP-.06){
+    const k=clamp((t-(TP-.06))/.38);
+    let ls=k<.22? lerp(.1,1.28,inCubic(k/.22)) : lerp(1.28,1,outBack(clamp((k-.22)/.78)));
+    const rot=lerp(-24,0,outExpo(clamp(k*1.5)));
+    if(t>2.0&&t<4.48) ls*=1+.02*Math.sin((t-2)*Math.PI*1.6);
+    if(t>=4.48){const q=clamp((t-4.48)/.32);ls*=1+.09*Math.sin(Math.PI*q)*(1-q*.3);}
+    logo.style.opacity=1;
+    logo.style.transform=`translate(-50%,-50%) translate(${shx}px,${shy+S.ly}px) rotate(${rot}deg) scale(${ls})`;
+    const ow=VERT?14:10;
+    logo.style.boxShadow=`0 0 0 ${ow}px #0b0b0c, ${ow*1.6}px ${ow*1.6}px 0 ${ow}px #0b0b0c`;
+  } else logo.style.opacity=0;
+  // caption slams in like a comic caption box
+  const cp=$('cap'), ck=clamp((t-1.95)/.22);
+  cp.style.opacity=ck>0?1:0;
+  const csc=ck<1? lerp(2.2,1,outBack(ck)):1;
+  let cbump=1; if(t>=4.52){const q=clamp((t-4.52)/.25);cbump=1+.06*Math.sin(Math.PI*q);}
+  cp.style.transform=`translate(-50%,0) translate(${shx}px,${shy}px) rotate(${lerp(-12,-3,outCubic(ck))}deg) scale(${csc*cbump})`;
+  // final bell: two ring flashes around the logo
+  for(const t0 of [4.5,4.66]){const q=clamp((t-t0)/.35);if(q<=0||q>=1)continue;
+    O.strokeStyle=`rgba(255,210,63,${1-q})`;O.lineWidth=(VERT?12:9)*(1-q)+2;O.beginPath();O.arc(CX+shx,CY+shy,S.ld*.55+outExpo(q)*S.ld*.7,0,Math.PI*2);O.stroke();}
+};
+document.fonts.ready.then(()=>{const i=new Image();i.onload=i.onerror=()=>{window.render(0);window.READY=true};i.src='cliprally_logo.jpg';});
+</script>
+</body></html>

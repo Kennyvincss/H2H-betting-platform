@@ -1,0 +1,140 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>ClipRally Outro — Viewfinder</title>
+<style>
+  :root{--red:#f13549;--text:#f5f3ee}
+  html,body{margin:0;background:#000;overflow:hidden}
+  #stage{position:absolute;left:0;top:0;overflow:hidden;background:#000}
+  canvas{position:absolute;left:0;top:0}
+  #logo{position:absolute;left:50%;top:50%;width:var(--ld);height:var(--ld);border-radius:50%;overflow:hidden;opacity:0;
+        background:#000 url("cliprally_logo.jpg") center/100% 100% no-repeat}
+  #label{position:absolute;left:50%;white-space:nowrap;transform:translateX(-50%);font:800 var(--ls)/1 Inter,"Segoe UI",Arial,sans-serif;letter-spacing:.1em;color:var(--text)}
+  #label b{color:var(--red);font-weight:800}
+  #label i{font-style:normal;display:inline-block;opacity:0}
+  #caret{display:inline-block;width:.12em;height:1em;background:var(--red);vertical-align:-.12em;margin-left:.08em;opacity:0}
+  .hud{position:absolute;font:600 var(--hs)/1 "DejaVu Sans Mono",monospace;letter-spacing:.12em;color:rgba(255,255,255,.85);white-space:nowrap}
+  #rec{display:flex;align-items:center;gap:.5em}
+  #dot{width:.8em;height:.8em;border-radius:50%;background:var(--red);box-shadow:0 0 12px rgba(241,53,73,.9)}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head>
+<body>
+<div id="stage">
+  <canvas id="under"></canvas>
+  <div id="logo"></div>
+  <canvas id="over"></canvas>
+  <div class="hud" id="rec"><div id="dot"></div><span id="recTxt">REC</span></div>
+  <div class="hud" id="tc">00:00:00:00</div>
+  <div class="hud" id="zoom">1.0×</div>
+  <div class="hud" id="af">AF</div>
+  <div id="label"></div>
+  <div id="flash"></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search);
+const VERT=Q.get('v')==='1';
+const W=VERT?1080:1920, H=VERT?1920:1080;
+const S=VERT?{ld:600,ly:-110,ls:50,gap:70,hs:34,fx:70,fy:150}:{ld:400,ly:-50,ls:33,gap:48,hs:26,fx:90,fy:70};
+const $=id=>document.getElementById(id);
+const st=$('stage');st.style.width=W+'px';st.style.height=H+'px';document.body.style.width=W+'px';document.body.style.height=H+'px';
+const RS=document.documentElement.style;RS.setProperty('--ld',S.ld+'px');RS.setProperty('--ls',S.ls+'px');RS.setProperty('--hs',S.hs+'px');
+for(const c of ['under','over']){$(c).width=W;$(c).height=H;}
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), lerp=(a,b,x)=>a+(b-a)*x;
+const ss=(a,b,x)=>{const k=clamp((x-a)/(b-a));return k*k*(3-2*k)};
+const outCubic=x=>1-Math.pow(1-x,3), outExpo=x=>x>=1?1:1-Math.pow(2,-10*x), inOutCubic=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const outBack=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+function rng(s){s=s>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const CX=W/2, CY=H/2+S.ly;
+// HUD positions inside the frame guides
+Object.assign($('rec').style,{left:(S.fx+40)+'px',top:(S.fy+34)+'px'});
+Object.assign($('tc').style,{right:(S.fx+40)+'px',top:(S.fy+34)+'px'});
+Object.assign($('zoom').style,{left:(S.fx+40)+'px',bottom:(S.fy+34)+'px'});
+Object.assign($('af').style,{right:(S.fx+40)+'px',bottom:(S.fy+34)+'px'});
+const lab=$('label');
+lab.innerHTML=[...'CLIPPED ON '].map(c=>`<i>${c===' '?'&nbsp;':c}</i>`).join('')+`<b>${[...'CLIPRALLY'].map(c=>`<i>${c}</i>`).join('')}</b><span id="caret"></span>`;
+lab.style.top=(CY+S.ld/2+S.gap)+'px';
+const TS=1.40, TO=1.56;   // shutter closes / opens
+
+function iris(O,r,rot,al){ // camera iris: black blades leaving a hexagonal aperture of radius r
+  O.save();O.globalAlpha=al;O.fillStyle='#050505';O.beginPath();O.rect(0,0,W,H);
+  const n=6;for(let i=0;i<=n;i++){const a=rot+i/n*Math.PI*2;const x=CX+Math.cos(a)*r,y=CY+Math.sin(a)*r;i?O.lineTo(x,y):O.moveTo(x,y);}
+  O.fill('evenodd');
+  O.strokeStyle='rgba(255,255,255,.18)';O.lineWidth=2;
+  for(let i=0;i<n;i++){const a=rot+i/n*Math.PI*2;const x=CX+Math.cos(a)*r,y=CY+Math.sin(a)*r;const b=a+Math.PI/2+.5;O.beginPath();O.moveTo(x,y);O.lineTo(x+Math.cos(b)*Math.max(W,H),y+Math.sin(b)*Math.max(W,H));O.stroke();}
+  O.restore();
+}
+function brackets(O,x,y,w,h,len,col,lw){   // four L-shaped corner marks
+  O.strokeStyle=col;O.lineWidth=lw;O.lineCap='square';
+  for(const [sx,sy] of [[-1,-1],[1,-1],[-1,1],[1,1]]){const px=x+sx*w/2,py=y+sy*h/2;
+    O.beginPath();O.moveTo(px,py-sy*len);O.lineTo(px,py);O.lineTo(px-sx*len,py);O.stroke();}
+}
+
+window.render=function(t){
+  const U=$('under').getContext('2d'), O=$('over').getContext('2d');
+  U.fillStyle='#000';U.fillRect(0,0,W,H);O.clearRect(0,0,W,H);
+  let shx=0,shy=0; if(t>TO&&t<TO+.18){const k=1-(t-TO)/.18;shx=Math.sin(t*200)*8*k;shy=Math.cos(t*230)*6*k}
+  const hudOn=ss(.08,.3,t);
+  // ---- background: faint sensor noise + scanlines + a soft red glow that grows ----
+  const r=rng(Math.floor(t*60)+11);
+  U.fillStyle=`rgba(255,255,255,${.035*hudOn})`;for(let i=0;i<500;i++)U.fillRect(r()*W,r()*H,1.5,1.5);
+  const gl=ss(.4,1.3,t)*(t<TS?1:.0)+ (t>=TO?1:0);
+  const g=U.createRadialGradient(CX,CY,0,CX,CY,S.ld*1.5);g.addColorStop(0,`rgba(241,53,73,${.28*gl})`);g.addColorStop(1,'rgba(0,0,0,0)');U.fillStyle=g;U.fillRect(0,0,W,H);
+  // ---- the logo: out of focus while the camera hunts, rack-focus into sharpness ----
+  const logo=$('logo');
+  let blur=0,lop=0,ls=1;
+  if(t<TS){ // bokeh
+    const foc=[[.55,34],[.78,14],[.92,24],[1.08,8],[1.22,16],[1.33,5]];
+    blur=40; for(const [tt,b] of foc) if(t>=tt) blur=b;
+    // smooth between steps
+    lop=ss(.35,.8,t)*.85; ls=1.25-ss(.5,1.35,t)*.2;
+  } else if(t>=TO){
+    const k=clamp((t-TO)/.35); blur=0; lop=1; ls=lerp(1.08,1,outBack(k));
+    if(t>2.2) ls*=1+.03*ss(2.2,4.4,t);                // slow push-in
+    if(t>=4.5){const q=clamp((t-4.5)/.3);ls*=1+.05*Math.sin(Math.PI*q);}
+  }
+  logo.style.opacity=lop; logo.style.filter=blur>.3?`blur(${blur}px) brightness(${1+blur/60})`:'none';
+  logo.style.transform=`translate(-50%,-50%) translate(${shx}px,${shy+S.ly}px) scale(${ls})`;
+  // ---- frame guides: corner brackets draw in, rule-of-thirds grid ----
+  const gi=outExpo(clamp((t-.12)/.4));
+  const fx=S.fx,fy=S.fy,fw=W-2*fx,fh=H-2*fy;
+  O.save();O.globalAlpha=hudOn;
+  brackets(O,W/2,H/2,lerp(W*1.3,fw,gi),lerp(H*1.3,fh,gi),VERT?90:110,'rgba(255,255,255,.9)',4);
+  O.strokeStyle=`rgba(255,255,255,${.07*gi})`;O.lineWidth=1;
+  for(const k of [1/3,2/3]){O.beginPath();O.moveTo(fx+fw*k,fy);O.lineTo(fx+fw*k,fy+fh);O.stroke();O.beginPath();O.moveTo(fx,fy+fh*k);O.lineTo(fx+fw,fy+fh*k);O.stroke();}
+  // centre cross
+  O.strokeStyle=`rgba(255,255,255,${.35*gi})`;O.lineWidth=2;O.beginPath();O.moveTo(CX-14,CY);O.lineTo(CX+14,CY);O.moveTo(CX,CY-14);O.lineTo(CX,CY+14);O.stroke();
+  O.restore();
+  // ---- focus reticle: hunts, then locks onto the logo ----
+  if(t>=.5){
+    let fs, col='rgba(255,255,255,.9)', jx=0,jy=0;
+    if(t<TS){const h=rng(Math.floor(t*14)*7)();fs=S.ld*(1.5-.45*ss(.5,1.3,t))*(1+.06*Math.sin(t*40));jx=(h-.5)*30*(1-ss(1,1.3,t));jy=(rng(Math.floor(t*14)*13)()-.5)*24*(1-ss(1,1.3,t));}
+    else {const k=clamp((t-TO)/.25);fs=lerp(S.ld*1.35,S.ld*1.04,outBack(k));col=t>=TO?'rgba(241,53,73,1)':col;
+      if(t>=4.5){const q=clamp((t-4.5)/.3);fs*=1-.05*Math.sin(Math.PI*q);} }
+    if(t<TS||t>=TO){O.save();O.shadowColor=t>=TO?'rgba(241,53,73,.9)':'rgba(255,255,255,.5)';O.shadowBlur=12;
+      brackets(O,CX+jx+shx,CY+jy+shy,fs,fs,fs*.16,col,t>=TO?5:3);O.restore();}
+  }
+  // ---- shutter: the iris snaps shut and open; again for the final beat ----
+  if(t>=TS-.06&&t<TO+.1){
+    const close=clamp((t-(TS-.06))/.08), open=clamp((t-(TO-.02))/.12);
+    const rad=Math.hypot(W,H)*.6*(1-outExpo(close))+Math.hypot(W,H)*.6*outExpo(open);
+    iris(O,Math.max(0,rad),.3+t*2,1);
+  }
+  if(t>=4.46&&t<4.66){const k=clamp((t-4.46)/.2);const rad=Math.hypot(W,H)*.6*(1-Math.sin(Math.PI*k)*.62);iris(O,rad,.3+t*2,1);}
+  $('flash').style.opacity= t>=TO&&t<TO+.12? .16*(1-(t-TO)/.12) : (t>=4.56&&t<4.66? .18*(1-(t-4.56)/.1):0);
+  // ---- HUD text ----
+  for(const id of ['rec','tc','zoom','af']) $(id).style.opacity=hudOn;
+  const frames=Math.floor((t<TO?t:TO)*24*37);  // fast-running timecode, freezes at the shutter
+  const f=n=>String(n).padStart(2,'0');
+  $('tc').textContent=`${f(Math.floor(frames/86400)%24)}:${f(Math.floor(frames/1440)%60)}:${f(Math.floor(frames/24)%60)}:${f(frames%24)}`;
+  $('dot').style.opacity=t<TO? (Math.floor(t*4)%2?.25:1) : 1;
+  $('recTxt').textContent=t<TO?'REC':'CLIPPED';
+  $('rec').style.color=t<TO?'rgba(255,255,255,.85)':'#f13549';
+  $('zoom').textContent=(t<TS? (1+1.4*ss(.5,1.3,t)) : 2.4).toFixed(1)+'×';
+  $('af').textContent=t<TO?(Math.floor(t*6)%2?'AF ·':'AF'):'AF ●';
+  $('af').style.color=t<TO?'rgba(255,255,255,.85)':'#f13549';
+  // ---- label: typed in after the lock ----
+  const chars=lab.querySelectorAll('i'); const nch=chars.length; const typed=Math.floor(clamp((t-1.95)/.5)*nch);
+  chars.forEach((c,i)=>{c.style.opacity=i<typed?1:0});
+  const caret=$('caret'); caret.style.opacity=t>1.9&&t<2.9? (Math.floor(t*5)%2?1:.2):0;
+};
+document.fonts.ready.then(()=>{const i=new Image();i.onload=i.onerror=()=>{window.render(0);window.READY=true};i.src='cliprally_logo.jpg';});
+</script>
+</body></html>
