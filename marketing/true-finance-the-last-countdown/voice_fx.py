@@ -1,6 +1,7 @@
 # Process each line (tempo, character EQ/space), save a 60 fps loudness envelope for jaw animation, and build the dialogue stem.
 import json,wave,subprocess,numpy as np
-SR=48000; N=SR*60
+SR=48000
+T0=json.load(open('vo/timeline.json')); N=int(SR*T0['end'])+SR
 T=json.load(open('vo/timeline.json')); L=T['lines']
 FX={'M':"highpass=f=85,equalizer=f=3000:t=q:w=1:g=2,acompressor=threshold=0.15:ratio=3,aecho=0.8:0.4:28:0.10,volume=1.3",
     'E':"highpass=f=110,equalizer=f=3500:t=q:w=1:g=2,acompressor=threshold=0.15:ratio=3,aecho=0.8:0.4:28:0.10,volume=1.35",

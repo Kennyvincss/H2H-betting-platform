@@ -1,4 +1,5 @@
-# Script lines: (scene, speaker, text). Speakers: M=Marcus, E=Elena, C=Colleague (phone), N=Narrator.
+# Script lines: (scene, speaker, spoken text[, on-screen subtitle]). M=Marcus, E=Elena, C=Colleague (phone), N=Narrator.
+# Scene 4 answers come from true.foundation (TRUE Foundation, the $TRUE issuer).
 LINES=[
  (1,'M',"What do you mean October fifteenth? What's happening on October fifteenth?"),
  (1,'E',"You haven't heard? TRUE Finance is approaching its biggest moment yet."),
@@ -10,12 +11,19 @@ LINES=[
  (3,'C',"You're late to the story, Marcus."),
  (3,'M',"What does that mean?"),
  (3,'C',"It means October fifteenth is closer than you think."),
- (4,'M',"I've seen the platform. I've read the announcements. Why does this launch matter so much?"),
- (4,'E',"Because launches mark beginnings, Marcus. They don't tell you the whole story."),
- (4,'E',"If you want to know where things are going, understand what they're building."),
+ (4,'M',"I've seen the platform. But what is TRUE, exactly?","I’ve seen the platform. But what is $TRUE, exactly?"),
+ (4,'E',"It's the utility and access token of the TRUE ecosystem. Issued by TRUE Foundation, on Solana.","It’s the utility and access token of the TRUE ecosystem. Issued by TRUE Foundation, on Solana."),
+ (4,'E',"TRUE AI builds and runs the exchange. The TRUE DEX is already live, with over a billion dollars traded."),
+ (4,'M',"So what is it actually used for?"),
+ (4,'E',"Pay your trading fees in TRUE, and get up to fifty percent off.","Pay your trading fees in $TRUE, and get up to 50% off."),
+ (4,'E',"Every request to TRUE AI runs on credits in TRUE. Hold more, and your share as a copy-trading leader goes up. Referral payouts can be boosted too.","Every request to TRUE AI runs on credits in $TRUE. Hold more, and your share as a copy-trading leader goes up. Referral payouts can be boosted too."),
+ (4,'E',"Then V I P levels, burns, staking and vaults, rolled out as each one ships.","Then VIP levels, burns, staking and vaults — rolled out as each one ships."),
+ (4,'M',"And why does the T G E matter?","And why does the TGE matter?"),
+ (4,'E',"On October fifteenth, at six p.m. Central European Time, the token is generated, and opens for trading on the TRUE DEX.","On October 15th, at 18:00 CET, the token is generated — and opens for trading on the TRUE DEX."),
+ (4,'E',"After listing, fee payment in TRUE and V I P levels switch on. And the contract address comes from official channels only.","After listing, fee payment in $TRUE and VIP levels switch on. And the contract address comes from official channels only."),
  (4,'M',"Then I want to see it for myself."),
  (5,'M',"October fifteenth. That's when everything begins?"),
- (5,'E',"That's when the TRUE T G E arrives."),
+ (5,'E',"That's when the TRUE T G E arrives.","That’s when the $TRUE TGE arrives."),
  (5,'M',"Then people should probably pay attention."),
  (5,'E',"Now you're starting to understand."),
  (6,'N',"October fifteenth. The next chapter begins."),

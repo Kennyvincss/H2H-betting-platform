@@ -25,8 +25,9 @@
   #rTrue .d{color:var(--violet);text-shadow:0 0 40px rgba(155,135,255,.9),0 0 90px rgba(110,86,207,.7)}
   #rTge{color:#fff}
   #rDate{position:absolute;left:0;right:0;top:618px;font:700 46px/1 Inter;letter-spacing:.32em;color:#e8e4ff}
-  #rName{position:absolute;left:0;right:0;top:690px;font:600 24px/1 Inter;letter-spacing:.62em;color:#a59cd6}
-  #rNote{position:absolute;left:0;right:0;top:760px;font:500 15px/1.4 Inter;color:#6f6a8c;letter-spacing:.04em}
+  #rWhere{position:absolute;left:0;right:0;top:686px;font:600 24px/1 Inter;letter-spacing:.24em;color:#9b87ff}
+  #rName{position:absolute;left:0;right:0;top:736px;font:600 24px/1 Inter;letter-spacing:.62em;color:#a59cd6}
+  #rNote{position:absolute;left:0;right:0;top:790px;font:500 15px/1.4 Inter;color:#6f6a8c;letter-spacing:.04em}
 </style></head>
 <body><div id="stage">
 <canvas id="bg"></canvas>
@@ -36,9 +37,9 @@
 <div id="reveal">
   <img id="rLogo" src="assets/lockup.svg">
   <div id="rTrue"><span class="d">$TRUE</span><span id="rTge"> TGE</span></div>
-  <div id="rDate">OCTOBER 15, 2026</div>
+  <div id="rDate">OCTOBER 15, 2026</div><div id="rWhere">18:00 CET · LISTING ON THE TRUE DEX · SOLANA</div>
   <div id="rName">TRUE FINANCE</div>
-  <div id="rNote">Date as announced by TRUE Finance on its official X account. Not financial advice; crypto assets carry high risk.</div>
+  <div id="rNote">Source: TRUE Foundation, true.foundation. Planned utility may change. Contract address on official channels only. Not investment advice; not a guarantee of any return. Crypto assets are high risk. Not available in the US, UAE or sanctioned jurisdictions.</div>
 </div>
 <div id="flash"></div><canvas id="grain" width="480" height="270"></canvas><div id="grade"></div><div id="vig"></div><div id="fade"></div>
 <div class="bar" id="barT"></div><div class="bar" id="barB"></div><div id="sub"></div>
@@ -82,7 +83,7 @@ dom.innerHTML=`
  <img class="img" id="cdLogo" src="assets/lockup.svg">`;
 const PANELS=['crops/perpetual-futures_panel.png','crops/ai-agents_panel.png','crops/swap_panel.png','crops/mcp_panel.png','crops/copy-trading-ai_panel.png','crops/features_grid.png','crops/perpetual-futures_hero.png','crops/ai-agents_hero.png','crops/swap_hero.png'];
 $('wall').innerHTML=PANELS.map((p,i)=>`<div class="scr" style="position:absolute;overflow:hidden;background:#0e0d16;border:3px solid #26233a;box-shadow:0 0 40px rgba(110,86,207,.35)"><img src="${p}" style="width:100%;height:100%;object-fit:cover;object-position:top"><img src="assets/lockup.svg" class="wl" style="position:absolute;left:12%;top:38%;width:76%;opacity:0"></div>`).join('');
-const imgs={}; ['crops/perpetual-futures_panel.png','crops/swap_panel.png','crops/ai-agents_panel.png','crops/features_grid.png','assets/og-home.png'].forEach(s=>{const i=new Image();i.src=s;imgs[s]=i});
+const imgs={}; ['tf/facts.png','tf/hero.png','tf/about_utility.png','tf/utility.png','tf/timeline.png','crops/perpetual-futures_panel.png','crops/swap_panel.png','crops/ai-agents_panel.png','crops/features_grid.png','assets/og-home.png'].forEach(s=>{const i=new Image();i.src=s;imgs[s]=i});
 
 function place(el,x,y,s,flip,rim,op=1){ // bottom-centre anchored
   el.style.left=(x-176)+'px'; el.style.top=(y-520)+'px';
@@ -242,36 +243,52 @@ window.render=function(t){
       place(M,W/2+40,1080+120,1.1,false,'rgba(190,170,255,.9)');
     }
   }
-  // ===================== SCENE 4 — THE REVELATION =====================
+  // ===================== SCENE 4 — THE REVELATION: what $TRUE is, what it's for, why the TGE matters =====================
   else if(t<SC[4][1]){
-    const l10=L[10],l11=L[11],l12=L[12],l13=L[13];
-    const tap=l12.A-.25, unify=ss(tap,tap+.6,t);
-    // wall of screens
-    const wall=$('wall'); wall.style.opacity=1;
-    let cam={z:1,x:0,y:0};
-    if(t<l11.A-.08) cam={z:lerp(.92,1.0,ease(clamp((t-SC[3][1])/(l11.A-SC[3][1])))),x:0,y:0};
-    else if(t<l12.A-.08) cam={z:1.5,x:-380,y:60};
-    else if(t<l13.A-.08) cam={z:lerp(1.02,1.1,clamp((t-l12.A)/3)),x:0,y:0};
-    else cam={z:1.6,x:420,y:60};
+    const Q=TLN.filter(l=>l.scene==4); const cur=Q.findIndex(l=>t>=l.A-.12&&t<(Q[Q.indexOf(l)+1]?Q[Q.indexOf(l)+1].A-.12:SC[4][1]));
+    const k=cur<0?0:clamp((t-(Q[cur].A-.12))/((Q[cur+1]?Q[cur+1].A:SC[4][1])-(Q[cur].A-.12)));
     C.fillStyle='#04030a';C.fillRect(0,0,W,H);
-    const g=C.createRadialGradient(W/2,H*.4,100,W/2,H*.4,1100);g.addColorStop(0,'rgba(110,86,207,.25)');g.addColorStop(1,'rgba(0,0,0,0)');C.fillStyle=g;C.fillRect(0,0,W,H);
-    const sw=360,sh=200,gx=W/2-(3*sw+2*24)/2,gy=150;
-    [...wall.children].forEach((d,i)=>{const cx=i%3,cy=Math.floor(i/3);const x=(gx+cx*(sw+24)-W/2)*cam.z+W/2+cam.x, y=(gy+cy*(sh+22)-H/2)*cam.z+H/2+cam.y;
-      Object.assign(d.style,{left:x+'px',top:y+'px',width:sw*cam.z+'px',height:sh*cam.z+'px'});
-      d.children[0].style.opacity=1-unify; d.children[1].style.opacity=unify; d.style.filter=`brightness(${.85+.15*Math.sin(t*3+i)})`;});
-    // floor reflection
+    const g=C.createRadialGradient(W/2,H*.42,100,W/2,H*.42,1100);g.addColorStop(0,'rgba(110,86,207,.28)');g.addColorStop(1,'rgba(0,0,0,0)');C.fillStyle=g;C.fillRect(0,0,W,H);
     C.fillStyle='rgba(155,135,255,.06)';C.fillRect(0,H*.78,W,H*.22);
-    // characters
-    const walkIn=outCubic(clamp((t-SC[3][1])/1.4));
-    if(t<l11.A-.08){ place(E,(1500-W/2)*cam.z+W/2,1080+20,1.35,true,'rgba(190,170,255,.95)'); place(M,lerp(-100,520,walkIn),1080+20,1.4,false,'rgba(150,170,255,.85)'); }
-    else if(t<l12.A-.08){ place(E,1100,1080+80,2.1,true,'rgba(200,180,255,1)'); }
-    else if(t<l13.A-.08){ place(E,1500,1080+20,1.35,true,'rgba(190,170,255,.95)'); place(M,520,1080+20,1.4,false,'rgba(150,170,255,.85)');
-      if(t>tap&&t<tap+.5){const q=(t-tap)/.5;X.strokeStyle=`rgba(155,135,255,${1-q})`;X.lineWidth=4;X.beginPath();X.arc(1300,700,20+120*q,0,Math.PI*2);X.stroke();} }
-    else { place(M,820,1080+80,2.1,false,'rgba(170,150,255,1)'); }
+    // each answer puts TRUE Foundation's own graphic on the big display: [image, from(cx,cy,zoom), to(cx,cy,zoom), source note]
+    const SRC='TRUE FOUNDATION · TRUE.FOUNDATION';
+    const SHOTS={1:['tf/facts.png',[.5,.45,1.0],[.5,.5,1.12],SRC],
+                 2:['tf/hero.png',[.5,.55,1.0],[.5,.62,1.18],'TRUE.FOUNDATION · FIGURES AS AT 8 SEP 2026, UNAUDITED'],
+                 4:['tf/about_utility.png',[.5,.55,1.0],[.47,.58,1.6],SRC+' · PLANNED UTILITY, MAY CHANGE'],
+                 5:['tf/about_utility.png',[.25,.65,1.9],[.82,.6,1.9],SRC+' · PLANNED UTILITY, MAY CHANGE'],
+                 6:['tf/utility.png',[.5,.4,1.0],[.5,.62,1.25],'PLANNED UTILITY · RATES AND ORDER PUBLISHED BY TRUE FOUNDATION AS THEY SHIP · NOT A PROMISE OF RETURN'],
+                 8:['tf/timeline.png',[.5,.5,1.0],[.56,.62,2.3],SRC+' · TIMELINE'],
+                 9:['tf/timeline.png',[.56,.62,2.3],[.7,.6,2.3],SRC+' · TIMELINE']};
+    const wall=$('wall');
+    if(SHOTS[cur]){
+      const [src,f0,f1,note]=SHOTS[cur]; const im=imgs[src]; const e=ease(k);
+      const sx=300,sy=170,sw=1320,sh=700;
+      C.save();C.shadowColor='rgba(155,135,255,.7)';C.shadowBlur=90;C.fillStyle='#f4f2fb';C.fillRect(sx,sy,sw,sh);C.restore();
+      C.save();C.beginPath();C.rect(sx,sy,sw,sh);C.clip();C.fillStyle='#f4f2fb';C.fillRect(sx,sy,sw,sh);
+      if(im&&im.complete&&im.width){const cx=lerp(f0[0],f1[0],e),cy=lerp(f0[1],f1[1],e),z=lerp(f0[2],f1[2],e);
+        const base=Math.min(sw/im.width,sh/im.height)*z, dw=im.width*base, dh=im.height*base;
+        C.drawImage(im,sx+sw/2-cx*dw,sy+sh/2-cy*dh,dw,dh);}
+      C.restore();
+      C.strokeStyle='#1d1a2c';C.lineWidth=14;C.strokeRect(sx-7,sy-7,sw+14,sh+14);
+      X.fillStyle='rgba(220,214,255,.7)';X.font='600 15px "DejaVu Sans Mono"';X.fillText(note,sx,sy+sh+34);
+      // the characters stay in the room: Elena explaining at the display, Marcus listening
+      place(E,1745,1080+40,1.25,true,'rgba(200,180,255,1)'); place(M,175,1080+40,1.2,false,'rgba(150,170,255,.85)',.9);
+    } else if(cur===0){ // Marcus walks into the room of screens: the question
+      wall.style.opacity=1; const z=lerp(.92,1.0,ease(k)); const sw=360,sh=200,gx=W/2-(3*sw+2*24)/2,gy=150;
+      [...wall.children].forEach((d,i)=>{const cx=i%3,cy=Math.floor(i/3);Object.assign(d.style,{left:(gx+cx*(sw+24)-W/2)*z+W/2+'px',top:(gy+cy*(sh+22)-H/2)*z+H/2+'px',width:sw*z+'px',height:sh*z+'px'});d.children[0].style.opacity=1;d.children[1].style.opacity=0;});
+      place(E,1500,1080+20,1.35,true,'rgba(190,170,255,.95)'); place(M,lerp(-100,520,outCubic(clamp(k*2.2))),1080+20,1.4,false,'rgba(150,170,255,.85)');
+    } else if(cur===3||cur===7){ // Marcus close-up: the next question
+      const g2=C.createLinearGradient(0,0,W,0);g2.addColorStop(0,'rgba(155,135,255,.0)');g2.addColorStop(1,'rgba(155,135,255,.25)');C.fillStyle=g2;C.fillRect(0,0,W,H);
+      place(M,860,1080+80,2.1,false,'rgba(170,150,255,1)');
+    } else { // "Then I want to see it for myself": every screen becomes the TRUE logo
+      wall.style.opacity=1; const unify=ss(0,.35,k); const sw=360,sh=200,gx=W/2-(3*sw+2*24)/2,gy=150, z=1.04;
+      [...wall.children].forEach((d,i)=>{const cx=i%3,cy=Math.floor(i/3);Object.assign(d.style,{left:(gx+cx*(sw+24)-W/2)*z+W/2+'px',top:(gy+cy*(sh+22)-H/2)*z+H/2+'px',width:sw*z+'px',height:sh*z+'px'});d.children[0].style.opacity=1-unify;d.children[1].style.opacity=unify;});
+      place(E,1500,1080+20,1.35,true,'rgba(190,170,255,.95)'); place(M,520,1080+20,1.4,false,'rgba(150,170,255,.85)');
+    }
   }
   // ===================== SCENE 5 — THE COUNTDOWN =====================
   else if(t<SC[5][1]){
-    const s0=SC[4][1], s1=SC[5][1], l14=L[14],l15=L[15],l16=L[16],l17=L[17];
+    const s0=SC[4][1], s1=SC[5][1], S5L=TLN.filter(l=>l.scene==5), l14=S5L[0],l15=S5L[1],l16=S5L[2],l17=S5L[3];
     const dim=ss(l17.B-.1,s1,t), push=ease(clamp((t-(l17.A))/(s1-l17.A)));
     C.fillStyle='#03020a';C.fillRect(0,0,W,H);
     // data streams
@@ -283,13 +300,13 @@ window.render=function(t){
     C.fillStyle='#0e0d16';C.fillRect(330,150,1260,560);C.strokeStyle='#2f2a48';C.lineWidth=6;C.strokeRect(330,150,1260,560);
     const cdl=$('cdLogo');cdl.style.opacity=1;Object.assign(cdl.style,{left:((W/2-330)-dx)*z+dx+'px',top:((200)-dy)*z+dy+'px',width:660*z+'px'});
     // countdown: T-minus to 15 Oct 2026 00:00, running
-    const total=2*86400+13*3600+42*60+18 - (t-s0)*1;    // illustrative clock, ticking in real time
+    const total=3*86400+2*3600+1*60+54 - (t-s0)*1;    // as on true.foundation's listing countdown; illustrative, ticking in real time
     const d=Math.floor(total/86400),hh=Math.floor(total%86400/3600),mm=Math.floor(total%3600/60),sec=Math.floor(total%60);
     const p2=n=>String(n).padStart(2,'0');
     C.textAlign='center';C.fillStyle='#a59cd6';C.font='600 28px "DejaVu Sans Mono"';C.fillText('T-MINUS',W/2,395);
     C.fillStyle='#fff';C.font='800 120px "DejaVu Sans Mono"';C.shadowColor='rgba(155,135,255,.9)';C.shadowBlur=30;C.fillText(`${p2(d)}:${p2(hh)}:${p2(mm)}:${p2(sec)}`,W/2,520);C.shadowBlur=0;
     C.fillStyle='#8f86b8';C.font='600 22px "DejaVu Sans Mono"';C.fillText('DAYS        HOURS        MIN        SEC',W/2,560);
-    C.fillStyle='#9b87ff';C.font='800 40px Inter';C.fillText('$TRUE TGE · OCTOBER 15, 2026',W/2,640);C.textAlign='left';
+    C.fillStyle='#9b87ff';C.font='800 34px Inter';C.fillText('$TRUE TGE · OCT 15, 2026 · 18:00 CET · TRUE DEX',W/2,640);C.textAlign='left';
     C.restore();
     // characters
     if(t<l15.A-.08) place(M,250,1080+40,1.55,false,'rgba(170,150,255,1)');           // Marcus turns to Elena
@@ -313,14 +330,14 @@ window.render=function(t){
       $('rLogo').style.transform=`translateX(-50%) scale(${push})`;
       const tk=ss(pulse+1.0,pulse+1.8,t); $('rTrue').style.opacity=tk; $('rTrue').style.transform=`scale(${lerp(1.08,1,tk)})`;
       $('rTge').style.opacity=ss(nr+1.2,nr+1.6,t);
-      $('rDate').style.opacity=ss(nr+1.5,nr+2.0,t); $('rName').style.opacity=ss(nr+1.9,nr+2.4,t); $('rNote').style.opacity=ss(nr+2.2,nr+2.7,t)*.9;
+      $('rDate').style.opacity=ss(nr+1.5,nr+2.0,t); $('rWhere').style.opacity=ss(nr+1.7,nr+2.2,t); $('rName').style.opacity=ss(nr+1.9,nr+2.4,t); $('rNote').style.opacity=ss(nr+2.2,nr+2.7,t)*.9;
       const imp=TL.narrEnd+.1; if(t>imp&&t<imp+.1) $('flash').style.opacity=.14*(1-(t-imp)/.1);
-      $('fade').style.opacity=ss(59.35,60,t);
+      $('fade').style.opacity=ss(TL.end-.65,TL.end,t);
     } else { $('reveal').style.opacity=0; }
   }
   // subtitles
   const l=lineAt(t);
-  if(l&&l.who!=='N'){const s=SPK[l.who];$('sub').innerHTML=`<span class="who" style="color:${s[1]}">${s[0]}</span>${DISPLAY[l.i]||'“'+l.txt+'”'}`;$('sub').style.opacity=clamp((t-l.A)/.1)*clamp((l.B-t)/.1);}
+  if(l&&l.who!=='N'){const s=SPK[l.who];$('sub').innerHTML=`<span class="who" style="color:${s[1]}">${s[0]}</span>${'“'+(l.disp||l.txt)+'”'}`;$('sub').style.opacity=clamp((t-l.A)/.1)*clamp((l.B-t)/.1);}
   else if(l&&l.who==='N'){$('sub').innerHTML=`<span style="font-style:italic;color:#d9d4f2">“${l.txt}”</span>`;$('sub').style.opacity=clamp((t-l.A)/.1)*clamp((l.B-t)/.1);}
   else $('sub').style.opacity=0;
   letterbox(true);

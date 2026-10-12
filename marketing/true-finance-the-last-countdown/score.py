@@ -1,7 +1,7 @@
 # Original score + sound design for "The Last Countdown", laid on the scene timeline.
 import json,wave,numpy as np
 TL=json.load(open('vo/timeline.json')); S={int(k):v for k,v in TL['scenes'].items()}; L=TL['lines']
-SR=48000; N=SR*60; t=np.arange(N)/SR; rs=np.random.default_rng(3); noise=rs.standard_normal(N)
+SR=48000; END=TL['end']; N=int(SR*END); t=np.arange(N)/SR; rs=np.random.default_rng(3); noise=rs.standard_normal(N)
 Lc=np.zeros(N); Rc=np.zeros(N)
 def lp(x,a):
     y=np.empty_like(x); acc=0.0
@@ -19,7 +19,7 @@ silent*=1-env(BLACK,PULSE,.05,.05)                    # two seconds of black sil
 # --- rain + thunder (S1-S3), softer behind glass indoors
 rain=(lp(noise,.35)*.6+HN*.15)
 rainLvl=env(0,1.5,.3,.2)*1.0+env(1.5,S[2][1],.2,.3)*.35+env(S[3][0],BB,.3,.05)*1.0+env(BB,S[3][1],.1,.3)*.25
-add(rain*rainLvl*.10*silent,.1); add(np.roll(rain,4800)*rainLvl*.10*silent,-.1)
+add(rain*rainLvl*.06*silent,.1); add(np.roll(rain,4800)*rainLvl*.06*silent,-.1)
 for t0 in (.47,.62,5.0,17.5): put(lambda x: lp(noise,.01)[:len(x)]*8*np.exp(-x*1.4)*np.clip(x/.08,0,1),t0,2.5,.35)
 # --- tension drone, building score
 drone=np.sin(2*np.pi*43.65*t)+.6*np.sin(2*np.pi*65.4*t)+.3*np.sin(2*np.pi*87.3*t+np.sin(2*np.pi*.2*t))
@@ -55,7 +55,7 @@ while tp<L[4]['A']-.1: put(lambda x: np.sin(2*np.pi*2400*x)*np.exp(-x*120),tp,.0
 for k,t0 in enumerate(np.arange(S[3][0]+.3,BB-.4,1.25)):                                                          # traffic pass-bys
     put(lambda x: lp(noise,.08)[:len(x)]*np.sin(np.pi*x/1.4)**2*1.5,t0,1.4,.25,-.8+1.6*(k%2))
 put(lambda x: np.sin(2*np.pi*425*x)*(np.sin(2*np.pi*25*x)>0)*.5,L[9]['B']+.05,.25,.08)                            # call ended tone
-tap=L[12]['A']-.25; put(lambda x: np.sin(2*np.pi*1200*x)*np.exp(-x*30)+lp(noise,.3)[:len(x)]*np.exp(-x*60)*.4,tap,.3,.2)
+tap=[l for l in L if l['scene']==4][4]['A']-.25; put(lambda x: np.sin(2*np.pi*1200*x)*np.exp(-x*30)+lp(noise,.3)[:len(x)]*np.exp(-x*60)*.4,tap,.3,.2)
 put(lambda x: (np.sin(2*np.pi*(300+900*x)*x))*np.sin(np.pi*x/.6)**2,tap+.05,.6,.08)                               # screens unify sweep
 for k in range(int(S[5][1]-S[5][0])): put(lambda x: np.sin(2*np.pi*3000*x)*np.exp(-x*200)+HN[:len(x)]*np.exp(-x*900)*.3,S[5][0]+k,.03,.12)  # clock ticks
 put(lambda x: lp(noise,.03)[:len(x)]*(x/1.2)**2*3,S[5][1]-1.25,1.2,.25)                                              # riser
@@ -63,13 +63,17 @@ put(lambda x: np.sin(2*np.pi*(30+80*np.exp(-x*8))*x)*np.exp(-x*1.6)+HN[:len(x)]*
 # --- final reveal: electronic pulse, orchestral finale, one deep impact, silence
 for k in range(5): put(lambda x: np.sin(2*np.pi*55*x)*np.exp(-x*8)+np.sin(2*np.pi*880*x)*np.exp(-x*30)*.15,PULSE+k*.6,.5,.35*(1-k*.12))
 fin=sum(np.sin(2*np.pi*f*t)+.3*np.sin(2*np.pi*2*f*t) for f in [73.4,110,146.8,174.6,220,293.7])/6
-add(lp(fin,.12)*env(PULSE+.8,59.9,1.6,.6)*.28)
+add(lp(fin,.12)*env(PULSE+.8,END-.1,1.6,.6)*.28)
 put(lambda x: np.sin(2*np.pi*(28+90*np.exp(-x*7))*x)*np.exp(-x*1.1)+lp(noise,.04)[:len(x)]*np.exp(-x*2)*.6,NE+.1,2.8,1.1)
-# --- master: duck under dialogue, add dialogue, normalise
+# --- music/effects stem only (dialogue is mixed on top in ffmpeg with sidechain ducking)
+fade=np.clip((END-t)/.6,0,1)
+st=np.stack([Lc*fade,Rc*fade],1); st/=np.abs(st).max()/0.9; st=np.tanh(st*1.1)/np.tanh(1.1)
+w=wave.open('music.wav','wb');w.setnchannels(2);w.setsampwidth(2);w.setframerate(SR);w.writeframes((st*32767*.9).astype(np.int16).tobytes());w.close()
+print('ok')
+# --- master: duck the music under dialogue, add dialogue, write the mix
 w=wave.open('vo/dialogue.wav');d=np.frombuffer(w.readframes(w.getnframes()),np.int16).astype(float)/32768;d=np.pad(d,(0,max(0,N-len(d))))[:N]
 act=np.convolve((np.abs(d)>.01).astype(float),np.ones(SR//4)/(SR//4),'same');duck=1-.55*np.clip(act*4,0,1)
-fade=np.clip((60-t)/.6,0,1)
 Lm=(Lc*duck+d*.95)*fade; Rm=(Rc*duck+d*.95)*fade
 st=np.stack([Lm,Rm],1); st/=np.abs(st).max()/0.95; st=np.tanh(st*1.15)/np.tanh(1.15)
 w=wave.open('mix_raw.wav','wb');w.setnchannels(2);w.setsampwidth(2);w.setframerate(SR);w.writeframes((st*32767*.9).astype(np.int16).tobytes());w.close()
-print('ok')
+print('mix ok')

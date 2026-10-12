@@ -5,315 +5,447 @@
    "scene": 1,
    "who": "M",
    "txt": "What do you mean October fifteenth? What's happening on October fifteenth?",
+   "disp": null,
    "sr": 22050,
    "trim": [
     0,
-    66816
+    70400
    ],
    "tempo": 1.14,
-   "dur": 2.658073755818117,
+   "dur": 2.8006524247125753,
    "A": 1.35,
-   "B": 4.008
+   "B": 4.151
   },
   {
    "i": 1,
    "scene": 1,
    "who": "E",
    "txt": "You haven't heard? TRUE Finance is approaching its biggest moment yet.",
+   "disp": null,
    "sr": 22050,
    "trim": [
     762,
-    83988
+    82238
    ],
    "tempo": 1.14,
-   "dur": 3.3108962883398974,
-   "A": 4.208,
-   "B": 7.519
+   "dur": 3.2412777976687757,
+   "A": 4.351,
+   "B": 7.592
   },
   {
    "i": 2,
    "scene": 1,
    "who": "M",
    "txt": "Then tell me everything.",
+   "disp": null,
    "sr": 22050,
    "trim": [
     0,
-    22784
+    23296
    ],
    "tempo": 1.14,
-   "dur": 0.9063929665433427,
-   "A": 7.719,
-   "B": 8.625
+   "dur": 0.9267613478139796,
+   "A": 7.792,
+   "B": 8.719
   },
   {
    "i": 3,
    "scene": 2,
    "who": "E",
    "txt": "TRUE Finance is building a different approach to trading. AI-powered tools and market access, in one ecosystem.",
+   "disp": null,
    "sr": 22050,
    "trim": [
-    133,
-    154624
+    0,
+    163156
    ],
    "tempo": 1.14,
-   "dur": 6.145960138441342,
-   "A": 8.925,
-   "B": 15.071
+   "dur": 6.49067112225007,
+   "A": 9.019,
+   "B": 15.51
   },
   {
    "i": 4,
    "scene": 2,
    "who": "M",
    "txt": "So this isn't just another token announcement?",
+   "disp": null,
    "sr": 22050,
    "trim": [
     0,
-    42496
+    40222
    ],
    "tempo": 1.14,
-   "dur": 1.6905756454628635,
-   "A": 15.271,
-   "B": 16.962
+   "dur": 1.6001113895850738,
+   "A": 15.71,
+   "B": 17.31
   },
   {
    "i": 5,
    "scene": 2,
    "who": "E",
    "txt": "There's more to the platform than the launch. But October fifteenth is the date everyone's watching.",
+   "disp": null,
    "sr": 22050,
    "trim": [
-    1104,
-    104613
+    261,
+    112933
    ],
    "tempo": 1.14,
-   "dur": 4.117794486215539,
-   "A": 17.162,
-   "B": 21.28
+   "dur": 4.482316903369536,
+   "A": 17.51,
+   "B": 21.992
   },
   {
    "i": 6,
    "scene": 3,
    "who": "M",
    "txt": "Look into TRUE Finance. Everything. The platform, the launch, all of it.",
+   "disp": null,
    "sr": 22050,
    "trim": [
     0,
-    82688
+    81664
    ],
    "tempo": 1.14,
-   "dur": 3.289493575207861,
-   "A": 21.58,
-   "B": 24.869
+   "dur": 3.2487568126665876,
+   "A": 22.292,
+   "B": 25.541
   },
   {
    "i": 7,
    "scene": 3,
    "who": "C",
    "txt": "You're late to the story, Marcus.",
+   "disp": null,
    "sr": 16000,
    "trim": [
-    139,
-    29805
+    173,
+    30833
    ],
    "tempo": 1.12,
-   "dur": 1.6554687499999998,
-   "A": 25.069,
-   "B": 26.724
+   "dur": 1.7109374999999998,
+   "A": 25.741,
+   "B": 27.452
   },
   {
    "i": 8,
    "scene": 3,
    "who": "M",
    "txt": "What does that mean?",
+   "disp": null,
    "sr": 22050,
    "trim": [
     0,
-    17664
+    18688
    ],
    "tempo": 1.14,
-   "dur": 0.7027091538369734,
-   "A": 26.924,
-   "B": 27.627
+   "dur": 0.7434459163782473,
+   "A": 27.652,
+   "B": 28.395
   },
   {
    "i": 9,
    "scene": 3,
    "who": "C",
    "txt": "It means October fifteenth is closer than you think.",
+   "disp": null,
    "sr": 16000,
    "trim": [
-    317,
-    48616
+    271,
+    48145
    ],
    "tempo": 1.12,
-   "dur": 2.6952566964285714,
-   "A": 27.827,
-   "B": 30.522
+   "dur": 2.6715401785714286,
+   "A": 28.595,
+   "B": 31.267
   },
   {
    "i": 10,
    "scene": 4,
    "who": "M",
-   "txt": "I've seen the platform. I've read the announcements. Why does this launch matter so much?",
+   "txt": "I've seen the platform. But what is TRUE, exactly?",
+   "disp": "I\u2019ve seen the platform. But what is $TRUE, exactly?",
    "sr": 22050,
    "trim": [
     0,
-    87040
+    53504
    ],
    "tempo": 1.14,
-   "dur": 3.462624816008275,
-   "A": 31.922,
-   "B": 35.385
+   "dur": 2.128495842781557,
+   "A": 32.667,
+   "B": 34.795
   },
   {
    "i": 11,
    "scene": 4,
    "who": "E",
-   "txt": "Because launches mark beginnings, Marcus. They don't tell you the whole story.",
+   "txt": "It's the utility and access token of the TRUE ecosystem. Issued by TRUE Foundation, on Solana.",
+   "disp": "It\u2019s the utility and access token of the TRUE ecosystem. Issued by TRUE Foundation, on Solana.",
    "sr": 22050,
    "trim": [
-    314,
-    98548
+    571,
+    138564
    ],
    "tempo": 1.14,
-   "dur": 3.907944464335442,
-   "A": 35.585,
-   "B": 39.493
+   "dur": 5.48963679038867,
+   "A": 34.995,
+   "B": 40.485
   },
   {
    "i": 12,
    "scene": 4,
    "who": "E",
-   "txt": "If you want to know where things are going, understand what they're building.",
+   "txt": "TRUE AI builds and runs the exchange. The TRUE DEX is already live, with over a billion dollars traded.",
+   "disp": null,
    "sr": 22050,
    "trim": [
-    456,
-    75264
+    0,
+    159220
    ],
    "tempo": 1.14,
-   "dur": 2.9760114572144647,
-   "A": 39.633,
-   "B": 42.609
+   "dur": 6.334089191232049,
+   "A": 40.625,
+   "B": 46.959
   },
   {
    "i": 13,
    "scene": 4,
    "who": "M",
-   "txt": "Then I want to see it for myself.",
+   "txt": "So what is it actually used for?",
+   "disp": null,
    "sr": 22050,
    "trim": [
     0,
-    34261
+    37376
    ],
    "tempo": 1.14,
-   "dur": 1.3629709193618968,
-   "A": 42.809,
-   "B": 44.172
+   "dur": 1.4868918327564946,
+   "A": 47.159,
+   "B": 48.646
   },
   {
    "i": 14,
-   "scene": 5,
-   "who": "M",
-   "txt": "October fifteenth. That's when everything begins?",
+   "scene": 4,
+   "who": "E",
+   "txt": "Pay your trading fees in TRUE, and get up to fifty percent off.",
+   "disp": "Pay your trading fees in $TRUE, and get up to 50% off.",
    "sr": 22050,
    "trim": [
     0,
-    48640
+    83733
    ],
    "tempo": 1.14,
-   "dur": 1.9349962207105065,
-   "A": 44.472,
-   "B": 46.407
+   "dur": 3.3310657596371884,
+   "A": 48.846,
+   "B": 52.177
   },
   {
    "i": 15,
-   "scene": 5,
+   "scene": 4,
    "who": "E",
-   "txt": "That's when the TRUE T G E arrives.",
+   "txt": "Every request to TRUE AI runs on credits in TRUE. Hold more, and your share as a copy-trading leader goes up. Referral payouts can be boosted too.",
+   "disp": "Every request to TRUE AI runs on credits in $TRUE. Hold more, and your share as a copy-trading leader goes up. Referral payouts can be boosted too.",
    "sr": 22050,
    "trim": [
-    576,
-    50699
+    878,
+    195173
    ],
    "tempo": 1.14,
-   "dur": 1.993992918804949,
-   "A": 46.607,
-   "B": 48.601
+   "dur": 7.729442654254684,
+   "A": 52.317,
+   "B": 60.046
   },
   {
    "i": 16,
-   "scene": 5,
-   "who": "M",
-   "txt": "Then people should probably pay attention.",
+   "scene": 4,
+   "who": "E",
+   "txt": "Then V I P levels, burns, staking and vaults, rolled out as each one ships.",
+   "disp": "Then VIP levels, burns, staking and vaults \u2014 rolled out as each one ships.",
    "sr": 22050,
    "trim": [
-    0,
-    38144
+    289,
+    122410
    ],
    "tempo": 1.14,
-   "dur": 1.5174444046624498,
-   "A": 48.801,
-   "B": 50.318
+   "dur": 4.858216970998926,
+   "A": 60.186,
+   "B": 65.044
   },
   {
    "i": 17,
-   "scene": 5,
-   "who": "E",
-   "txt": "Now you're starting to understand.",
+   "scene": 4,
+   "who": "M",
+   "txt": "And why does the T G E matter?",
+   "disp": "And why does the TGE matter?",
    "sr": 22050,
    "trim": [
-    590,
-    35776
+    0,
+    36096
    ],
    "tempo": 1.14,
-   "dur": 1.3997692644309185,
-   "A": 50.518,
-   "B": 51.918
+   "dur": 1.4359708795799022,
+   "A": 65.244,
+   "B": 66.68
   },
   {
    "i": 18,
+   "scene": 4,
+   "who": "E",
+   "txt": "On October fifteenth, at six p.m. Central European Time, the token is generated, and opens for trading on the TRUE DEX.",
+   "disp": "On October 15th, at 18:00 CET, the token is generated \u2014 and opens for trading on the TRUE DEX.",
+   "sr": 22050,
+   "trim": [
+    747,
+    199782
+   ],
+   "tempo": 1.14,
+   "dur": 7.918009308986753,
+   "A": 66.88,
+   "B": 74.798
+  },
+  {
+   "i": 19,
+   "scene": 4,
+   "who": "E",
+   "txt": "After listing, fee payment in TRUE and V I P levels switch on. And the contract address comes from official channels only.",
+   "disp": "After listing, fee payment in $TRUE and VIP levels switch on. And the contract address comes from official channels only.",
+   "sr": 22050,
+   "trim": [
+    740,
+    183480
+   ],
+   "tempo": 1.14,
+   "dur": 7.269761705851932,
+   "A": 74.938,
+   "B": 82.208
+  },
+  {
+   "i": 20,
+   "scene": 4,
+   "who": "M",
+   "txt": "Then I want to see it for myself.",
+   "disp": null,
+   "sr": 22050,
+   "trim": [
+    0,
+    33019
+   ],
+   "tempo": 1.14,
+   "dur": 1.3135616819827347,
+   "A": 82.408,
+   "B": 83.722
+  },
+  {
+   "i": 21,
+   "scene": 5,
+   "who": "M",
+   "txt": "October fifteenth. That's when everything begins?",
+   "disp": null,
+   "sr": 22050,
+   "trim": [
+    0,
+    47360
+   ],
+   "tempo": 1.14,
+   "dur": 1.8840752675339143,
+   "A": 84.022,
+   "B": 85.906
+  },
+  {
+   "i": 22,
+   "scene": 5,
+   "who": "E",
+   "txt": "That's when the TRUE T G E arrives.",
+   "disp": "That\u2019s when the $TRUE TGE arrives.",
+   "sr": 22050,
+   "trim": [
+    787,
+    47105
+   ],
+   "tempo": 1.14,
+   "dur": 1.8426224290885946,
+   "A": 86.106,
+   "B": 87.949
+  },
+  {
+   "i": 23,
+   "scene": 5,
+   "who": "M",
+   "txt": "Then people should probably pay attention.",
+   "disp": null,
+   "sr": 22050,
+   "trim": [
+    0,
+    38656
+   ],
+   "tempo": 1.14,
+   "dur": 1.5378127859330868,
+   "A": 88.149,
+   "B": 89.687
+  },
+  {
+   "i": 24,
+   "scene": 5,
+   "who": "E",
+   "txt": "Now you're starting to understand.",
+   "disp": null,
+   "sr": 22050,
+   "trim": [
+    552,
+    37952
+   ],
+   "tempo": 1.14,
+   "dur": 1.4878466006285558,
+   "A": 89.887,
+   "B": 91.375
+  },
+  {
+   "i": 25,
    "scene": 6,
    "who": "N",
    "txt": "October fifteenth. The next chapter begins.",
+   "disp": null,
    "sr": 22050,
    "trim": [
-    383,
-    54305
+    863,
+    54994
    ],
    "tempo": 0.94,
-   "dur": 2.601534230713562,
-   "A": 55.218,
-   "B": 57.82
+   "dur": 2.6116176967240796,
+   "A": 94.675,
+   "B": 97.287
   }
  ],
  "scenes": {
   "1": [
    0.0,
-   8.775
+   8.869
   ],
   "2": [
-   8.775,
-   21.43
+   8.869,
+   22.142000000000003
   ],
   "3": [
-   21.43,
-   31.772
+   22.142000000000003,
+   32.516999999999996
   ],
   "4": [
-   31.772,
-   44.322
+   32.516999999999996,
+   83.872
   ],
   "5": [
-   44.322,
-   52.467999999999996
+   83.872,
+   91.925
   ],
   "6": [
-   52.467999999999996,
-   60.0
+   91.925,
+   100.69
   ]
  },
- "billboard": 30.671999999999997,
- "black": 52.467999999999996,
- "narr": 55.218,
- "narrEnd": 57.82
+ "billboard": 31.416999999999998,
+ "black": 91.925,
+ "narr": 94.675,
+ "narrEnd": 97.287,
+ "end": 100.69
 }

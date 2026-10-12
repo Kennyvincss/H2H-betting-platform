@@ -20,8 +20,9 @@ S[2]=[S[1][1], scenes[3]['first']-.15]
 S[3]=[S[2][1], scenes[3]['last']+BILLBOARD+.15]
 S[4]=[S[3][1], scenes[5]['first']-.15]
 S[5]=[S[4][1], scenes[5]['last']+DIM]
-S[6]=[S[5][1], 60.0]
-out={'lines':L,'scenes':{k:v for k,v in S.items()},'billboard':scenes[3]['last']+.15,'black':S[5][1],'narr':L[-1]['A'],'narrEnd':L[-1]['B']}
+END=round(L[-1]['B']+3.4,2)
+S[6]=[S[5][1], END]
+out={'lines':L,'scenes':{k:v for k,v in S.items()},'billboard':scenes[3]['last']+.15,'black':S[5][1],'narr':L[-1]['A'],'narrEnd':L[-1]['B'],'end':END}
 json.dump(out,open('vo/timeline.json','w'),indent=1)
 for l in L: print(f"{l['i']:2d} s{l['scene']} {l['who']} {l['A']:6.2f}-{l['B']:6.2f} {l['txt'][:55]}")
-print({k:[round(a,2),round(b,2)] for k,(a,b) in S.items()}, 'title hold after narrator: %.2f s'%(60-L[-1]['B']))
+print({k:[round(a,2),round(b,2)] for k,(a,b) in S.items()}, 'END',END)
