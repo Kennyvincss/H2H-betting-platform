@@ -12,18 +12,22 @@ def win(t0,dur): m=(t>=t0)&(t<t0+dur); return m,t[m]-t0
 def put(fn,t0,dur,g=1.,pan=0.):
     m,x=win(t0,dur); s=fn(x)*g; L[m]+=s*(1-pan); R[m]+=s*(1+pan)
 HN=hp(noise,.55)
-# 1) GLASS CRACK at 0.10: hard transient, crackle grains, glassy tinkles
-put(lambda x: HN[:len(x)]*np.exp(-x*90),0.10,.12,.9)
-put(lambda x: np.sin(2*np.pi*(90+300*np.exp(-x*40))*x)*np.exp(-x*18),0.10,.3,.55)
-g=np.random.default_rng(4)
-for i in range(38):
-    t0=0.10+abs(g.normal(0,.07)); f=3500+g.random()*6500; pan=g.uniform(-.8,.8)
-    put(lambda x,f=f: (np.sin(2*np.pi*f*x)+.5*np.sin(2*np.pi*f*1.53*x))*np.exp(-x*(60+g.random()*80)),t0,.09,.07*(1-i/45),pan)
-for i in range(60):   # crackle grains
-    t0=0.10+g.random()*.28; put(lambda x: HN[:len(x)]*np.exp(-x*900),t0,.008,.25*np.exp(-(t0-.1)*6),g.uniform(-.9,.9))
-# 2) SHATTER BURST at 0.40: wide noise swell + low thump
-m,x=win(.38,.6); b=lp(noise,.12)[m]; e=np.clip(x/.04,0,1)*np.exp(-x*5.5); L[m]+=b*e*.9; R[m]+=np.roll(lp(noise,.12),311)[m]*e*.9
-put(lambda x: np.sin(2*np.pi*(60+90*np.exp(-x*22))*x)*np.exp(-x*9),.40,.5,.6)
+# 1) PULL-BACK 0.00-0.32: the clip settles into a card (falling filtered swoosh)
+m,x=win(0.0,.36); k=x/.36; y=lp(noise,.08)[m]*np.sin(np.pi*np.clip(k*1.2,0,1))**2
+L[m]+=y*.5; R[m]+=y*.5
+put(lambda x: np.sin(2*np.pi*(420-260*x/.3)*x)*np.sin(np.pi*x/.3)**2,0.0,.3,.08)
+# 2) STAMP at 0.16: scissor snip (two metallic clicks) + punchy thump
+for dt,f in ((0.0,5200),(0.045,6100)):
+    put(lambda x,f=f: (np.sin(2*np.pi*f*x)+.6*np.sin(2*np.pi*f*1.41*x))*np.exp(-x*120)+HN[:len(x)]*np.exp(-x*400)*.8,0.16+dt,.06,.35)
+put(lambda x: np.sin(2*np.pi*(70+160*np.exp(-x*30))*x)*np.exp(-x*14),0.20,.4,.95)
+put(lambda x: HN[:len(x)]*np.exp(-x*70),0.20,.08,.35)
+# 3) MULTIPLY at 0.38: cards dealt out (rapid stuttered swishes) + wide swell
+g=np.random.default_rng(9)
+for i in range(9):
+    t0=0.38+i*0.045+g.random()*.01; pan=g.uniform(-.9,.9)
+    put(lambda x: hp(noise,.3)[:len(x)]*np.sin(np.pi*x/.07)**2,t0,.07,.22*(1-i/12),pan)
+m,x=win(.38,.6); b=lp(noise,.12)[m]; e=np.clip(x/.05,0,1)*np.exp(-x*5.5); L[m]+=b*e*.7; R[m]+=np.roll(lp(noise,.12),311)[m]*e*.7
+put(lambda x: np.sin(2*np.pi*(60+90*np.exp(-x*22))*x)*np.exp(-x*9),.38,.5,.5)
 # 3) FLY-BY WHOOSHES 0.9 -> 2.3, accelerating (cards passing the camera)
 def whoosh(t0,dur,g,pan_from,pan_to,bright):
     m,x=win(t0,dur); k=x/dur; env=np.sin(np.pi*k)**2
@@ -68,5 +72,5 @@ L=room(L); R=room(R)
 mx=max(np.abs(L).max(),np.abs(R).max()); st=np.stack([L,R],1)/mx
 st=np.tanh(st*1.3)/np.tanh(1.3)
 st[-int(.006*SR):]*=np.linspace(1,0,int(.006*SR))[:,None]
-w=wave.open('sig2.wav','wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((st*32767*.73).astype(np.int16).tobytes()); w.close()
+w=wave.open('sig3.wav','wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((st*32767*.73).astype(np.int16).tobytes()); w.close()
 print('ok')

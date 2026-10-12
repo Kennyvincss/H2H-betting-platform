@@ -1,0 +1,230 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>ClipRally Outro — One Clip. Everywhere.</title>
+<style>
+  :root{--bg:#0b0b0c;--red:#f13549;--red2:#bb1b30;--cyan:#35c8e8;--text:#f5f3ee}
+  html,body{margin:0;background:#000;overflow:hidden}
+  #stage{position:absolute;left:0;top:0;overflow:hidden;background:var(--bg)}
+  #bg{position:absolute;inset:0}
+  canvas{position:absolute;left:0;top:0}
+  .persp{position:absolute;inset:0;perspective:1150px;perspective-origin:50% 50%}
+  .world{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
+  /* the clip itself, which becomes a player card */
+  #hero{position:absolute;left:0;top:0;overflow:hidden;background:#000 center/cover no-repeat;transform-origin:50% 50%}
+  #hero .track{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.28)}
+  #hero .prog{position:absolute;left:0;bottom:0;background:var(--red);box-shadow:0 0 18px rgba(241,53,73,.9)}
+  #hero .knob{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(241,53,73,.9)}
+  #stamp{position:absolute;left:var(--sx);top:var(--sy);white-space:nowrap;font:900 var(--st)/1 Inter,sans-serif;letter-spacing:.06em;color:#fff;
+         background:var(--red);padding:.32em .6em .3em;border-radius:.28em;box-shadow:0 10px 40px rgba(241,53,73,.55);opacity:0}
+  #stamp span{font-family:"Noto Color Emoji";font-size:.9em;margin-right:.35em;vertical-align:-.05em}
+  /* double-sided video cards */
+  .card{position:absolute;left:0;top:0;transform-style:preserve-3d;will-change:transform,opacity}
+  .face{position:absolute;inset:0;border-radius:14px;overflow:hidden;background:#000 center/cover no-repeat;
+        box-shadow:0 0 0 2px rgba(255,255,255,.16),0 18px 40px rgba(0,0,0,.55)}
+  .back{}
+  .face .bar{position:absolute;left:0;bottom:0;height:5px;background:var(--red)}
+  .face .bar2{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.25)}
+  .face .badge{position:absolute;left:9px;top:9px;font:800 15px/1 Inter;color:#fff;padding:5px 8px;border-radius:6px;background:rgba(0,0,0,.6)}
+  .face .badge.live{background:var(--red)}
+  /* official logo: circular badge, never stretched */
+  #logo{position:absolute;left:50%;top:50%;width:var(--ld);height:var(--ld);border-radius:50%;overflow:hidden;opacity:0;
+        background:#000 url("cliprally_logo.jpg") center/100% 100% no-repeat}
+  #logoSweep{position:absolute;inset:0;border-radius:50%;background:linear-gradient(105deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 60%);
+        background-size:300% 100%;mix-blend-mode:screen;opacity:0}
+  #logoRim{position:absolute;left:50%;top:50%;width:var(--ld);height:var(--ld);border-radius:50%;opacity:0;
+        box-shadow:0 0 0 3px rgba(241,53,73,.9),0 0 60px 6px rgba(241,53,73,.55),0 0 160px 20px rgba(187,27,48,.35)}
+  #label{position:absolute;left:50%;white-space:nowrap;transform:translateX(-50%);font:800 var(--ls)/1 Inter,"Segoe UI",Arial,sans-serif;letter-spacing:.1em;color:var(--text);text-shadow:0 2px 16px rgba(0,0,0,.7)}
+  #label b{color:var(--red);font-weight:800}
+  #label i{font-style:normal;display:inline-block;opacity:0}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head>
+<body>
+<div id="stage">
+  <div id="bg"></div>
+  <canvas id="under"></canvas>
+  <div class="persp" id="persp"><div class="world" id="world">
+    <div id="hero"><div class="track"></div><div class="prog"></div><div class="knob"></div><div id="stamp"><span>✂️</span>CLIPPED</div></div>
+  </div></div>
+  <canvas id="over"></canvas>
+  <div id="logoRim"></div>
+  <div id="logo"><div id="logoSweep"></div></div>
+  <div id="label"></div>
+  <div id="flash"></div>
+</div>
+<script>
+const Q=new URLSearchParams(location.search);
+const VERT=Q.get('v')==='1';
+const W=VERT?1080:1920, H=VERT?1920:1080;
+const FRAME=Q.get('frame')||'sample_frame.png';
+// logo diameter + text sized to sit inside the centre 9:16 column on 16:9 (x 656–1264)
+const S=VERT?{ld:600,ly:-110,ls:50,gap:70,R:430,cardW:300,cardH:169,heroK:.74,st:46}
+            :{ld:400,ly:-50,ls:33,gap:48,R:560,cardW:290,cardH:163,heroK:.6,st:40};
+const $=id=>document.getElementById(id);
+const st=$('stage');st.style.width=W+'px';st.style.height=H+'px';document.body.style.width=W+'px';document.body.style.height=H+'px';
+const RS=document.documentElement.style;RS.setProperty('--ld',S.ld+'px');RS.setProperty('--ls',S.ls+'px');RS.setProperty('--st',S.st+'px');RS.setProperty('--sx',VERT?'24%':'15%');RS.setProperty('--sy',VERT?'12%':'17%');
+for(const c of ['under','over']){$(c).width=W;$(c).height=H;}
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), lerp=(a,b,x)=>a+(b-a)*x;
+const ss=(a,b,x)=>{const k=clamp((x-a)/(b-a));return k*k*(3-2*k)};
+const outCubic=x=>1-Math.pow(1-x,3), outExpo=x=>x>=1?1:1-Math.pow(2,-10*x), inCubic=x=>x*x*x, inOutCubic=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const outBack=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+function rng(s){s=s>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const rnd=rng(2026);
+$('bg').style.background=`radial-gradient(ellipse ${W*.5}px ${H*.38}px at 50% 50%, rgba(241,53,73,.14), rgba(0,0,0,0) 70%), #0b0b0c`;
+
+// ---------- hero: the clip's last frame ----------
+const hero=$('hero');
+Object.assign(hero.style,{width:W+'px',height:H+'px',backgroundImage:`url("${FRAME}")`});
+const heroBarH=VERT?10:8;
+hero.querySelector('.track').style.height=heroBarH+'px';hero.querySelector('.prog').style.height=heroBarH+'px';
+const knob=hero.querySelector('.knob');knob.style.width=knob.style.height=(heroBarH*2.6)+'px';
+const stamp=$('stamp');
+
+// ---------- cards: front = the clip, back = another moment ----------
+const BADGES=['LIVE','▶ 0:14','🔥 2.4M','LIVE','▶ 0:31','💬 18K','▶ 0:09','LIVE','❤ 96K','▶ 1:02'];
+const CARDS=[];const NB=46, NC=NB+30;
+const world=$('world');
+for(let k=0;k<NC;k++){
+  const el=document.createElement('div');el.className='card';el.style.width=S.cardW+'px';el.style.height=S.cardH+'px';
+  const b=BADGES[k%BADGES.length], chrome=`<div class="bar2"></div><div class="bar" style="width:${20+(k*37)%75}%"></div><div class="badge ${b==='LIVE'?'live':''}">${b}</div>`;
+  el.innerHTML=`<div class="face front" style="background-image:url('${FRAME}')"><div class="bar2"></div><div class="bar" style="width:100%"></div></div>
+                <div class="face back" style="background-image:url('thumbs/t${(k*5)%12}.png')">${chrome}</div>`;
+  world.appendChild(el);
+  const burst=k<NB;
+  // burst target spreads over the whole frame with depth
+  const a=rnd()*Math.PI*2, d=Math.sqrt(rnd());
+  CARDS.push({el,burst,front:el.children[0],back:el.children[1],
+    tx:Math.cos(a)*d*W*.62, ty:Math.sin(a)*d*H*.6, tz:-700+rnd()*900,
+    rx:(rnd()-.5)*50, rz:(rnd()-.5)*70, flip:.46+rnd()*.42, delay:rnd()*.12,
+    th0:k*2.39996, Rf:.75+rnd()*.5, z0:burst?-900+rnd()*1000:-4200+rnd()*2600, tilt:(rnd()-.5)*30});
+}
+
+// ---------- label ----------
+const lab=$('label');
+lab.innerHTML=[...'CLIPPED ON '].map(c=>`<i>${c===' '?'&nbsp;':c}</i>`).join('')+`<b>${[...'CLIPRALLY'].map(c=>`<i>${c}</i>`).join('')}</b>`;
+lab.style.top=(H/2+S.ly+S.ld/2+S.gap)+'px';
+
+// network nodes for the ripple
+const NODES=[];{const r=rng(77);for(let i=0;i<70;i++){let x,y;do{x=r()*W;y=r()*H}while(Math.abs(x-W/2)<(VERT?380:400)&&Math.abs(y-(H/2+S.ly+40))<(VERT?460:300));NODES.push({x,y,s:1.5+r()*2.5})}}
+const LINKS=NODES.map((n,i)=>{let best=0,bd=1e9;NODES.forEach((m,j)=>{if(i===j)return;const d=Math.hypot(n.x-m.x,n.y-m.y);if(d<bd){bd=d;best=j}});return[i,best]});
+// red crystal shards that burst from the logo impact (echo the badge art)
+const CRY=[];{const r=rng(31);for(let i=0;i<46;i++)CRY.push({a:r()*Math.PI*2,sp:500+r()*1100,sz:6+r()*22,rot:r()*6,vr:(r()-.5)*14,life:.5+r()*.6})}
+
+function spin(tau){return 1.1*tau+7.5*Math.pow(tau,3)/(3*1.69)}
+function dive(tau){return 260*tau+2600*Math.pow(tau,3)/(3*1.69)}
+
+window.render=function(t){
+  const U=$('under').getContext('2d'), O=$('over').getContext('2d');U.clearRect(0,0,W,H);O.clearRect(0,0,W,H);
+  let sx=0,sy=0; const T0=2.42;
+  if(t>T0&&t<T0+.22){const k=1-(t-T0)/.22;sx=Math.sin(t*210)*12*k;sy=Math.cos(t*230)*9*k}
+  $('persp').style.transform=`translate(${sx}px,${sy}px)`;
+
+  // ===== START 0.00–0.40: the clip ends — it settles into a player card and gets clipped =====
+  const hk=inOutCubic(clamp(t/.32));                       // full frame → card
+  const hs=lerp(1,S.heroK,hk), rad=lerp(0,30,hk);
+  const prog=lerp(.9,1,outCubic(clamp(t/.24)));            // progress bar runs out
+  hero.querySelector('.prog').style.width=(prog*100)+'%';
+  knob.style.left=`calc(${prog*100}% - ${heroBarH*1.3}px)`;knob.style.bottom=(-heroBarH*.8)+'px';
+  hero.querySelector('.track').style.opacity=hero.querySelector('.prog').style.opacity=knob.style.opacity=clamp(t/.06);
+  hero.style.borderRadius=rad/hs+'px';
+  hero.style.boxShadow=`0 0 0 ${2/hs}px rgba(255,255,255,${.25*hk}), 0 ${30*hk}px ${70*hk}px rgba(0,0,0,${.35*hk}), 0 0 ${90*hk}px rgba(241,53,73,${.35*hk})`;
+  hero.style.transform=`translate3d(${-W/2}px,${-H/2}px,0) scale(${hs})`;
+  hero.style.opacity=t<.40?1:0;
+  // "✂ CLIPPED" stamp slams onto the card at 0.16
+  const sk=clamp((t-.16)/.14);
+  stamp.style.opacity=sk>0?1:0;
+  stamp.style.transform=`translate(-50%,-50%) scale(${(lerp(2.4,1,outBack(sk))/hs).toFixed(3)}) rotate(${lerp(-14,-6,sk)}deg)`;
+  if(t>=.30) stamp.style.opacity=1-clamp((t-.36)/.06);
+  // light dip of the dark surround as the card pulls back
+  if(t<.4){const g=U.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.7);g.addColorStop(0,`rgba(241,53,73,${.18*hk})`);g.addColorStop(1,'rgba(0,0,0,0)');U.fillStyle=g;U.fillRect(0,0,W,H);}
+
+  // ===== 0.38–1.0: one clip becomes many — copies fan out and flip to other moments =====
+  const tau=clamp(t-1.0,0,1.32), vw=ss(.86,1.3,t), col=clamp((t-2.18)/.24), colE=inCubic(col);
+  const heroCardScale=W*S.heroK/S.cardW;
+  for(const c of CARDS){
+    let bx=0,by=0,bz=-6000,brx=0,bry=0,brz=0,bsc=1,bop=0;
+    if(c.burst){
+      const u=clamp((t-.38-c.delay)/.6), e=outCubic(u);
+      bx=c.tx*e; by=c.ty*e; bz=c.tz*e; brx=c.rx*e; brz=c.rz*e;
+      bry=180*ss(c.flip,c.flip+.22,t);                      // flip from the clip to a new moment
+      bsc=lerp(heroCardScale,1,outExpo(u)); bop=t>=.38?1:0;
+    }
+    const th=c.th0+spin(tau)*(1+.15*Math.sin(c.th0)), R=S.R*c.Rf*(1-.28*ss(1.6,2.3,t));
+    const vx=Math.cos(th)*R, vy=Math.sin(th)*R*(VERT?1.35:.78), vz=c.z0+dive(tau);
+    const vrz=th*180/Math.PI+90+c.tilt, vry=180+Math.sin(th)*25;
+    let x=lerp(bx,vx,vw), y=lerp(by,vy,vw), z=lerp(bz,vz,vw), rx=lerp(brx,0,vw), ry=lerp(bry,vry,vw), rz=lerp(brz,vrz,vw), sc=lerp(bsc,1,vw);
+    let op=c.burst?bop:ss(.95,1.3,t);
+    op*=1-ss(820,1050,z);
+    if(col>0){x=lerp(x,0,colE);y=lerp(y,S.ly,colE);z=lerp(z,-500,colE);sc*=lerp(1,.05,colE);op*=1-ss(.75,1,col);}
+    c.el.style.display=op<=0.002?'none':'block';
+    if(op>0.002){
+      // a flip swaps content at the edge-on moment, so no face is ever seen mirrored
+      const ryN=((ry%360)+360)%360, showBack=ryN>90&&ryN<270; ry=showBack?ryN-180:(ryN>=270?ryN-360:ryN);
+      c.front.style.display=showBack?'none':'block'; c.back.style.display=showBack?'block':'none';
+      const sh=sc>1.25?'0 0 0 2px rgba(255,255,255,.16)':''; c.front.style.boxShadow=sh; c.back.style.boxShadow=sh;
+      c.el.style.opacity=op;
+      c.el.style.transform=`translate3d(${x-S.cardW/2}px,${y-S.cardH/2}px,${z}px) rotateZ(${rz}deg) rotateY(${ry}deg) rotateX(${rx}deg) scale(${sc})`;
+      const blur=t>1.1?clamp(Math.pow(tau/1.3,2)*7*(z>-600?1:.4),0,7):0;const fb=blur>.3?`blur(${blur.toFixed(1)}px)`:'none'; c.front.style.filter=fb; c.back.style.filter=fb;
+    }
+  }
+  // tunnel light + speed lines
+  if(t>.8&&t<2.6){
+    const k=ss(.8,1.3,t)*(1-ss(2.42,2.55,t)), sp=Math.pow(clamp(tau/1.3),2), cx=W/2, cy=H/2;
+    const g=U.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*.6);
+    g.addColorStop(0,`rgba(255,240,240,${.10*k+.55*k*col*col})`);g.addColorStop(.12,`rgba(241,53,73,${.22*k})`);g.addColorStop(.5,`rgba(53,200,232,${.05*k})`);g.addColorStop(1,'rgba(0,0,0,0)');
+    U.fillStyle=g;U.fillRect(0,0,W,H);
+    const r=rng(Math.floor(t*60)*31+7);O.lineCap='round';const n=Math.floor(20+70*sp);
+    for(let i=0;i<n;i++){const a=r()*Math.PI*2,r0=60+r()*Math.max(W,H)*.5,len=(80+r()*380)*sp+20,al=(.15+.5*r())*k;
+      O.strokeStyle=r()<.65?`rgba(255,255,255,${al})`:`rgba(241,53,73,${al})`;O.lineWidth=1+r()*2.2;
+      O.beginPath();O.moveTo(cx+Math.cos(a)*r0,cy+Math.sin(a)*r0);O.lineTo(cx+Math.cos(a)*(r0+len),cy+Math.sin(a)*(r0+len));O.stroke();}
+  }
+
+  // ===== 2.42: the mascot punches out of the vortex =====
+  $('flash').style.opacity= t>=T0-.02&&t<T0+.12 ? (t<T0+.02? .22*(t-(T0-.02))/.04 : .22*(1-(t-(T0+.02))/.10)) : 0;
+  const logo=$('logo'), rim=$('logoRim'), cy=H/2+S.ly;
+  let ls=0,lrot=0,lop=0,lblur=0;
+  if(t>=T0-.10){
+    const k=clamp((t-(T0-.10))/.42);
+    ls=k<.24? lerp(.05,1.18,inCubic(k/.24)) : lerp(1.18,1,outBack(clamp((k-.24)/.76)));  // rush in, overshoot, settle
+    lrot=lerp(-18,0,outExpo(clamp(k*1.6))); lop=clamp(k*6); lblur=k<.24?(1-k/.24)*10:0;
+  }
+  // signature ending: one last punch on the beat at 4.50
+  if(t>=4.48){const k=clamp((t-4.48)/.32);ls*=1+.07*Math.sin(Math.PI*k)*(1-k*.3);}
+  else if(t>3.0){ls*=1+.01*Math.sin((t-3)*Math.PI*1.2);}
+  logo.style.opacity=lop;rim.style.opacity=lop*(t>T0+.1?(.55+.25*Math.pow(Math.sin((t-T0)*2.4),2)):0);
+  for(const el of [logo,rim]) el.style.transform=`translate(-50%,-50%) translate(${sx}px,${sy+S.ly}px) rotate(${lrot}deg) scale(${ls})`;
+  logo.style.filter=lblur>.2?`blur(${lblur.toFixed(1)}px)`:'none';
+  // light sweep across the badge
+  const sw=clamp((t-2.82)/.42);$('logoSweep').style.opacity=sw>0&&sw<1?1:0;$('logoSweep').style.backgroundPosition=`${lerp(110,-10,inOutCubic(sw))}% 0`;
+  if(t>=T0){
+    // impact shockwave + red crystal burst
+    const k=clamp((t-T0)/.6);
+    if(k<1){O.strokeStyle=`rgba(255,255,255,${.85*(1-k)})`;O.lineWidth=5*(1-k)+1;O.shadowColor='rgba(241,53,73,1)';O.shadowBlur=22;
+      const r=S.ld*.5+outExpo(k)*Math.max(W,H)*.5;O.beginPath();O.arc(W/2,cy,r,0,Math.PI*2);O.stroke();O.shadowBlur=0;}
+    for(const c of CRY){const q=clamp((t-T0)/c.life);if(q<=0||q>=1)continue;const d=S.ld*.45+outExpo(q)*c.sp*.6;
+      const x=W/2+Math.cos(c.a)*d, y=cy+Math.sin(c.a)*d;O.save();O.translate(x,y);O.rotate(c.rot+c.vr*q);O.globalAlpha=1-q;
+      O.fillStyle=q<.15?'#ffd3d8':'#f13549';O.shadowColor='#f13549';O.shadowBlur=16;O.beginPath();O.moveTo(0,-c.sz);O.lineTo(c.sz*.45,c.sz*.3);O.lineTo(-c.sz*.35,c.sz*.5);O.closePath();O.fill();O.restore();}
+    // glow behind the badge
+    const gk=clamp((t-T0)/.2)*(t>3?.75+.25*Math.pow(Math.sin((t-3)*Math.PI),2):1);
+    const g=U.createRadialGradient(W/2,cy,S.ld*.3,W/2,cy,S.ld*1.25);g.addColorStop(0,`rgba(241,53,73,${.5*gk})`);g.addColorStop(1,'rgba(0,0,0,0)');U.fillStyle=g;U.fillRect(0,0,W,H);
+  }
+  // final punch ring
+  if(t>=4.5){const k=clamp((t-4.5)/.45);O.strokeStyle=`rgba(241,53,73,${.8*(1-k)})`;O.lineWidth=4*(1-k)+1;O.beginPath();O.arc(W/2,cy,S.ld*.52+outExpo(k)*S.ld*.9,0,Math.PI*2);O.stroke();}
+
+  // ===== label + ripple across the network =====
+  lab.querySelectorAll('i').forEach((ch,i)=>{const k=clamp((t-2.92-i*.018)/.22),e=outCubic(k);ch.style.opacity=k;ch.style.transform=`translateY(${(1-e)*26}px)`;ch.style.filter=k<1?`blur(${(1-e)*5}px)`:'none'});
+  if(t>=3.15){
+    const cx=W/2, rings=[3.2,3.75,4.5].map(t0=>clamp((t-t0)/1.1)), fadeIn=ss(3.15,3.5,t), RM=Math.hypot(W,H)*.62;
+    for(const k of rings){if(k<=0||k>=1)continue;const r=S.ld*.5+outCubic(k)*RM;
+      O.strokeStyle=`rgba(241,53,73,${.4*(1-k)})`;O.lineWidth=2;O.beginPath();O.arc(cx,cy,r,0,Math.PI*2);O.stroke();}
+    for(const [a,b] of LINKS){const A=NODES[a],B=NODES[b];O.strokeStyle=`rgba(255,255,255,${.06*fadeIn})`;O.lineWidth=1;O.beginPath();O.moveTo(A.x,A.y);O.lineTo(B.x,B.y);O.stroke();}
+    for(const n of NODES){const dn=Math.hypot(n.x-cx,n.y-cy);let hit=0;
+      for(const k of rings){if(k<=0)continue;const r=S.ld*.5+outCubic(k)*RM;hit=Math.max(hit,Math.exp(-Math.abs(r-dn)/40)*(1-k*.5))}
+      O.fillStyle=`rgba(255,255,255,${(.14+.3*hit)*fadeIn})`;O.beginPath();O.arc(n.x,n.y,n.s,0,Math.PI*2);O.fill();
+      if(hit>.05){O.fillStyle=`rgba(241,53,73,${hit*.9})`;O.shadowColor='rgba(241,53,73,1)';O.shadowBlur=14;O.beginPath();O.arc(n.x,n.y,n.s+2.5*hit,0,Math.PI*2);O.fill();O.shadowBlur=0;}}
+  }
+};
+document.fonts.ready.then(()=>{
+  const imgs=[FRAME,'cliprally_logo.jpg',...Array.from({length:12},(_,i)=>`thumbs/t${i}.png`)];
+  Promise.all(imgs.map(src=>new Promise(r=>{const i=new Image();i.onload=i.onerror=r;i.src=src}))).then(()=>{window.render(0);window.READY=true});
+});
+</script>
+</body></html>
