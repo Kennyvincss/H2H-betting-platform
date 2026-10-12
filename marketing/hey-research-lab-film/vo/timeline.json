@@ -1,0 +1,2402 @@
+{
+ "lines": [
+  {
+   "i": 0,
+   "scene": 0,
+   "who": "J",
+   "txt": "Five thousand projects on Robinhood Chain. New tokens every hour. And every chart says the same thing.",
+   "disp": null,
+   "shot": {
+    "cold": 1
+   },
+   "sr": 22050,
+   "trim": [
+    627,
+    121333
+   ],
+   "tempo": 1.08,
+   "dur": 5.0686990845721,
+   "A": 2.2,
+   "B": 7.269,
+   "PA": 2.05,
+   "PB": 7.339
+  },
+  {
+   "i": 1,
+   "scene": 0,
+   "who": "J",
+   "txt": "But a chart can't tell me the one thing I need to know. Is anyone actually building this?",
+   "disp": null,
+   "shot": {
+    "cold": 2
+   },
+   "sr": 22050,
+   "trim": [
+    410,
+    92261
+   ],
+   "tempo": 1.08,
+   "dur": 3.857016880826404,
+   "A": 7.489,
+   "B": 11.346,
+   "PA": 7.339,
+   "PB": 11.496
+  },
+  {
+   "i": 2,
+   "scene": 0,
+   "who": "K",
+   "txt": "That's exactly the question HEY Research Lab answers.",
+   "disp": null,
+   "shot": {
+    "cold": 3
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    62464
+   ],
+   "tempo": 1.08,
+   "dur": 2.622994876963131,
+   "A": 11.646,
+   "B": 14.269,
+   "PA": 11.496,
+   "PB": 14.519
+  },
+  {
+   "i": 3,
+   "scene": 1,
+   "who": "K",
+   "txt": "Price tells you what the market is doing. HEY tells you what the builder is doing.",
+   "disp": null,
+   "shot": {
+    "img": "home",
+    "a": [
+     0.5,
+     0.5,
+     1
+    ],
+    "b": [
+     0.3,
+     0.3,
+     1.7
+    ],
+    "hl": [
+     [
+      0.125,
+      0.295,
+      0.37,
+      0.365
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    89344
+   ],
+   "tempo": 1.08,
+   "dur": 3.7517426723775933,
+   "A": 15.969,
+   "B": 19.721,
+   "PA": 15.819,
+   "PB": 19.791
+  },
+  {
+   "i": 4,
+   "scene": 1,
+   "who": "K",
+   "txt": "It reads public evidence. Code, releases, contracts, a project's own website. And every ship it records has a source you can open.",
+   "disp": null,
+   "shot": {
+    "img": "home",
+    "a": [
+     0.3,
+     0.36,
+     1.7
+    ],
+    "b": [
+     0.48,
+     0.42,
+     1.7
+    ],
+    "hl": [
+     [
+      0.125,
+      0.38,
+      0.31,
+      0.455
+     ],
+     [
+      0.67,
+      0.38,
+      0.86,
+      0.425
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    165120
+   ],
+   "tempo": 1.08,
+   "dur": 6.93373645754598,
+   "A": 19.941,
+   "B": 26.875,
+   "PA": 19.791,
+   "PB": 27.025
+  },
+  {
+   "i": 5,
+   "scene": 1,
+   "who": "J",
+   "txt": "So it's not another price tracker.",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    42233
+   ],
+   "tempo": 1.08,
+   "dur": 1.7734525909129082,
+   "A": 27.175,
+   "B": 28.948,
+   "PA": 27.025,
+   "PB": 29.098
+  },
+  {
+   "i": 6,
+   "scene": 1,
+   "who": "K",
+   "txt": "No. Building is never read from price, market cap, volume or holders. Hype and announcements are recorded, but never counted as building.",
+   "disp": null,
+   "shot": {
+    "img": "methodology",
+    "a": [
+     0.35,
+     0.3,
+     1.5
+    ],
+    "b": [
+     0.35,
+     0.45,
+     1.8
+    ],
+    "hl": [
+     [
+      0.125,
+      0.405,
+      0.56,
+      0.495
+     ]
+    ],
+    "q": "Activity is never derived from token price, market cap, trading volume, holders or wallets."
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    164096
+   ],
+   "tempo": 1.08,
+   "dur": 6.890736541530192,
+   "A": 29.248,
+   "B": 36.139,
+   "PA": 29.098,
+   "PB": 36.209
+  },
+  {
+   "i": 7,
+   "scene": 1,
+   "who": "K",
+   "txt": "And every line is marked Fact, Derived, or Unknown. Unknown is never counted as zero.",
+   "disp": null,
+   "shot": {
+    "img": "scan_result",
+    "a": [
+     0.35,
+     0.8,
+     1.7
+    ],
+    "b": [
+     0.38,
+     0.88,
+     2.1
+    ],
+    "hl": [
+     [
+      0.235,
+      0.855,
+      0.3,
+      0.88
+     ],
+     [
+      0.235,
+      0.915,
+      0.28,
+      0.935
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    109824
+   ],
+   "tempo": 1.08,
+   "dur": 4.611740992693373,
+   "A": 36.359,
+   "B": 40.971,
+   "PA": 36.209,
+   "PB": 41.221
+  },
+  {
+   "i": 8,
+   "scene": 2,
+   "who": "J",
+   "txt": "Okay. Where do I start?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    32329
+   ],
+   "tempo": 1.08,
+   "dur": 1.3575627781976989,
+   "A": 42.671,
+   "B": 44.029,
+   "PA": 42.521,
+   "PB": 44.179
+  },
+  {
+   "i": 9,
+   "scene": 2,
+   "who": "K",
+   "txt": "Hey Research Discovery. The public site. Free, and no account needed.",
+   "disp": null,
+   "shot": {
+    "img": "explore",
+    "a": [
+     0.5,
+     0.5,
+     1
+    ],
+    "b": [
+     0.4,
+     0.3,
+     1.45
+    ],
+    "hl": [
+     [
+      0.125,
+      0.23,
+      0.44,
+      0.275
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    82688
+   ],
+   "tempo": 1.08,
+   "dur": 3.472243218274964,
+   "A": 44.329,
+   "B": 47.801,
+   "PA": 44.179,
+   "PB": 47.871
+  },
+  {
+   "i": 10,
+   "scene": 2,
+   "who": "K",
+   "txt": "Explore lists every project HEY can research. At capture: five thousand and eleven published, over a thousand research ready, and one thousand and nine verified builders.",
+   "disp": "Explore lists every project HEY can research. At capture: 5,011 published, 1,087 research-ready and 1,009 verified builders.",
+   "shot": {
+    "img": "explore",
+    "a": [
+     0.3,
+     0.27,
+     2.0
+    ],
+    "b": [
+     0.36,
+     0.31,
+     2.2
+    ],
+    "hl": [
+     [
+      0.125,
+      0.29,
+      0.6,
+      0.325
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    216576
+   ],
+   "tempo": 1.08,
+   "dur": 9.09448223733938,
+   "A": 48.021,
+   "B": 57.115,
+   "PA": 47.871,
+   "PB": 57.185
+  },
+  {
+   "i": 11,
+   "scene": 2,
+   "who": "K",
+   "txt": "Each one carries an activity status. Shipping means a source backed ship in the last seven days. Active, the last month. Then Quiet, Dormant, or Resumed building.",
+   "disp": "Each one carries an activity status. Shipping: a source-backed ship in the last 7 days. Active: the last month. Then Quiet, Dormant, or Resumed building.",
+   "shot": {
+    "img": "explore",
+    "a": [
+     0.3,
+     0.41,
+     1.9
+    ],
+    "b": [
+     0.42,
+     0.78,
+     1.5
+    ],
+    "hl": [
+     [
+      0.14,
+      0.395,
+      0.45,
+      0.425
+     ],
+     [
+      0.15,
+      0.745,
+      0.2,
+      0.775
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    193792
+   ],
+   "tempo": 1.08,
+   "dur": 8.137734105988073,
+   "A": 57.335,
+   "B": 65.473,
+   "PA": 57.185,
+   "PB": 65.623
+  },
+  {
+   "i": 12,
+   "scene": 2,
+   "who": "J",
+   "txt": "And if HEY can't find any source at all?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    710,
+    50017
+   ],
+   "tempo": 1.08,
+   "dur": 2.0705047451079195,
+   "A": 65.773,
+   "B": 67.844,
+   "PA": 65.623,
+   "PB": 67.994
+  },
+  {
+   "i": 13,
+   "scene": 2,
+   "who": "K",
+   "txt": "Then it says activity unknown. Not dormant. Not zero. It looked, and found nothing to read building from.",
+   "disp": null,
+   "shot": {
+    "img": "glossary",
+    "a": [
+     0.35,
+     0.3,
+     1.6
+    ],
+    "b": [
+     0.35,
+     0.45,
+     1.7
+    ],
+    "hl": [
+     [
+      0.135,
+      0.24,
+      0.555,
+      0.4
+     ]
+    ],
+    "q": "Activity unknown: not enough public sources to judge activity yet."
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    120832
+   ],
+   "tempo": 1.08,
+   "dur": 5.073990089863106,
+   "A": 68.144,
+   "B": 73.218,
+   "PA": 67.994,
+   "PB": 73.468
+  },
+  {
+   "i": 14,
+   "scene": 3,
+   "who": "K",
+   "txt": "Ships is the live feed of what shipped on the chain. Releases, commits, contracts, announcements. Every entry backed by a public source.",
+   "disp": null,
+   "shot": {
+    "img": "ships",
+    "a": [
+     0.5,
+     0.45,
+     1.1
+    ],
+    "b": [
+     0.45,
+     0.78,
+     1.5
+    ],
+    "hl": [
+     [
+      0.135,
+      0.745,
+      0.41,
+      0.775
+     ],
+     [
+      0.135,
+      0.82,
+      0.37,
+      0.98
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    165120
+   ],
+   "tempo": 1.08,
+   "dur": 6.93373645754598,
+   "A": 74.918,
+   "B": 81.852,
+   "PA": 74.768,
+   "PB": 81.922
+  },
+  {
+   "i": 15,
+   "scene": 3,
+   "who": "K",
+   "txt": "Signals are measured changes. Development spikes, contracts deployed, liquidity moving, launches graduating. Each one with its figures before and after.",
+   "disp": null,
+   "shot": {
+    "img": "signals",
+    "a": [
+     0.5,
+     0.3,
+     1.5
+    ],
+    "b": [
+     0.5,
+     0.72,
+     1.6
+    ],
+    "hl": [
+     [
+      0.29,
+      0.51,
+      0.67,
+      0.54
+     ],
+     [
+      0.29,
+      0.695,
+      0.7,
+      0.77
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    186368
+   ],
+   "tempo": 1.08,
+   "dur": 7.825984714873604,
+   "A": 82.072,
+   "B": 89.898,
+   "PA": 81.922,
+   "PB": 89.968
+  },
+  {
+   "i": 16,
+   "scene": 3,
+   "who": "K",
+   "txt": "Narratives show what people are building. AI agents, agentic finance, analytics, D Ex, even memes.",
+   "disp": "Narratives show what people are building: AI agents, agentic finance, analytics, DEX \u2014 even memes.",
+   "shot": {
+    "img": "narratives",
+    "a": [
+     0.5,
+     0.45,
+     1.15
+    ],
+    "b": [
+     0.5,
+     0.5,
+     1.45
+    ],
+    "hl": [
+     [
+      0.5,
+      0.29,
+      0.86,
+      0.43
+     ],
+     [
+      0.135,
+      0.45,
+      0.49,
+      0.59
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    136704
+   ],
+   "tempo": 1.08,
+   "dur": 5.740488788107835,
+   "A": 90.118,
+   "B": 95.858,
+   "PA": 89.968,
+   "PB": 95.928
+  },
+  {
+   "i": 17,
+   "scene": 3,
+   "who": "K",
+   "txt": "And Pulse shows the whole chain, day by day. Trades, launches, and the ships that were verified.",
+   "disp": null,
+   "shot": {
+    "img": "pulse",
+    "a": [
+     0.5,
+     0.55,
+     1.1
+    ],
+    "b": [
+     0.5,
+     0.82,
+     1.5
+    ],
+    "hl": [
+     [
+      0.135,
+      0.76,
+      0.36,
+      0.97
+     ],
+     [
+      0.385,
+      0.76,
+      0.61,
+      0.97
+     ],
+     [
+      0.63,
+      0.76,
+      0.86,
+      0.97
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    108544
+   ],
+   "tempo": 1.08,
+   "dur": 4.557991097673637,
+   "A": 96.078,
+   "B": 100.636,
+   "PA": 95.928,
+   "PB": 100.886
+  },
+  {
+   "i": 18,
+   "scene": 4,
+   "who": "J",
+   "txt": "But how do I tell who's building the most?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    174,
+    41192
+   ],
+   "tempo": 1.08,
+   "dur": 1.722432182749643,
+   "A": 102.336,
+   "B": 104.058,
+   "PA": 102.186,
+   "PB": 104.208
+  },
+  {
+   "i": 19,
+   "scene": 4,
+   "who": "K",
+   "txt": "Build Momentum. A score built from shipping evidence only. A product launch weighs more than a docs update. An announcement counts for nothing.",
+   "disp": null,
+   "shot": {
+    "img": "project_merrymen",
+    "a": [
+     0.35,
+     0.5,
+     1.7
+    ],
+    "b": [
+     0.3,
+     0.57,
+     2.3
+    ],
+    "hl": [
+     [
+      0.24,
+      0.58,
+      0.41,
+      0.61
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    155904
+   ],
+   "tempo": 1.08,
+   "dur": 6.54673721340388,
+   "A": 104.358,
+   "B": 110.905,
+   "PA": 104.208,
+   "PB": 110.975
+  },
+  {
+   "i": 20,
+   "scene": 4,
+   "who": "K",
+   "txt": "Commit activity is capped, so neither commit spam nor marketing can inflate it. And no market figure ever reaches it.",
+   "disp": null,
+   "shot": {
+    "img": "methodology",
+    "a": [
+     0.35,
+     0.55,
+     1.6
+    ],
+    "b": [
+     0.35,
+     0.68,
+     1.9
+    ],
+    "hl": [
+     [
+      0.125,
+      0.51,
+      0.56,
+      0.89
+     ]
+    ],
+    "q": "Aggregated commit activity is capped, so neither commit volume nor marketing volume can inflate the score."
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    130816
+   ],
+   "tempo": 1.08,
+   "dur": 5.493239271017048,
+   "A": 111.125,
+   "B": 116.618,
+   "PA": 110.975,
+   "PB": 116.688
+  },
+  {
+   "i": 21,
+   "scene": 4,
+   "who": "K",
+   "txt": "Then the Discovery Gap. It compares how actively a project ships, with how much market attention its token gets.",
+   "disp": null,
+   "shot": {
+    "img": "they_market_chart",
+    "a": [
+     0.7,
+     0.45,
+     1.7
+    ],
+    "b": [
+     0.84,
+     0.47,
+     2.4
+    ],
+    "hl": [
+     [
+      0.755,
+      0.42,
+      0.93,
+      0.52
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    128768
+   ],
+   "tempo": 1.08,
+   "dur": 5.40723943898547,
+   "A": 116.838,
+   "B": 122.245,
+   "PA": 116.688,
+   "PB": 122.315
+  },
+  {
+   "i": 22,
+   "scene": 4,
+   "who": "K",
+   "txt": "A steady builder with a positive gap shows up as Under the Radar. Building, little attention.",
+   "disp": null,
+   "shot": {
+    "img": "explore_tab_under-the-radar",
+    "a": [
+     0.3,
+     0.45,
+     1.7
+    ],
+    "b": [
+     0.33,
+     0.68,
+     1.6
+    ],
+    "hl": [
+     [
+      0.32,
+      0.39,
+      0.425,
+      0.425
+     ],
+     [
+      0.13,
+      0.635,
+      0.5,
+      0.69
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    109056
+   ],
+   "tempo": 1.08,
+   "dur": 4.579491055681531,
+   "A": 122.465,
+   "B": 127.044,
+   "PA": 122.315,
+   "PB": 127.114
+  },
+  {
+   "i": 23,
+   "scene": 4,
+   "who": "K",
+   "txt": "And Still Building marks teams that kept shipping after their token's value fell by half or more.",
+   "disp": null,
+   "shot": {
+    "img": "explore",
+    "a": [
+     0.3,
+     0.4,
+     2.1
+    ],
+    "b": [
+     0.3,
+     0.42,
+     2.4
+    ],
+    "hl": [
+     [
+      0.255,
+      0.395,
+      0.315,
+      0.43
+     ]
+    ],
+    "q": "Still Building: market value at or below 50% of its 90-day high, and meaningful building continued after the decline began."
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    98560
+   ],
+   "tempo": 1.08,
+   "dur": 4.138741916519694,
+   "A": 127.264,
+   "B": 131.403,
+   "PA": 127.114,
+   "PB": 131.553
+  },
+  {
+   "i": 24,
+   "scene": 4,
+   "who": "J",
+   "txt": "So these are buy signals?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    1246,
+    30450
+   ],
+   "tempo": 1.08,
+   "dur": 1.2263374485596708,
+   "A": 131.703,
+   "B": 132.929,
+   "PA": 131.553,
+   "PB": 133.079
+  },
+  {
+   "i": 25,
+   "scene": 4,
+   "who": "K",
+   "txt": "No. Building is evidence about a team, not a promise about a token. It's context, never a prediction.",
+   "disp": null,
+   "shot": {
+    "img": "glossary",
+    "a": [
+     0.35,
+     0.28,
+     1.9
+    ],
+    "b": [
+     0.35,
+     0.3,
+     2.2
+    ],
+    "hl": [
+     [
+      0.135,
+      0.24,
+      0.555,
+      0.4
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    118528
+   ],
+   "tempo": 1.08,
+   "dur": 4.97724027882758,
+   "A": 133.229,
+   "B": 138.206,
+   "PA": 133.079,
+   "PB": 138.456
+  },
+  {
+   "i": 26,
+   "scene": 5,
+   "who": "J",
+   "txt": "Okay. Someone drops a contract address in my group chat. Then what?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    331,
+    90624
+   ],
+   "tempo": 1.08,
+   "dur": 3.7915931804820695,
+   "A": 139.906,
+   "B": 143.698,
+   "PA": 139.756,
+   "PB": 143.848
+  },
+  {
+   "i": 27,
+   "scene": 5,
+   "who": "K",
+   "txt": "Paste it into Scan. It answers one question. Is anyone building this?",
+   "disp": null,
+   "shot": {
+    "img": "scan_typed",
+    "a": [
+     0.5,
+     0.4,
+     1
+    ],
+    "b": [
+     0.36,
+     0.48,
+     1.75
+    ],
+    "hl": [
+     [
+      0.13,
+      0.525,
+      0.625,
+      0.6
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    79616
+   ],
+   "tempo": 1.08,
+   "dur": 3.343243470227597,
+   "A": 143.998,
+   "B": 147.341,
+   "PA": 143.848,
+   "PB": 147.411
+  },
+  {
+   "i": 28,
+   "scene": 5,
+   "who": "K",
+   "txt": "HEY reads the chain, the explorer, and what the token declares about itself. Even for a contract it has never seen. Here's HEY's own contract.",
+   "disp": null,
+   "shot": {
+    "img": "scan_result",
+    "a": [
+     0.35,
+     0.5,
+     1.5
+    ],
+    "b": [
+     0.36,
+     0.8,
+     1.8
+    ],
+    "hl": [
+     [
+      0.13,
+      0.53,
+      0.62,
+      0.6
+     ],
+     [
+      0.14,
+      0.7,
+      0.62,
+      0.79
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    187904
+   ],
+   "tempo": 1.08,
+   "dur": 7.890484588897287,
+   "A": 147.561,
+   "B": 155.451,
+   "PA": 147.411,
+   "PB": 155.521
+  },
+  {
+   "i": 29,
+   "scene": 5,
+   "who": "K",
+   "txt": "It won't tell you a token is safe. It tells you whether someone is building it. With the source behind every line.",
+   "disp": null,
+   "shot": {
+    "img": "scan_result",
+    "a": [
+     0.33,
+     0.45,
+     2.2
+    ],
+    "b": [
+     0.33,
+     0.5,
+     2.4
+    ],
+    "hl": [
+     [
+      0.13,
+      0.485,
+      0.52,
+      0.515
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    111616
+   ],
+   "tempo": 1.08,
+   "dur": 4.686990845721004,
+   "A": 155.671,
+   "B": 160.358,
+   "PA": 155.521,
+   "PB": 160.608
+  },
+  {
+   "i": 30,
+   "scene": 6,
+   "who": "J",
+   "txt": "Show me a real project.",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    405,
+    32768
+   ],
+   "tempo": 1.08,
+   "dur": 1.3589905097841606,
+   "A": 162.058,
+   "B": 163.417,
+   "PA": 161.908,
+   "PB": 163.567
+  },
+  {
+   "i": 31,
+   "scene": 6,
+   "who": "K",
+   "txt": "Merrymen. Autonomous trading agents. Verified builder: HEY confirmed shipping evidence from the project's own public sources.",
+   "disp": null,
+   "shot": {
+    "img": "project_merrymen",
+    "a": [
+     0.5,
+     0.4,
+     1.2
+    ],
+    "b": [
+     0.32,
+     0.24,
+     1.9
+    ],
+    "hl": [
+     [
+      0.23,
+      0.205,
+      0.31,
+      0.235
+     ],
+     [
+      0.13,
+      0.245,
+      0.53,
+      0.28
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    164096
+   ],
+   "tempo": 1.08,
+   "dur": 6.890736541530192,
+   "A": 163.717,
+   "B": 170.608,
+   "PA": 163.567,
+   "PB": 170.678
+  },
+  {
+   "i": 32,
+   "scene": 6,
+   "who": "K",
+   "txt": "Shipping consistently. Eight meaningful events in thirty days. Build Momentum sixty two. And the latest ship, with its commits.",
+   "disp": "Shipping consistently. 8 meaningful events in 30 days. Build Momentum 62. And the latest ship, with its commits.",
+   "shot": {
+    "img": "project_merrymen",
+    "a": [
+     0.35,
+     0.55,
+     1.8
+    ],
+    "b": [
+     0.7,
+     0.66,
+     1.6
+    ],
+    "hl": [
+     [
+      0.24,
+      0.525,
+      0.62,
+      0.61
+     ],
+     [
+      0.65,
+      0.53,
+      0.86,
+      0.92
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    137216
+   ],
+   "tempo": 1.08,
+   "dur": 5.76198874611573,
+   "A": 170.828,
+   "B": 176.59,
+   "PA": 170.678,
+   "PB": 176.66
+  },
+  {
+   "i": 33,
+   "scene": 6,
+   "who": "K",
+   "txt": "Product usage counts the calls to its watched contracts. Six and a half thousand in seven days.",
+   "disp": "Product usage counts the calls to its watched contracts: 6,536 in 7 days.",
+   "shot": {
+    "img": "project_merrymen",
+    "a": [
+     0.35,
+     0.85,
+     1.8
+    ],
+    "b": [
+     0.35,
+     0.92,
+     2.0
+    ],
+    "hl": [
+     [
+      0.13,
+      0.91,
+      0.6,
+      0.985
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    114432
+   ],
+   "tempo": 1.08,
+   "dur": 4.805240614764424,
+   "A": 176.81,
+   "B": 181.615,
+   "PA": 176.66,
+   "PB": 181.685
+  },
+  {
+   "i": 34,
+   "scene": 6,
+   "who": "K",
+   "txt": "You can follow it, set an alert, or get its changes by email. No account needed for that.",
+   "disp": null,
+   "shot": {
+    "img": "project_merrymen",
+    "a": [
+     0.32,
+     0.68,
+     1.9
+    ],
+    "b": [
+     0.32,
+     0.76,
+     1.9
+    ],
+    "hl": [
+     [
+      0.145,
+      0.64,
+      0.5,
+      0.685
+     ],
+     [
+      0.145,
+      0.775,
+      0.5,
+      0.84
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    96786
+   ],
+   "tempo": 1.08,
+   "dur": 4.064247921390778,
+   "A": 181.835,
+   "B": 185.899,
+   "PA": 181.685,
+   "PB": 186.149
+  },
+  {
+   "i": 35,
+   "scene": 7,
+   "who": "J",
+   "txt": "That's Discovery. So what's the Research Terminal?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    774,
+    59566
+   ],
+   "tempo": 1.08,
+   "dur": 2.4687998656252623,
+   "A": 187.599,
+   "B": 190.068,
+   "PA": 187.449,
+   "PB": 190.218
+  },
+  {
+   "i": 36,
+   "scene": 7,
+   "who": "K",
+   "txt": "Discovery finds the projects. The Terminal is where you research them. Same records, deeper tools.",
+   "disp": null,
+   "shot": {
+    "img": "terminal",
+    "a": [
+     0.5,
+     0.5,
+     1
+    ],
+    "b": [
+     0.48,
+     0.45,
+     1.25
+    ],
+    "hl": [
+     [
+      0.05,
+      0.21,
+      0.94,
+      0.81
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    112640
+   ],
+   "tempo": 1.08,
+   "dur": 4.729990761736793,
+   "A": 190.368,
+   "B": 195.098,
+   "PA": 190.218,
+   "PB": 195.168
+  },
+  {
+   "i": 37,
+   "scene": 7,
+   "who": "K",
+   "txt": "Open a project, and you get a research summary. Every line with its receipt.",
+   "disp": null,
+   "shot": {
+    "img": "terminal_hey",
+    "a": [
+     0.5,
+     0.6,
+     1.3
+    ],
+    "b": [
+     0.5,
+     0.88,
+     1.7
+    ],
+    "hl": [
+     [
+      0.05,
+      0.745,
+      0.97,
+      1.0
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    85248
+   ],
+   "tempo": 1.08,
+   "dur": 3.579743008314437,
+   "A": 195.318,
+   "B": 198.898,
+   "PA": 195.168,
+   "PB": 198.968
+  },
+  {
+   "i": 38,
+   "scene": 7,
+   "who": "K",
+   "txt": "A full timeline of everything HEY recorded, including scheduled token unlocks.",
+   "disp": null,
+   "shot": {
+    "img": "they_timeline",
+    "a": [
+     0.3,
+     0.5,
+     1.6
+    ],
+    "b": [
+     0.3,
+     0.75,
+     1.8
+    ],
+    "hl": [
+     [
+      0.05,
+      0.67,
+      0.6,
+      0.84
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    104960
+   ],
+   "tempo": 1.08,
+   "dur": 4.407491391618375,
+   "A": 199.118,
+   "B": 203.525,
+   "PA": 198.968,
+   "PB": 203.595
+  },
+  {
+   "i": 39,
+   "scene": 7,
+   "who": "K",
+   "txt": "Ships and releases, each with its evidence, and whether it counts toward the status.",
+   "disp": null,
+   "shot": {
+    "img": "they_build",
+    "a": [
+     0.5,
+     0.55,
+     1.4
+    ],
+    "b": [
+     0.6,
+     0.78,
+     1.7
+    ],
+    "hl": [
+     [
+      0.6,
+      0.63,
+      0.95,
+      1.0
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    90112
+   ],
+   "tempo": 1.08,
+   "dur": 3.783992609389435,
+   "A": 203.745,
+   "B": 207.529,
+   "PA": 203.595,
+   "PB": 207.599
+  },
+  {
+   "i": 40,
+   "scene": 7,
+   "who": "K",
+   "txt": "The market chart, with build events on the candles. Releases and code activity, placed by time, not by cause.",
+   "disp": null,
+   "shot": {
+    "img": "they_market_chart",
+    "a": [
+     0.4,
+     0.3,
+     1.3
+    ],
+    "b": [
+     0.42,
+     0.33,
+     1.65
+    ],
+    "hl": [
+     [
+      0.07,
+      0.12,
+      0.17,
+      0.17
+     ],
+     [
+      0.555,
+      0.12,
+      0.66,
+      0.17
+     ],
+     [
+      0.065,
+      0.765,
+      0.37,
+      0.795
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    142592
+   ],
+   "tempo": 1.08,
+   "dur": 5.987738305198622,
+   "A": 207.749,
+   "B": 213.737,
+   "PA": 207.599,
+   "PB": 213.807
+  },
+  {
+   "i": 41,
+   "scene": 7,
+   "who": "K",
+   "txt": "On-chain shows what the project's contracts are doing, counted from the chain itself.",
+   "disp": null,
+   "shot": {
+    "img": "they_onchain",
+    "a": [
+     0.5,
+     0.6,
+     1.4
+    ],
+    "b": [
+     0.5,
+     0.85,
+     1.8
+    ],
+    "hl": [
+     [
+      0.05,
+      0.78,
+      0.95,
+      0.87
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    91332
+   ],
+   "tempo": 1.08,
+   "dur": 3.835222978080121,
+   "A": 213.957,
+   "B": 217.792,
+   "PA": 213.807,
+   "PB": 217.862
+  },
+  {
+   "i": 42,
+   "scene": 7,
+   "who": "K",
+   "txt": "And Sources lists everything HEY reads for the project, and which ones are verified.",
+   "disp": null,
+   "shot": {
+    "img": "they_research",
+    "a": [
+     0.5,
+     0.6,
+     1.4
+    ],
+    "b": [
+     0.5,
+     0.75,
+     1.7
+    ],
+    "hl": [
+     [
+      0.055,
+      0.6,
+      0.93,
+      0.71
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    104704
+   ],
+   "tempo": 1.08,
+   "dur": 4.3967414126144275,
+   "A": 218.012,
+   "B": 222.409,
+   "PA": 217.862,
+   "PB": 222.479
+  },
+  {
+   "i": 43,
+   "scene": 7,
+   "who": "K",
+   "txt": "What changed gives you the last twenty four hours across the chain. Most meaningful first.",
+   "disp": "What changed gives you the last 24 hours across the chain \u2014 most meaningful first.",
+   "shot": {
+    "img": "terminal_centre_today",
+    "a": [
+     0.5,
+     0.45,
+     1.2
+    ],
+    "b": [
+     0.62,
+     0.45,
+     1.5
+    ],
+    "hl": [
+     [
+      0.87,
+      0.33,
+      0.97,
+      0.42
+     ],
+     [
+      0.53,
+      0.45,
+      0.86,
+      0.73
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    92231
+   ],
+   "tempo": 1.08,
+   "dur": 3.872973880910389,
+   "A": 222.629,
+   "B": 226.502,
+   "PA": 222.479,
+   "PB": 226.572
+  },
+  {
+   "i": 44,
+   "scene": 7,
+   "who": "K",
+   "txt": "Compare puts two to four projects side by side. No winner, and no recommendation.",
+   "disp": null,
+   "shot": {
+    "img": "terminal_centre_compare",
+    "a": [
+     0.5,
+     0.45,
+     1.15
+    ],
+    "b": [
+     0.4,
+     0.35,
+     1.4
+    ],
+    "hl": [
+     [
+      0.05,
+      0.08,
+      0.48,
+      0.19
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    101888
+   ],
+   "tempo": 1.08,
+   "dur": 4.278491643571008,
+   "A": 226.722,
+   "B": 231.0,
+   "PA": 226.572,
+   "PB": 231.07
+  },
+  {
+   "i": 45,
+   "scene": 7,
+   "who": "K",
+   "txt": "A research queue keeps the projects you mean to review, and what changed since you last looked.",
+   "disp": null,
+   "shot": {
+    "img": "terminal_centre_queue",
+    "a": [
+     0.5,
+     0.45,
+     1.15
+    ],
+    "b": [
+     0.45,
+     0.32,
+     1.4
+    ],
+    "hl": [
+     [
+      0.05,
+      0.08,
+      0.58,
+      0.18
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    94588
+   ],
+   "tempo": 1.08,
+   "dur": 3.971949273536575,
+   "A": 231.22,
+   "B": 235.192,
+   "PA": 231.07,
+   "PB": 235.262
+  },
+  {
+   "i": 46,
+   "scene": 7,
+   "who": "K",
+   "txt": "And Ask HEY answers questions only from HEY's records. Every line marked Fact, Derived, or Unknown.",
+   "disp": null,
+   "shot": {
+    "img": "ask_result",
+    "a": [
+     0.4,
+     0.35,
+     1.5
+    ],
+    "b": [
+     0.35,
+     0.32,
+     1.9
+    ],
+    "hl": [
+     [
+      0.05,
+      0.24,
+      0.57,
+      0.32
+     ],
+     [
+      0.05,
+      0.135,
+      0.5,
+      0.22
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    137984
+   ],
+   "tempo": 1.08,
+   "dur": 5.794238683127572,
+   "A": 235.412,
+   "B": 241.206,
+   "PA": 235.262,
+   "PB": 241.356
+  },
+  {
+   "i": 47,
+   "scene": 7,
+   "who": "J",
+   "txt": "How do I get in?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    81,
+    15668
+   ],
+   "tempo": 1.08,
+   "dur": 0.6545309481817418,
+   "A": 241.506,
+   "B": 242.161,
+   "PA": 241.356,
+   "PB": 242.311
+  },
+  {
+   "i": 48,
+   "scene": 7,
+   "who": "K",
+   "txt": "Three ways. One, a one time seven day trial with a wallet. No HEY is asked for.",
+   "disp": "Three ways. One: a one-time 7-day trial with a wallet. No $HEY is asked for.",
+   "shot": {
+    "img": "terminal_access",
+    "a": [
+     0.5,
+     0.3,
+     1.6
+    ],
+    "b": [
+     0.5,
+     0.5,
+     1.75
+    ],
+    "hl": [
+     [
+      0.27,
+      0.4,
+      0.72,
+      0.7
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    176,
+    118272
+   ],
+   "tempo": 1.08,
+   "dur": 4.9590996892584185,
+   "A": 242.461,
+   "B": 247.42,
+   "PA": 242.311,
+   "PB": 247.49
+  },
+  {
+   "i": 49,
+   "scene": 7,
+   "who": "K",
+   "txt": "Two, hold at least five hundred dollars of HEY. Checked once a day, with one signature and no transaction. You keep access while it stays at four fifty or more.",
+   "disp": "Two: hold at least $500 of $HEY. Checked once a day \u2014 one signature, no transaction. Access stays while it\u2019s worth $450 or more.",
+   "shot": {
+    "img": "terminal_access",
+    "a": [
+     0.5,
+     0.7,
+     1.75
+    ],
+    "b": [
+     0.5,
+     0.88,
+     1.75
+    ],
+    "hl": [
+     [
+      0.27,
+      0.76,
+      0.72,
+      0.98
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    200448
+   ],
+   "tempo": 1.08,
+   "dur": 8.417233560090702,
+   "A": 247.64,
+   "B": 256.057,
+   "PA": 247.49,
+   "PB": 256.127
+  },
+  {
+   "i": 50,
+   "scene": 7,
+   "who": "K",
+   "txt": "Three, request early access, and an admin reviews it. And the Hey Research Lab sample project is fully open, every tab, for anyone.",
+   "disp": null,
+   "shot": {
+    "img": "terminal_hey",
+    "a": [
+     0.45,
+     0.2,
+     1.6
+    ],
+    "b": [
+     0.45,
+     0.25,
+     1.6
+    ],
+    "hl": [
+     [
+      0.05,
+      0.065,
+      0.85,
+      0.095
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    1133,
+    158720
+   ],
+   "tempo": 1.08,
+   "dur": 6.617409926933736,
+   "A": 256.277,
+   "B": 262.894,
+   "PA": 256.127,
+   "PB": 263.144
+  },
+  {
+   "i": 51,
+   "scene": 8,
+   "who": "K",
+   "txt": "If you're building a project, claim your page, add the badge, and embed it.",
+   "disp": null,
+   "shot": {
+    "img": "home",
+    "a": [
+     0.55,
+     0.35,
+     1.6
+    ],
+    "b": [
+     0.6,
+     0.4,
+     2.0
+    ],
+    "hl": [
+     [
+      0.5,
+      0.38,
+      0.67,
+      0.455
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    83808
+   ],
+   "tempo": 1.08,
+   "dur": 3.519274376417233,
+   "A": 264.594,
+   "B": 268.113,
+   "PA": 264.444,
+   "PB": 268.183
+  },
+  {
+   "i": 52,
+   "scene": 8,
+   "who": "K",
+   "txt": "And for developers, there's a free public API, a typed SDK, and an MCP server, so AI assistants can read HEY. No key, no account.",
+   "disp": null,
+   "shot": {
+    "img": "developers",
+    "a": [
+     0.5,
+     0.35,
+     1.5
+    ],
+    "b": [
+     0.5,
+     0.6,
+     1.5
+    ],
+    "hl": [
+     [
+      0.29,
+      0.12,
+      0.7,
+      0.24
+     ],
+     [
+      0.29,
+      0.665,
+      0.7,
+      0.735
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    194560
+   ],
+   "tempo": 1.08,
+   "dur": 8.169984042999916,
+   "A": 268.333,
+   "B": 276.503,
+   "PA": 268.183,
+   "PB": 276.753
+  },
+  {
+   "i": 53,
+   "scene": 9,
+   "who": "J",
+   "txt": "And the HEY token?",
+   "disp": "And the $HEY token?",
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    184,
+    23296
+   ],
+   "tempo": 1.08,
+   "dur": 0.9705215419501132,
+   "A": 278.203,
+   "B": 279.174,
+   "PA": 278.053,
+   "PB": 279.324
+  },
+  {
+   "i": 54,
+   "scene": 9,
+   "who": "K",
+   "txt": "HEY is the research token, on Robinhood Chain. It launched on Pons on September ninth, with no presale.",
+   "disp": "$HEY is the research token, on Robinhood Chain. It launched on Pons on 9 September \u2014 no presale.",
+   "shot": {
+    "img": "hey",
+    "a": [
+     0.4,
+     0.5,
+     1.3
+    ],
+    "b": [
+     0.35,
+     0.88,
+     1.75
+    ],
+    "hl": [
+     [
+      0.13,
+      0.93,
+      0.5,
+      0.985
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    125952
+   ],
+   "tempo": 1.08,
+   "dur": 5.28898966994205,
+   "A": 279.474,
+   "B": 284.763,
+   "PA": 279.324,
+   "PB": 284.833
+  },
+  {
+   "i": 55,
+   "scene": 9,
+   "who": "K",
+   "txt": "It pays for research work. Research requests, bounties, holder pricing, and Terminal access by holding. Each trade carries a two percent creator tax, paid to the treasury.",
+   "disp": "It pays for research work: research requests, bounties, holder pricing, Terminal access by holding. Each trade carries a 2% creator tax, paid to the treasury.",
+   "shot": {
+    "img": "hey",
+    "a": [
+     0.35,
+     0.5,
+     1.6
+    ],
+    "b": [
+     0.35,
+     0.6,
+     1.75
+    ],
+    "hl": [
+     [
+      0.13,
+      0.39,
+      0.56,
+      0.69
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    202240
+   ],
+   "tempo": 1.08,
+   "dur": 8.492483413118332,
+   "A": 284.983,
+   "B": 293.475,
+   "PA": 284.833,
+   "PB": 293.545
+  },
+  {
+   "i": 56,
+   "scene": 9,
+   "who": "K",
+   "txt": "And it never buys a ranking, a status, or coverage. HEY's own project is researched by the same rules.",
+   "disp": null,
+   "shot": {
+    "img": "hey",
+    "a": [
+     0.35,
+     0.25,
+     2.1
+    ],
+    "b": [
+     0.35,
+     0.27,
+     2.3
+    ],
+    "hl": [
+     [
+      0.13,
+      0.262,
+      0.56,
+      0.292
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    136704
+   ],
+   "tempo": 1.08,
+   "dur": 5.740488788107835,
+   "A": 293.695,
+   "B": 299.435,
+   "PA": 293.545,
+   "PB": 299.685
+  },
+  {
+   "i": 57,
+   "scene": 10,
+   "who": "J",
+   "txt": "So my routine is. Scan the contract. Check its status and receipts on Discovery. Then open the Terminal, and dig into the timeline and the chart.",
+   "disp": "So my routine: scan the contract. Check its status and receipts on Discovery. Then open the Terminal and dig into the timeline and the chart.",
+   "shot": {
+    "seq": [
+     {
+      "img": "scan_result",
+      "a": [
+       0.35,
+       0.6,
+       1.5
+      ],
+      "b": [
+       0.35,
+       0.75,
+       1.6
+      ],
+      "hl": [
+       [
+        0.14,
+        0.7,
+        0.62,
+        0.79
+       ]
+      ],
+      "q": null
+     },
+     {
+      "img": "project_merrymen",
+      "a": [
+       0.35,
+       0.45,
+       1.6
+      ],
+      "b": [
+       0.35,
+       0.55,
+       1.6
+      ],
+      "hl": [
+       [
+        0.24,
+        0.525,
+        0.62,
+        0.61
+       ]
+      ],
+      "q": null
+     },
+     {
+      "img": "they_market_chart",
+      "a": [
+       0.4,
+       0.3,
+       1.3
+      ],
+      "b": [
+       0.42,
+       0.33,
+       1.5
+      ],
+      "hl": [
+       [
+        0.07,
+        0.12,
+        0.17,
+        0.17
+       ]
+      ],
+      "q": null
+     }
+    ]
+   },
+   "sr": 22050,
+   "trim": [
+    1195,
+    200615
+   ],
+   "tempo": 1.08,
+   "dur": 8.374065675652977,
+   "A": 301.135,
+   "B": 309.509,
+   "PA": 300.985,
+   "PB": 309.659
+  },
+  {
+   "i": 58,
+   "scene": 10,
+   "who": "K",
+   "txt": "Exactly. Discovery finds who's building. The Terminal shows you how.",
+   "disp": null,
+   "shot": {
+    "img": "home",
+    "a": [
+     0.3,
+     0.3,
+     1.6
+    ],
+    "b": [
+     0.5,
+     0.5,
+     1.0
+    ],
+    "hl": [],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    81408
+   ],
+   "tempo": 1.08,
+   "dur": 3.418493323255228,
+   "A": 309.809,
+   "B": 313.227,
+   "PA": 309.659,
+   "PB": 313.377
+  },
+  {
+   "i": 59,
+   "scene": 10,
+   "who": "J",
+   "txt": "And why does that matter so much on Robinhood Chain?",
+   "disp": null,
+   "shot": {
+    "cu": "J"
+   },
+   "sr": 22050,
+   "trim": [
+    347,
+    54272
+   ],
+   "tempo": 1.08,
+   "dur": 2.264424288233812,
+   "A": 313.527,
+   "B": 315.791,
+   "PA": 313.377,
+   "PB": 315.941
+  },
+  {
+   "i": 60,
+   "scene": 10,
+   "who": "K",
+   "txt": "Because anyone can launch a token there. Most have nobody building behind them. And some borrow Robinhood's name, without being Robinhood's.",
+   "disp": null,
+   "shot": {
+    "img": "pulse",
+    "a": [
+     0.5,
+     0.7,
+     1.4
+    ],
+    "b": [
+     0.5,
+     0.85,
+     1.7
+    ],
+    "hl": [
+     [
+      0.385,
+      0.76,
+      0.61,
+      0.97
+     ]
+    ],
+    "q": "Robinhood Chain (chain 4663): anyone can launch a token. HEY is independent of Robinhood."
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    147456
+   ],
+   "tempo": 1.08,
+   "dur": 6.191987906273621,
+   "A": 316.091,
+   "B": 322.283,
+   "PA": 315.941,
+   "PB": 322.353
+  },
+  {
+   "i": 61,
+   "scene": 10,
+   "who": "K",
+   "txt": "HEY shows you who is. Then you check the contract, the market, and the team yourself.",
+   "disp": null,
+   "shot": {
+    "img": "glossary",
+    "a": [
+     0.35,
+     0.28,
+     1.9
+    ],
+    "b": [
+     0.35,
+     0.32,
+     2.0
+    ],
+    "hl": [
+     [
+      0.135,
+      0.24,
+      0.555,
+      0.4
+     ]
+    ],
+    "q": null
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    103969
+   ],
+   "tempo": 1.08,
+   "dur": 4.365877215083564,
+   "A": 322.503,
+   "B": 326.869,
+   "PA": 322.353,
+   "PB": 327.119
+  },
+  {
+   "i": 62,
+   "scene": 11,
+   "who": "N",
+   "txt": "Price shows the market. HEY shows the builder.",
+   "disp": null,
+   "shot": {
+    "end": 1
+   },
+   "sr": 22050,
+   "trim": [
+    0,
+    55162
+   ],
+   "tempo": 0.94,
+   "dur": 2.6613595792927103,
+   "A": 328.069,
+   "B": 330.73,
+   "PA": 327.919,
+   "PB": 330.98
+  }
+ ],
+ "chap": {
+  "1": 14.369,
+  "2": 41.071,
+  "3": 73.318,
+  "4": 100.736,
+  "5": 138.306,
+  "6": 160.458,
+  "7": 185.999,
+  "8": 262.994,
+  "9": 276.603,
+  "10": 299.535,
+  "11": 326.969
+ },
+ "end": 334.93
+}
