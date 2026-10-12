@@ -12,15 +12,18 @@ def win(t0,dur): m=(t>=t0)&(t<t0+dur); return m,t[m]-t0
 def put(fn,t0,dur,g=1.,pan=0.):
     m,x=win(t0,dur); s=fn(x)*g; L[m]+=s*(1-pan); R[m]+=s*(1+pan)
 HN=hp(noise,.55)
-# 1) PULL-BACK 0.00-0.32: the clip settles into a card (falling filtered swoosh)
-m,x=win(0.0,.36); k=x/.36; y=lp(noise,.08)[m]*np.sin(np.pi*np.clip(k*1.2,0,1))**2
-L[m]+=y*.5; R[m]+=y*.5
-put(lambda x: np.sin(2*np.pi*(420-260*x/.3)*x)*np.sin(np.pi*x/.3)**2,0.0,.3,.08)
+# 1) THE CUT 0.00-0.10: bright slicing swish across the stereo field, then the card lands at 0.12
+m,x=win(0.0,.14); k=x/.14
+y=hp(noise,.45)[m]*np.sin(np.pi*np.clip(k,0,1))**1.5
+L[m]+=y*.55*(1-k); R[m]+=y*.55*k
+put(lambda x: np.sin(2*np.pi*(1800+5200*x/.1)*x)*np.sin(np.pi*np.clip(x/.1,0,1))**2,0.0,.1,.07)
+put(lambda x: np.sin(2*np.pi*(55+150*np.exp(-x*28))*x)*np.exp(-x*11),0.12,.45,.9)
+put(lambda x: lp(noise,.1)[:len(x)]*np.exp(-x*18),0.12,.25,.45)
 # 2) STAMP at 0.16: scissor snip (two metallic clicks) + punchy thump
 for dt,f in ((0.0,5200),(0.045,6100)):
-    put(lambda x,f=f: (np.sin(2*np.pi*f*x)+.6*np.sin(2*np.pi*f*1.41*x))*np.exp(-x*120)+HN[:len(x)]*np.exp(-x*400)*.8,0.16+dt,.06,.35)
-put(lambda x: np.sin(2*np.pi*(70+160*np.exp(-x*30))*x)*np.exp(-x*14),0.20,.4,.95)
-put(lambda x: HN[:len(x)]*np.exp(-x*70),0.20,.08,.35)
+    put(lambda x,f=f: (np.sin(2*np.pi*f*x)+.6*np.sin(2*np.pi*f*1.41*x))*np.exp(-x*120)+HN[:len(x)]*np.exp(-x*400)*.8,0.18+dt,.06,.35)
+put(lambda x: np.sin(2*np.pi*(70+160*np.exp(-x*30))*x)*np.exp(-x*14),0.22,.4,.8)
+put(lambda x: HN[:len(x)]*np.exp(-x*70),0.22,.08,.3)
 # 3) MULTIPLY at 0.38: cards dealt out (rapid stuttered swishes) + wide swell
 g=np.random.default_rng(9)
 for i in range(9):
